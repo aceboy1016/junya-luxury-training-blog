@@ -1,26 +1,282 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+/* JUNYA ISHIHARA Luxury Training カスタム変数 */
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #333333;
+  --junya-gold: #F59E0B;
+  --junya-gold-dark: #D97706;
+  --junya-gold-darker: #92400E;
+  --junya-amber: #FBBF24;
+  --junya-orange: #F59E0B;
+  --junya-text: #333333;
+  --junya-gray: #666666;
+  --junya-light: #F8F9FA;
+  --junya-border: #E5E5E5;
+  --junya-white: #FFFFFF;
+  --junya-black: #000000;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: "Inter", "Hiragino Kaku Gothic Pro", "Yu Gothic", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
+/* ダークモードは無効化（JUNYA ISHIHARAブランドに合わせて） */
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+} */
+
+/* ベーススタイル */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Inter", "Hiragino Kaku Gothic Pro", "Yu Gothic", sans-serif;
+  line-height: 1.6;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* リンクのデフォルトスタイル */
+a {
+  color: var(--junya-gold);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--junya-gold-dark);
+  text-decoration: underline;
+}
+
+/* ボタンの基本スタイル */
+.btn-primary {
+  background: linear-gradient(135deg, var(--junya-gold), var(--junya-gold-dark));
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 0;
+  border: none;
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 40px rgba(245, 158, 11, 0.4);
+  color: white;
+  text-decoration: none;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--junya-gold);
+  border: 2px solid var(--junya-gold);
+  padding: 1rem 2rem;
+  border-radius: 0;
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-secondary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--junya-gold), var(--junya-gold-dark));
+  transition: left 0.3s ease;
+  z-index: -1;
+}
+
+.btn-secondary:hover::before {
+  left: 0;
+}
+
+.btn-secondary:hover {
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px rgba(245, 158, 11, 0.4);
+  text-decoration: none;
+}
+
+/* カードコンポーネント */
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  transform: translateY(-4px);
+}
+
+/* バッジスタイル */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.badge-blue {
+  background: linear-gradient(45deg, var(--junya-blue), var(--junya-green));
+  color: white;
+}
+
+.badge-gray {
+  background-color: var(--junya-light);
+  color: var(--junya-gray);
+}
+
+/* タイポグラフィ */
+.text-gradient {
+  background: linear-gradient(135deg, var(--junya-blue), var(--junya-green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* アニメーション */
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    transform: translateY(10px); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateY(0); 
+    opacity: 1; 
+  }
+}
+
+/* スクロールバーのカスタマイズ */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--junya-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, var(--junya-blue), var(--junya-green));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #2980b9, #27ae60);
+}
+
+/* フォーカススタイル */
+:focus {
+  outline: 2px solid var(--junya-blue);
+  outline-offset: 2px;
+}
+
+/* セレクションスタイル */
+::selection {
+  background: linear-gradient(45deg, var(--junya-blue), var(--junya-green));
+  color: white;
+}
+
+/* プリント時のスタイル */
+@media print {
+  * {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  a, a:visited {
+    text-decoration: underline;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* レスポンシブ画像 */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Sanity Image の最適化 */
+.sanity-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* ローディングアニメーション */
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid var(--junya-light);
+  border-radius: 50%;
+  border-top-color: var(--junya-blue);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
