@@ -1,9 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { getFeaturedPosts } from '@/lib/sanity'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import ArticleCard from '@/components/ArticleCard'
 
 export const metadata: Metadata = {
   title: 'JUNYA ISHIHARA PERSONAL TRAINING',
@@ -176,38 +174,39 @@ const MethodologySection = () => (
   </section>
 )
 
-const BlogSection = async () => {
-  const featuredPosts = await getFeaturedPosts()
-  
-  return (
-    <section className="py-20 bg-white">
-      <div className="container mx-auto px-6 text-center">
-        <div className="mb-20">
-          <p className="text-junya-gold font-bold tracking-widest uppercase mb-2">INSIGHTS</p>
-          <h2 className="text-5xl font-black text-black mb-4 tracking-wide">
-            JUNYA'S <span className="bg-gradient-to-r from-junya-gold via-junya-gold-dark to-junya-gold-darker bg-clip-text text-transparent">BLOG</span>
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto tracking-wide">
-            プロフェッショナルの視点から、トレーニングや栄養に関する最新情報と専門知識をお届けします
-          </p>
-        </div>
-        
-        <div className="grid md:grid-cols-3 gap-8 mb-12 max-w-7xl mx-auto">
-          {featuredPosts.slice(0, 3).map((post) => (
-            <ArticleCard key={post._id} post={post} />
-          ))}
-        </div>
-        
-        <Link
-          href="/blog"
-          className="btn-primary inline-block text-lg px-12 py-5"
-        >
-          ブログ一覧を見る
-        </Link>
+const BlogSection = () => (
+  <section className="py-20 bg-white">
+    <div className="container mx-auto px-6 text-center">
+      <div className="mb-20">
+        <p className="text-junya-gold font-bold tracking-widest uppercase mb-2">INSIGHTS</p>
+        <h2 className="text-5xl font-black text-black mb-4 tracking-wide">
+          JUNYA'S <span className="bg-gradient-to-r from-junya-gold via-junya-gold-dark to-junya-gold-darker bg-clip-text text-transparent">BLOG</span>
+        </h2>
+        <p className="text-xl text-gray-600 max-w-3xl mx-auto tracking-wide">
+          プロフェッショナルの視点から、トレーニングや栄養に関する最新情報と専門知識をお届けします
+        </p>
       </div>
-    </section>
-  )
-}
+      
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-gray-100 p-12 rounded-lg">
+          <h3 className="text-2xl font-bold text-gray-800 mb-4">
+            ブログ準備中
+          </h3>
+          <p className="text-gray-600 mb-8">
+            現在、最新のトレーニング情報と専門知識をお届けするための準備を進めています。<br />
+            近日公開予定ですので、もうしばらくお待ちください。
+          </p>
+          <Link
+            href="/contact"
+            className="btn-primary inline-block text-lg px-12 py-5"
+          >
+            お問い合わせ
+          </Link>
+        </div>
+      </div>
+    </div>
+  </section>
+)
 
 const ContactSection = () => (
   <section className="py-20 bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white">
@@ -244,7 +243,7 @@ const ContactSection = () => (
   </section>
 )
 
-export default async function Home() {
+export default function Home() {
   return (
     <>
       <Header />
