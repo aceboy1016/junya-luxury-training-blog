@@ -4,7 +4,7 @@ import './globals.css'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import CookieConsent from '@/components/CookieConsent'
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter'
@@ -98,12 +98,13 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="//cdn.sanity.io" />
+        <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="theme-color" content="#E49B3F" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="JUNYA ISHIHARA PT" />
-        
+
         {/* 構造化データ */}
         <script
           type="application/ld+json"
@@ -149,11 +150,11 @@ export default function RootLayout({
         {process.env.NEXT_PUBLIC_GA_ID && (
           <GoogleAnalytics ga_id={process.env.NEXT_PUBLIC_GA_ID} />
         )}
-        
+
         <div id="__next">
           {children}
         </div>
-        
+
         {/* Cookie同意バナー */}
         {/* <CookieConsent /> */}
       </body>
