@@ -11,7 +11,12 @@ export const metadata: Metadata = {
 /* ─── Hero ─── */
 const HeroSection = () => (
   <section id="home" className="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden text-white"
-    style={{ background: `linear-gradient(135deg,rgba(0,0,0,.8),rgba(0,0,0,.6)),radial-gradient(ellipse at center,rgba(245,158,11,.1) 0%,transparent 70%),url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920&q=80')`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}>
+    style={{
+      background: `linear-gradient(135deg,rgba(0,0,0,.9),rgba(20,20,20,.8)),radial-gradient(ellipse at center,rgba(245,158,11,.15) 0%,transparent 60%),url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=1920&q=80')`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundAttachment: 'fixed'
+    }}>
     <div className="absolute inset-0 opacity-10">
       <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl animate-pulse" style={{ background: 'linear-gradient(135deg,#F59E0B,#D97706)' }} />
       <div className="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full blur-3xl animate-pulse" style={{ background: 'linear-gradient(135deg,#F59E0B,#D97706)', animationDelay: '2s' }} />
