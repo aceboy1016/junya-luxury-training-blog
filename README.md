@@ -1,100 +1,143 @@
-# JUNYA ISHIHARA ブログシステム - Next.js Web App
+# JUNYA ISHIHARA PERSONAL TRAINING
 
-既存のパーソナルトレーニングサイト「JUNYA ISHIHARA PERSONAL TRAINING」のデザインに完全に合わせたSanityベースのブログシステムのフロントエンド部分です。
+パーソナルトレーナー **石原淳哉** の公式ウェブサイト。  
+WordPressテーマ `junya-luxury-training` のリッチなデザイン・コンテンツを Next.js に完全移植し、Vercel でホスティングしています。
 
-## 🚀 機能
+## 🌐 公開URL
 
-- ✅ **完全レスポンシブデザイン** - モバイル・タブレット・デスクトップ対応
-- ✅ **JUNYA ISHIHARAデザインシステム** - 既存サイトと統一されたUI/UX
-- ✅ **高速パフォーマンス** - Next.js 14 App Router + 静的サイト生成
-- ✅ **SEO最適化** - メタタグ、構造化データ、サイトマップ自動生成
-- ✅ **Sanity CMS連携** - 直感的なコンテンツ管理
-- ✅ **検索機能** - 全文検索対応
-- ✅ **カテゴリー機能** - 記事の分類・絞り込み
-- ✅ **目次自動生成** - 記事内の見出しから目次を自動作成
-- ✅ **シェア機能** - SNS・URLコピー対応
-- ✅ **関連記事表示** - 同カテゴリーの記事を自動表示
+**[https://junya-luxury-training-blog.vercel.app](https://junya-luxury-training-blog.vercel.app)**
+
+---
+
+## 🚀 技術スタック
+
+| カテゴリ | 技術 |
+|---------|------|
+| **フレームワーク** | Next.js 16 (App Router) |
+| **言語** | TypeScript / React 19 |
+| **スタイリング** | Tailwind CSS + カスタムCSS |
+| **CMS** | Sanity (ブログ記事管理用) |
+| **アイコン** | Remixicon 3.5 (CDN) |
+| **ホスティング** | Vercel |
+| **リポジトリ** | GitHub (`aceboy1016/junya-luxury-training-blog`) |
+
+---
+
+## 📄 サイト構成（トップページ）
+
+WordPressテーマ `front-page.php` (1,320行) の全セクションを移植済み：
+
+| # | セクション | 内容 |
+|---|-----------|------|
+| 1 | **Hero** | キャッチコピー「変化を実感するから自然と続けたくなる」、統計カード (3000+/10+/100%)、CTA |
+| 2 | **Methodology** | ELITE METHODOLOGY — 4ステップ (Assessment/Design/Execution/Evolution) |
+| 3 | **Why Me** | 選ばれる理由 — 多角的アプローチ、確実なステップアップ、コンディショニング重視 |
+| 4 | **Concept** | 科学的メソッド × 最高級サービス — Science/Personalized/Holistic/Luxury |
+| 5 | **Service Flow** | 初回の流れ — お申し込み → ご来店 → カウンセリング → コンディショニング |
+| 6 | **Locations** | HALLEL半蔵門店 / HALLEL恵比寿店 |
+| 7 | **Pricing** | 通常セッション (60/90/120分) + 出張セッション (60/90分) |
+| 8 | **Testimonials** | お客様の声 3件 + 統計バー |
+| 9 | **Profile** | 経歴タイムライン、専門分野スキルバー、保有資格 (NASM-PES) |
+| 10 | **Contact** | Googleフォーム / LINE公式 / メール |
+
+---
 
 ## 🎨 デザインシステム
 
-### カラーパレット
-```css
---junya-orange: #E49B3F     /* メインオレンジ */
---junya-text: #333333       /* メインテキスト */
---junya-gray: #666666       /* セカンダリーテキスト */
---junya-light: #F8F9FA      /* ライト背景 */
---junya-border: #E5E5E5     /* ボーダー */
-```
+### カラーパレット（ゴールド基調）
 
-## 🛠 技術スタック
+- `--junya-gold: #F59E0B` — メインアクセント
+- `--junya-gold-dark: #D97706` — グラデーション用
+- `--junya-gold-darker: #92400E` — ディープアクセント
+- `--junya-amber: #FBBF24` — ハイライト
 
-- **Framework**: Next.js 14 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS + カスタムデザインシステム
-- **CMS**: Sanity
-- **Image Optimization**: Next.js Image + Sanity CDN
-- **SEO**: 構造化データ + 自動サイトマップ生成
-- **Deployment**: Vercel対応
+### フォント
 
-## 🚀 セットアップ
+- **英語**: Inter
+- **日本語**: Hiragino Kaku Gothic Pro / Yu Gothic
 
-### 1. 依存関係のインストール
-```bash
-npm install
-```
+### 主要UIパーツ
 
-### 2. 環境変数の設定
-`.env.local`ファイルを作成し、以下を設定:
-```env
-# Sanity CMS
-NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
-NEXT_PUBLIC_SANITY_DATASET=production
-SANITY_API_TOKEN=your_api_token
+- `.bg-gold-gradient` — ゴールドグラデーション背景
+- `.text-gradient` — ゴールドグラデーションテキスト
+- `.glass-effect` — グラスモーフィズム
+- `.luxury-card` — ホバーエフェクト付きカード
+- `.btn-primary` — ゴールドCTAボタン
 
-# サイト設定
-NEXT_PUBLIC_SITE_URL=https://your-domain.com
-```
+---
 
-### 3. 開発サーバーの起動
-```bash
-npm run dev
-```
-
-ブラウザで [http://localhost:3000/blog](http://localhost:3000/blog) を開いてください。
-
-## 📱 レスポンシブ対応
-
-完全レスポンシブデザインで、モバイル・タブレット・デスクトップすべてに最適化されています。
-
-## 🔍 SEO機能
-
-- 自動メタタグ生成
-- OGP・TwitterCard対応
-- 構造化データ
-- 自動サイトマップ生成
-- robots.txt自動生成
-
-## 🚀 本番デプロイ
-
-### Vercelデプロイ（推奨）
-```bash
-npm run build
-vercel --prod
-```
-
-## 📂 主要ディレクトリ
+## 🗂️ ディレクトリ構成
 
 ```
 src/
-├── app/blog/              # ブログページ
-├── components/            # 再利用可能コンポーネント
-└── lib/sanity.ts         # Sanity設定・クエリ
+├── app/
+│   ├── globals.css          # グローバルスタイル（ゴールドテーマ）
+│   ├── layout.tsx           # ルートレイアウト（SEO/GA/Remixicon）
+│   ├── page.tsx             # トップページ（全10セクション）
+│   └── blog/                # ブログページ群
+├── components/
+│   ├── Header.tsx           # スクロール検知ヘッダー
+│   └── Footer.tsx           # フッター（実住所・SNS）
+└── lib/
+    └── sanity.ts            # Sanity CMS クライアント
 ```
 
-## 📞 サポート
+---
 
-### 必要環境
-- Node.js 18+
-- npm 9+
+## 🔧 開発
 
-このプロジェクトは JUNYA ISHIHARA PERSONAL TRAINING の専用ブログシステムです。
+```bash
+# 依存関係インストール
+npm install --legacy-peer-deps
+
+# 開発サーバー起動
+npm run dev
+
+# 本番ビルド
+npm run build
+
+# Vercelデプロイ
+npx vercel --yes --prod
+```
+
+### 環境変数 (`.env.local`)
+
+```env
+NEXT_PUBLIC_SANITY_PROJECT_ID=xxxxxxxx
+NEXT_PUBLIC_SANITY_DATASET=production
+SANITY_API_TOKEN=sk...
+NEXT_PUBLIC_SITE_URL=https://junya-luxury-training-blog.vercel.app
+```
+
+---
+
+## 📋 開発ログ
+
+### 2026-02-19: WPテーマ → Next.js 完全移植
+- WordPressテーマ `junya-luxury-training` の全コンテンツをNext.jsコンポーネントに変換
+- `front-page.php` (1,320行) → `page.tsx` の10個のReactコンポーネント
+- `header.php` → `Header.tsx` (スクロール検知、モバイルメニュー)
+- `footer.php` → `Footer.tsx` (実住所、Remixicon SNSリンク)
+- `style.css` → `globals.css` + `tailwind.config.js` (ゴールドテーマ統一)
+- Remixicon CDN を `layout.tsx` に追加
+- Next.js を最新版にアップデート
+- Vercel へ本番デプロイ完了
+- Hero背景画像をダンベルから抽象的ラグジュアリー画像に変更
+
+---
+
+## 📌 今後のTODO
+
+- [ ] 独自ドメイン設定 (Vercel)
+- [ ] 実際のトレーニング写真への差し替え
+- [ ] LINE公式アカウント・Googleフォームのリンク設定
+- [ ] Google Analytics (GA4) の設定
+- [ ] Sanity CMS でブログ記事の投稿開始
+- [ ] OGP画像の設定
+- [ ] パフォーマンス最適化 (画像最適化、Lighthouse)
+
+---
+
+## 📜 ライセンス
+
+Private — © 2026 JUNYA ISHIHARA PERSONAL TRAINING. All rights reserved.
