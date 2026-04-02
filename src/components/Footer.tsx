@@ -89,15 +89,15 @@ const Footer = () => {
               <div className="flex items-center">
                 <i className="ri-map-pin-line text-gold-500 mr-3 text-lg"></i>
                 <div>
-                  <p className="text-gray-400 text-sm">HALLEL半蔵門店</p>
-                  <p className="text-gray-500 text-xs">東京都千代田区一番町10-8</p>
+                  <p className="text-gray-400 text-sm">HALLEL半蔵門</p>
+                  <p className="text-gray-500 text-xs">東京都千代田区一番町7-1 一番町ビルヂング 3F</p>
                 </div>
               </div>
               <div className="flex items-center">
                 <i className="ri-map-pin-line text-gold-500 mr-3 text-lg"></i>
                 <div>
-                  <p className="text-gray-400 text-sm">HALLEL恵比寿店</p>
-                  <p className="text-gray-500 text-xs">東京都渋谷区恵比寿南2-3-11</p>
+                  <p className="text-gray-400 text-sm">HALLEL恵比寿</p>
+                  <p className="text-gray-500 text-xs">東京都渋谷区恵比寿西2-11-9 プラネックスボルタ1階</p>
                 </div>
               </div>
               <div className="flex items-center">
