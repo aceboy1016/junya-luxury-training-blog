@@ -5,7 +5,7 @@ import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'JUNYA ISHIHARA PERSONAL TRAINING | 石原淳哉パーソナルトレーニング',
-  description: '変化を実感するから自然と続けたくなる。根本から改善するアプローチで、見た目も体調も確実に変化を実感。半蔵門・恵比寿のプレミアムパーソナルトレーニング。',
+  description: '変化を実感するから自然と続けたくなる。根本から改善するアプローチで、見た目も体調も確実に変化を実感。半蔵門・恵比寿のパーソナルトレーニング。',
 }
 
 /* ─── Hero ─── */
@@ -23,7 +23,7 @@ const HeroSection = () => (
     </div>
     <div className="container mx-auto px-6 text-center relative z-10 max-w-7xl">
       <div className="mb-8">
-        <p className="text-gold-400 text-xl tracking-widest uppercase font-bold mb-2 animate-fade-in-up">Premium Personal Training</p>
+        <p className="text-gold-400 text-xl tracking-widest uppercase font-bold mb-2 animate-fade-in-up">Personal Training & Conditioning</p>
         <div className="w-20 h-1 bg-gold-gradient mx-auto" />
       </div>
       <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight mb-8 animate-fade-in-up" style={{ animationDelay: '.3s', lineHeight: 1.1 }}>
@@ -63,8 +63,8 @@ const MethodologySection = () => (
     <div className="container mx-auto px-6">
       <div className="text-center mb-20">
         <p className="text-gold-500 font-bold tracking-widest uppercase mb-2">OUR METHOD</p>
-        <h2 className="text-5xl font-black text-black mb-4 tracking-wide">ELITE <span className="text-gradient">METHODOLOGY</span></h2>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto"><span className="text-gold-500 font-semibold">科学的根拠</span>と豊富な経験に基づいた独自のメソッドで、<span className="text-gold-500 font-semibold">確実な結果</span>と最高級の体験をお約束</p>
+        <h2 className="text-5xl font-black text-black mb-4 tracking-wide">LOGICAL <span className="text-gradient">METHODOLOGY</span></h2>
+        <p className="text-xl text-gray-600 max-w-3xl mx-auto"><span className="text-gold-500 font-semibold">科学的根拠</span>と豊富な経験に基づいた独自のメソッドで、<span className="text-gold-500 font-semibold">確かな変化</span>と充実した時間を提供</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
         {[
@@ -163,8 +163,8 @@ const ConceptSection = () => (
     </div>
     <div className="container mx-auto px-6 relative z-10">
       <div className="text-center mb-24">
-        <h2 className="text-4xl md:text-6xl font-black text-white mb-6">科学的メソッド <span className="text-gold-500 mx-2">×</span> 最高級サービス</h2>
-        <p className="text-xl text-gray-300 font-light tracking-widest">最新のスポーツ科学とプレミアムな体験を<span className="text-gold-400 font-bold">融合</span></p>
+        <h2 className="text-4xl md:text-6xl font-black text-white mb-6">科学的メソッド <span className="text-gold-500 mx-2">×</span> 洗練された空間</h2>
+        <p className="text-xl text-gray-300 font-light tracking-widest">最新のスポーツ科学と一人ひとりに寄り添う対応を<span className="text-gold-400 font-bold">研鑽</span></p>
         <div className="w-24 h-1 bg-gold-gradient mx-auto mt-8" />
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-32 max-w-6xl mx-auto relative">
@@ -181,7 +181,7 @@ const ConceptSection = () => (
           { icon: 'ri-flask-line', t: 'SCIENCE-BASED', s: '科学的根拠', d: '最新のスポーツ科学と栄養学に基づいた\n効果実証済みのメソッド', align: 'text-right lg:pr-16' },
           { icon: 'ri-user-settings-line', t: 'PERSONALIZED', s: '完全個別対応', d: '一人ひとりの体質・目標・ライフスタイルに\n完全カスタマイズ', align: 'text-left lg:pl-16' },
           { icon: 'ri-focus-3-line', t: 'HOLISTIC', s: '統合的アプローチ', d: '運動・栄養・回復・メンタルケアを統合した\n全体的なサポート', align: 'text-right lg:pr-16' },
-          { icon: 'ri-vip-crown-line', t: 'LUXURY', s: '最高級体験', d: '上質な環境とプレミアムサービスで\n最高のフィットネス体験を提供', align: 'text-left lg:pl-16' },
+          { icon: 'ri-vip-crown-line', t: 'HOSPITALITY', s: '上質な環境', d: '心地よい空間と細やかな配慮で\n理想の身体づくりをサポート', align: 'text-left lg:pl-16' },
         ].map(c => (
           <div key={c.t} className={`bg-white/5 backdrop-blur-md border border-white/10 p-8 rounded-2xl hover:bg-white/10 hover:border-gold-500/50 transition-all duration-500 group ${c.align} relative overflow-hidden`}>
             <div className={`text-gold-500 text-5xl mb-6 transform group-hover:scale-110 transition-transform duration-500 ${c.align.includes('right') ? 'flex justify-end' : ''}`}><i className={c.icon} /></div>
@@ -240,7 +240,7 @@ const LocationsSection = () => (
             <div className="bg-white shadow-xl p-8 border-t-8 border-gold-500 h-full flex flex-col">
               <div className="relative overflow-hidden mb-6">
                 <img src={loc.img} alt={loc.name} className="w-full h-48 object-cover" />
-                <div className="absolute top-4 left-4 bg-gold-gradient text-white px-3 py-1 text-sm font-bold uppercase tracking-wide">Premium Location</div>
+                <div className="absolute top-4 left-4 bg-gold-gradient text-white px-3 py-1 text-sm font-bold uppercase tracking-wide">Location Focus</div>
               </div>
               <h3 className="text-2xl font-bold text-black mb-4">{loc.name}</h3>
               <div className="space-y-3 text-gray-600 flex-grow">
@@ -264,9 +264,9 @@ const PricingSection = () => (
   <section id="pricing" className="py-20 bg-gray-100">
     <div className="container mx-auto px-6">
       <div className="text-center mb-16">
-        <p className="text-gold-500 font-bold tracking-widest uppercase mb-2">PREMIUM PROGRAMS</p>
-        <h2 className="text-6xl font-black text-black mb-4">CHOOSE YOUR <span className="text-gradient">LUXURY</span></h2>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto">あなたのライフスタイルに合わせた最高級のプログラム</p>
+        <p className="text-gold-500 font-bold tracking-widest uppercase mb-2">COURSE MENU</p>
+        <h2 className="text-6xl font-black text-black mb-4">CHOOSE YOUR <span className="text-gradient">COURSE</span></h2>
+        <p className="text-xl text-gray-600 max-w-3xl mx-auto">あなたのライフスタイルに寄り添った最適なプログラム</p>
       </div>
       <div className="mb-20">
         <h3 className="text-4xl font-bold text-center text-black mb-12">通常セッション</h3>
@@ -287,7 +287,7 @@ const PricingSection = () => (
       <div>
         <h3 className="text-4xl font-bold text-center text-black mb-12">出張セッション</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {[{ t: '60分', p: '¥18,000', d: 'ご指定の場所で質の高いトレーニングを手軽に。' }, { t: '90分', p: '¥26,250', d: '店舗と変わらないプレミアムなトレーニングをご自宅で。' }].map(p => (
+          {[{ t: '60分', p: '¥18,000', d: 'ご指定の場所で質の高いトレーニングを手軽に。' }, { t: '90分', p: '¥26,250', d: '店舗と変わらない本格的なトレーニングをご自宅で。' }].map(p => (
             <div key={p.t} className="bg-white shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 flex flex-col border-t-4 border-gold-500">
               <div className="p-8 text-center flex-grow">
                 <div className="mb-6"><i className="ri-roadster-line text-5xl text-gold-500" /></div>
@@ -358,7 +358,7 @@ const ProfileSection = () => (
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-24">
         <div className="lg:col-span-5 relative">
           <div className="relative rounded-2xl overflow-hidden shadow-2xl hover:scale-[1.02] transition-transform duration-500">
-            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80" alt="石原淳哉" className="w-full h-[500px] object-cover" />
+            <img src="/junya-profile.png" alt="石原淳哉" className="w-full h-[500px] object-cover" />
             <div className="absolute bottom-6 right-6 bg-white/95 backdrop-blur-md p-4 rounded-xl shadow-lg border-l-4 border-gold-500 max-w-[200px]">
               <div className="text-gold-600 font-black text-lg leading-tight mb-1">NASM-PES</div>
               <div className="text-gray-600 text-xs font-medium">Certified Personal Trainer</div>
