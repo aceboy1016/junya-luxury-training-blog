@@ -358,7 +358,7 @@ const ProfileSection = () => (
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-24">
         <div className="lg:col-span-5 relative">
           <div className="relative rounded-2xl overflow-hidden shadow-2xl hover:scale-[1.02] transition-transform duration-500">
-            <img src="/junya-profile.png" alt="石原淳哉" className="w-full h-[500px] object-cover" style={{ objectPosition: 'center 42%' }} />
+            <img src="/junya-profile.png" alt="石原淳哉" className="w-full h-[500px] object-cover" style={{ objectPosition: 'center 35%' }} />
             <div className="absolute bottom-6 right-6 bg-white/95 backdrop-blur-md p-4 rounded-xl shadow-lg border-l-4 border-gold-500 max-w-[200px]">
               <div className="text-gold-600 font-black text-lg leading-tight mb-1">NASM-PES</div>
               <div className="text-gray-600 text-xs font-medium">Certified Personal Trainer</div>
