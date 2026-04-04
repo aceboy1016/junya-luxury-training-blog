@@ -16,42 +16,44 @@ const Header = () => {
   }, [])
 
   const navigation = [
-    { name: 'HOME', href: '#home' },
-    { name: 'ABOUT', href: '#profile' },
-    { name: 'SERVICE', href: '#service-flow' },
-    { name: 'PRICE', href: '#pricing' },
+    { name: 'HOME', href: '/#home' },
+    { name: 'ABOUT', href: '/#profile' },
+    { name: 'SERVICE', href: '/#service-flow' },
+    { name: 'PRICE', href: '/#pricing' },
     { name: 'BLOG', href: '/blog' },
-    { name: 'CONTACT', href: '#contact' },
+    { name: 'CONTACT', href: '/#contact' },
   ]
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-          ? 'bg-white/95 backdrop-blur-xl shadow-lg py-3'
-          : 'bg-white/90 backdrop-blur-md py-5'
-        }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-1000 ${
+        isScrolled
+          ? 'bg-white/95 backdrop-blur-xl shadow-2xl py-4'
+          : 'bg-transparent py-8'
+      }`}
     >
-      <nav className="container mx-auto px-6">
+      <nav className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="logo flex items-center">
-            <Link href="/" className="no-underline group flex items-center gap-4">
-              {/* Geometric JI Icon - Navy Style */}
-              <div className="w-12 h-12 bg-navy-500 flex items-center justify-center relative overflow-hidden group-hover:bg-navy-600 transition-colors duration-500">
-                <div className="text-white font-black text-2xl tracking-tighter font-outfit relative z-10">JI</div>
-                <div className="absolute inset-x-0 bottom-0 h-0.5 bg-white group-hover:h-full transition-all duration-500 opacity-10"></div>
-              </div>
-              <div className="flex flex-col justify-center">
-                <h1 className="text-2xl font-black text-navy-500 tracking-[0.1em] leading-none font-outfit uppercase">
-                  J. ISHIHARA
-                </h1>
-                <div className="h-0.5 w-full bg-navy-500 mt-1.5 origin-left scale-x-50 group-hover:scale-x-100 transition-transform duration-500"></div>
-                <p className="text-[9px] text-zinc-400 tracking-[0.4em] uppercase font-black mt-1">
-                  Conditioning
-                </p>
-              </div>
-            </Link>
-          </div>
+          <Link href="/" className="group flex items-center space-x-4">
+            <div className={`w-12 h-12 flex items-center justify-center text-xl font-black font-outfit tracking-tighter transition-all duration-700 ${
+              isScrolled ? 'bg-navy-500 text-white' : 'bg-white text-navy-500 shadow-2xl'
+            }`}>
+              JI
+            </div>
+            <div className="flex flex-col">
+              <span className={`text-xl font-black font-outfit tracking-tighter uppercase transition-colors duration-700 ${
+                isScrolled ? 'text-navy-500' : 'text-white'
+              }`}>
+                JUNYA ISHIHARA
+              </span>
+              <span className={`text-[8px] font-black tracking-[0.4em] uppercase transition-colors duration-700 ${
+                isScrolled ? 'text-zinc-400' : 'text-white/50'
+              }`}>
+                Personal Training
+              </span>
+            </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-12">
@@ -59,62 +61,64 @@ const Header = () => {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-navy-500 font-bold tracking-widest hover:text-navy-400 transition-all duration-300 relative group uppercase text-[11px]"
+                className={`text-[10px] font-black tracking-[0.4em] uppercase transition-all duration-700 hover:scale-110 relative group ${
+                  isScrolled ? 'text-navy-500' : 'text-white'
+                }`}
               >
                 {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-navy-500 group-hover:w-full transition-all duration-500"></span>
+                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-navy-500 transition-all duration-700 group-hover:w-full" />
               </Link>
             ))}
 
             {/* CTA Button */}
             <Link
-              href="#contact"
-              className="btn-primary text-[11px] px-8 py-3.5"
+              href="/#contact"
+              className={`px-8 py-3 text-[10px] font-black tracking-[0.4em] uppercase transition-all duration-700 shadow-2xl ${
+                isScrolled 
+                  ? 'bg-navy-500 text-white hover:bg-zinc-950' 
+                  : 'bg-white text-navy-500 hover:bg-navy-500 hover:text-white'
+              }`}
             >
-              Contact
+              Experience Session
             </Link>
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden bg-navy-500 text-white p-3 hover:bg-navy-600 transition-all duration-300 rounded-sm"
+            className={`lg:hidden w-12 h-12 flex items-center justify-center text-2xl transition-all duration-700 ${
+              isScrolled ? 'text-navy-500' : 'text-white'
+            }`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="メニューを開く"
           >
-            <i className={`${isMenuOpen ? 'ri-close-line' : 'ri-menu-line'} text-xl`}></i>
+            <i className={isMenuOpen ? 'ri-close-line' : 'ri-menu-3-line'} />
           </button>
         </div>
 
         {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="lg:hidden mt-4 py-8 border-t border-zinc-100 bg-white shadow-2xl rounded-sm">
-            <ul className="flex flex-col space-y-6 px-6">
-              {navigation.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    href={item.href}
-                    className="text-navy-500 font-black uppercase text-lg hover:text-navy-400 transition-colors duration-300 block py-2 border-b border-zinc-50"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <div className="px-6 pt-8">
-              <Link
-                href="#contact"
-                className="block bg-navy-500 text-white px-6 py-4 font-black tracking-widest text-center uppercase transition-all duration-300 hover:bg-navy-600"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                体験予約
-              </Link>
-            </div>
-          </div>
-        )}
+        <div className={`fixed inset-0 bg-zinc-950 z-[-1] flex flex-col items-center justify-center space-y-12 transition-all duration-1000 ${
+          isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+        }`}>
+          {navigation.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className="text-white text-4xl font-black font-outfit tracking-tighter uppercase hover:text-navy-500 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {item.name}
+            </Link>
+          ))}
+          <Link
+            href="/#contact"
+            className="px-12 py-5 bg-navy-500 text-white text-[10px] font-black tracking-[0.4em] uppercase shadow-2xl"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Experience Session
+          </Link>
+        </div>
       </nav>
     </header>
   )
 }
 
-export default Header// force rebuild: Thu Apr  2 19:13:28 JST 2026
+export default Header

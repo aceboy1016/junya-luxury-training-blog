@@ -4,135 +4,113 @@ const Footer = () => {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-zinc-950 text-white">
-      {/* Main Footer */}
-      <div className="container mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          {/* Brand */}
-          <div className="lg:col-span-1">
-            <Link href="/" className="no-underline group flex items-center gap-4 mb-8">
-              {/* Geometric JI Icon - Navy Style */}
-              <div className="w-10 h-10 bg-navy-500 flex items-center justify-center relative overflow-hidden group-hover:bg-navy-600 transition-colors duration-500">
-                <div className="text-white font-black text-xl tracking-tighter font-outfit relative z-10">JI</div>
-                <div className="absolute inset-x-0 bottom-0 h-0.5 bg-white group-hover:h-full transition-all duration-500 opacity-10"></div>
+    <footer className="bg-zinc-950 text-white pt-40 pb-20 border-t border-white/5">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-24 mb-40">
+          
+          {/* Brand & Socials (Restored from Footer.tsx.org) */}
+          <div className="space-y-12">
+            <Link href="/" className="space-y-4 block group">
+              <div className="flex items-center space-x-4">
+                <div className="w-10 h-10 bg-navy-500 text-white flex items-center justify-center text-sm font-black font-outfit tracking-tighter">
+                  JI
+                </div>
+                <div className="text-3xl font-black font-outfit tracking-tighter uppercase group-hover:text-navy-400 transition-colors">
+                  JUNYA <br />ISHIHARA
+                </div>
               </div>
-              <div className="flex flex-col justify-center">
-                <h1 className="text-xl font-black text-white tracking-[0.1em] leading-none font-outfit uppercase group-hover:text-zinc-300 transition-colors">
-                  J. ISHIHARA
-                </h1>
-                <p className="text-[8px] text-zinc-500 tracking-[0.4em] uppercase font-black mt-1">
-                  Conditioning
-                </p>
-              </div>
+              <p className="text-[10px] font-black text-zinc-500 tracking-[0.4em] uppercase">
+                Premium Personal Training
+              </p>
             </Link>
-            <p className="text-zinc-400 text-xs leading-relaxed mb-8 font-medium">
-              科学的根拠に基づいたプロフェッショナルなアプローチで、
-              あなたのポテンシャルを最大限に引き出す洗練された環境を。
+            <p className="text-sm text-zinc-500 leading-loose font-medium max-w-sm">
+              科学的根拠に基づいたプロフェッショナルなパーソナルトレーニングで、 あなたの理想の身体づくりをサポートします。
             </p>
-            <div className="flex space-x-6">
+            <div className="flex space-x-8 pt-4">
               {[
                 { i: 'ri-instagram-line', h: '#' },
                 { i: 'ri-youtube-line', h: '#' },
-                { i: 'ri-line-fill', h: '#' },
-              ].map((social, idx) => (
-                <a key={idx} href={social.h} className="text-zinc-500 hover:text-white transition-colors duration-500 text-xl">
-                  <i className={social.i}></i>
+                { i: 'ri-line-line', h: '#' }
+              ].map(social => (
+                <a key={social.i} href={social.h} className="text-2xl text-zinc-600 hover:text-navy-400 transition-all duration-500">
+                  <i className={social.i} />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Sitemap (Restored from Footer.tsx.org) */}
           <div>
-            <h3 className="text-lg font-bold text-white mb-6 tracking-wider uppercase">サイトマップ</h3>
-            <ul className="space-y-3">
+            <h3 className="text-[10px] font-black text-white tracking-[0.5em] uppercase mb-12">Sitemap</h3>
+            <ul className="space-y-6">
               {[
-                { name: 'HOME', href: '/' },
-                { name: 'ABOUT', href: '#profile' },
-                { name: 'SERVICE', href: '#service-flow' },
-                { name: 'PRICE', href: '#pricing' },
-                { name: 'CONTACT', href: '#contact' },
-              ].map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-500 hover:text-navy-300 transition-colors duration-300 text-[10px] font-black tracking-widest flex items-center uppercase"
-                  >
-                    <i className="ri-arrow-right-s-line mr-2 text-navy-500/30"></i>
-                    {link.name}
+                { n: 'HOME', h: '/#home' },
+                { n: 'ABOUT', h: '/#profile' },
+                { n: 'SERVICE', h: '/#service-flow' },
+                { n: 'PRICE', h: '/#pricing' },
+                { n: 'CONTACT', h: '/#contact' }
+              ].map(link => (
+                <li key={link.h}>
+                  <Link href={link.h} className="text-[10px] font-black text-zinc-500 tracking-[0.3em] uppercase hover:text-white transition-colors flex items-center group">
+                    <span className="w-4 h-0.5 bg-navy-500 mr-4 opacity-0 group-hover:opacity-100 transition-all duration-500" />
+                    {link.n}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Blog */}
+          {/* Categories (Restored from Footer.tsx.org) */}
           <div>
-            <h3 className="text-lg font-bold text-white mb-6 tracking-wider uppercase">ブログ</h3>
-            <ul className="space-y-3">
+            <h3 className="text-[10px] font-black text-white tracking-[0.5em] uppercase mb-12">Resources</h3>
+            <ul className="space-y-6">
               {[
-                { name: 'ブログ一覧', href: '/blog' },
-                { name: 'トレーニング', href: '/blog/category/training' },
-                { name: '栄養・食事', href: '/blog/category/nutrition' },
-                { name: 'ライフスタイル', href: '/blog/category/lifestyle' },
-              ].map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-500 hover:text-navy-300 transition-colors duration-300 text-[10px] font-black tracking-widest flex items-center uppercase"
-                  >
-                    <i className="ri-arrow-right-s-line mr-2 text-navy-500/30"></i>
-                    {link.name}
+                { n: 'Journal List', h: '/blog' },
+                { n: 'Training Method', h: '/blog/category/training' },
+                { n: 'Performance Meal', h: '/blog/category/nutrition' },
+                { n: 'Mind & Lifestyle', h: '/blog/category/lifestyle' }
+              ].map(link => (
+                <li key={link.h}>
+                  <Link href={link.h} className="text-[10px] font-black text-zinc-500 tracking-[0.3em] uppercase hover:text-white transition-colors flex items-center group">
+                    <span className="w-4 h-0.5 bg-navy-500 mr-4 opacity-0 group-hover:opacity-100 transition-all duration-500" />
+                    {link.n}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Contact Info */}
+          {/* Locations (Restored from Footer.tsx.org) */}
           <div>
-            <h3 className="text-lg font-bold text-white mb-6 tracking-wider uppercase">お問い合わせ</h3>
-            <div className="space-y-4">
-              <div className="flex items-center">
-                <i className="ri-map-pin-line text-navy-500 mr-3 text-lg"></i>
-                <div>
-                  <p className="text-zinc-400 text-xs font-black tracking-widest mb-1">HALLEL HANZOMON</p>
-                  <p className="text-zinc-500 text-[10px]">東京都千代田区一番町7-1 一番町ビルヂング 3F</p>
-                </div>
+            <h3 className="text-[10px] font-black text-white tracking-[0.5em] uppercase mb-12">Contact</h3>
+            <div className="space-y-10">
+              <div className="space-y-3">
+                <p className="text-[10px] font-black text-navy-300 tracking-widest uppercase">HALLEL Hanzomon</p>
+                <p className="text-xs text-zinc-500 font-medium leading-relaxed">〒102-0082 東京都千代田区一番町10-8</p>
               </div>
-              <div className="flex items-center">
-                <i className="ri-map-pin-line text-navy-500 mr-3 text-lg"></i>
-                <div>
-                  <p className="text-zinc-400 text-xs font-black tracking-widest mb-1">HALLEL EBISU</p>
-                  <p className="text-zinc-500 text-[10px]">東京都渋谷区恵比寿西2-11-9 プラネックスボルタ1階</p>
-                </div>
+              <div className="space-y-3">
+                <p className="text-[10px] font-black text-navy-300 tracking-widest uppercase">HALLEL Ebisu</p>
+                <p className="text-xs text-zinc-500 font-medium leading-relaxed">〒150-0022 東京都渋谷区恵比寿南2-3-11</p>
               </div>
-              <div className="flex items-center">
-                <i className="ri-mail-send-line text-navy-500 mr-3 text-lg"></i>
-                <a
-                  href="mailto:junya1995@gmail.com"
-                  className="text-zinc-500 hover:text-navy-300 transition-colors duration-300 text-[10px] font-black"
-                >
+              <div className="pt-4">
+                <a href="mailto:junya1995@gmail.com" className="text-lg font-black text-white font-outfit hover:text-navy-400 transition-colors">
                   junya1995@gmail.com
                 </a>
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-gray-800">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-500 text-sm">
-              © {currentYear} JUNYA ISHIHARA PERSONAL TRAINING. All rights reserved.
-            </p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              <Link href="/privacy" className="text-zinc-500 hover:text-navy-300 transition-colors duration-300 text-[10px] font-black uppercase tracking-widest">
-                Privacy Policy
-              </Link>
-            </div>
+        </div>
+
+        {/* Bottom Bar (Restored from Footer.tsx.org + Added Privacy Policy) */}
+        <div className="border-t border-white/5 pt-12 flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0">
+          <p className="text-[10px] font-black text-zinc-700 tracking-[0.3em] uppercase">
+            © {currentYear} JUNYA ISHIHARA PERSONAL TRAINING.
+          </p>
+          <div className="flex space-x-12">
+            <Link href="/privacy" className="text-[10px] font-black text-zinc-700 tracking-[0.3em] uppercase hover:text-white transition-colors">
+              Privacy Policy
+            </Link>
           </div>
         </div>
       </div>
