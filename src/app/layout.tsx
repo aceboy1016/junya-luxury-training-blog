@@ -10,6 +10,21 @@ const inter = Inter({
   variable: '--font-inter'
 })
 
+import { Outfit, Cormorant_Garamond } from 'next/font/google'
+const outfit = Outfit({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-outfit'
+})
+
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  style: ['italic'],
+  display: 'swap',
+  variable: '--font-serif'
+})
+
 export const metadata: Metadata = {
   title: {
     default: 'JUNYA ISHIHARA PERSONAL TRAINING',
@@ -93,7 +108,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="ja" className={`${inter.variable}`}>
+    <html lang="ja" className={`${inter.variable} ${outfit.variable} ${cormorant.variable}`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

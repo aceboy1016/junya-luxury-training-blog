@@ -20,8 +20,8 @@ interface TagCloudProps {
 const TagCloud = ({ 
   className = '', 
   maxTags = 20, 
-  minFontSize = 12, 
-  maxFontSize = 24 
+  minFontSize = 10, 
+  maxFontSize = 18 
 }: TagCloudProps) => {
   const [tags, setTags] = useState<TagWithCount[]>([])
   const [loading, setLoading] = useState(true)
@@ -65,33 +65,17 @@ const TagCloud = ({
     fetchTags()
   }, [maxTags])
 
-  const getFontSize = (count: number, maxCount: number, minCount: number) => {
-    if (maxCount === minCount) return minFontSize
-    
-    const ratio = (count - minCount) / (maxCount - minCount)
-    return minFontSize + (maxFontSize - minFontSize) * ratio
-  }
-
-  const getOpacity = (count: number, maxCount: number, minCount: number) => {
-    if (maxCount === minCount) return 0.8
-    
-    const ratio = (count - minCount) / (maxCount - minCount)
-    return 0.5 + 0.5 * ratio
-  }
-
   if (loading) {
     return (
       <div className={`${className}`}>
-        <div className="animate-pulse space-y-2">
-          <div className="flex flex-wrap gap-2">
-            {[...Array(8)].map((_, i) => (
-              <div
-                key={i}
-                className="h-6 bg-gray-200 rounded-full"
-                style={{ width: `${Math.random() * 60 + 40}px` }}
-              />
-            ))}
-          </div>
+        <div className="animate-pulse flex flex-wrap gap-3">
+          {[...Array(12)].map((_, i) => (
+            <div
+              key={i}
+              className="h-8 bg-zinc-50 border border-zinc-100"
+              style={{ width: `${Math.random() * 80 + 60}px` }}
+            />
+          ))}
         </div>
       </div>
     )
@@ -105,28 +89,30 @@ const TagCloud = ({
   const minCount = Math.min(...tags.map(t => t.count))
 
   return (
-    <div className={`${className}`}>
-      <h3 className="text-lg font-bold text-junya-text mb-4">タグ</h3>
-      <div className="flex flex-wrap gap-2 items-center">
+    <div className={`bg-white border border-zinc-100 p-10 ${className}`}>
+      <div className="flex items-center space-x-3 mb-10">
+        <span className="w-8 h-8 bg-navy-500 flex items-center justify-center text-white text-[10px] font-black font-outfit uppercase tracking-tighter">CLD</span>
+        <h3 className="text-sm font-black text-navy-500 tracking-[0.2em] uppercase font-outfit">Cloud</h3>
+      </div>
+      <div className="flex flex-wrap gap-4 items-center">
         {tags.map(({ tag, count }) => {
-          const fontSize = getFontSize(count, maxCount, minCount)
-          const opacity = getOpacity(count, maxCount, minCount)
+          const ratio = (count - minCount) / (maxCount - minCount || 1)
+          const fontSize = minFontSize + (maxFontSize - minFontSize) * ratio
           
           return (
             <Link
               key={tag}
               href={`/blog/search?q=${encodeURIComponent(tag)}`}
               onClick={() => trackCategoryClick(`tag:${tag}`)}
-              className="inline-block px-3 py-1 bg-junya-orange/10 text-junya-orange hover:bg-junya-orange hover:text-white rounded-full transition-all duration-200 hover:scale-105"
+              className="inline-flex items-center px-4 py-2 border border-zinc-100 bg-zinc-50 text-navy-400 hover:border-navy-500 hover:text-navy-500 transition-all duration-500 font-bold uppercase tracking-widest shadow-sm hover:shadow-xl hover:-translate-y-1"
               style={{
                 fontSize: `${fontSize}px`,
-                opacity: opacity,
-                fontWeight: count > maxCount * 0.7 ? 'bold' : 'medium'
               }}
-              title={`${tag} (${count}記事)`}
+              title={`${tag} (${count} posts)`}
             >
-              #{tag}
-              <span className="ml-1 text-xs opacity-75">({count})</span>
+              <span className="mr-1 opacity-30 text-[0.8em]">#</span>
+              {tag}
+              <span className="ml-2 text-[8px] opacity-40 font-outfit">[{count}]</span>
             </Link>
           )
         })}

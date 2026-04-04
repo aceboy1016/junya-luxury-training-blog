@@ -54,7 +54,7 @@ const CookieConsent = () => {
               詳しくは
               <a 
                 href="/privacy" 
-                className="text-junya-gold hover:underline mx-1"
+                className="text-navy-500 hover:text-navy-400 underline underline-offset-4 mx-1 transition-colors"
               >
                 プライバシーポリシー
               </a>
@@ -65,13 +65,13 @@ const CookieConsent = () => {
           <div className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
             <button
               onClick={declineCookies}
-              className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200"
+              className="px-6 py-3 text-[10px] font-black text-zinc-500 bg-zinc-100 hover:bg-zinc-200 transition-all duration-300 uppercase tracking-widest"
             >
               必要最小限のみ
             </button>
             <button
               onClick={acceptCookies}
-              className="px-6 py-2 text-sm font-medium text-white bg-junya-gold hover:bg-junya-gold-dark rounded-lg transition-colors duration-200"
+              className="px-8 py-3 text-[10px] font-black text-white bg-navy-500 hover:bg-navy-600 transition-all duration-300 uppercase tracking-widest"
             >
               すべて同意する
             </button>

@@ -1,12 +1,12 @@
 interface LoadingSpinnerProps {
   size?: 'sm' | 'md' | 'lg'
-  color?: 'orange' | 'gray' | 'white'
+  color?: 'navy' | 'gray' | 'white'
   text?: string
 }
 
 const LoadingSpinner = ({ 
   size = 'md', 
-  color = 'orange',
+  color = 'navy',
   text 
 }: LoadingSpinnerProps) => {
   const sizeClasses = {
@@ -16,19 +16,25 @@ const LoadingSpinner = ({
   }
 
   const colorClasses = {
-    orange: 'border-junya-orange',
-    gray: 'border-junya-gray',
+    navy: 'border-navy-500',
+    gray: 'border-zinc-300',
     white: 'border-white'
   }
 
   const textSizeClasses = {
-    sm: 'text-sm',
-    md: 'text-base',
-    lg: 'text-lg'
+    sm: 'text-[8px]',
+    md: 'text-[10px]',
+    lg: 'text-xs'
+  }
+
+  const colorHex = {
+    navy: '#262636',
+    gray: '#D4D4D8',
+    white: '#ffffff'
   }
 
   return (
-    <div className="flex flex-col items-center justify-center space-y-2">
+    <div className="flex flex-col items-center justify-center space-y-4">
       <div 
         className={`
           ${sizeClasses[size]} 
@@ -40,13 +46,13 @@ const LoadingSpinner = ({
         `}
         style={{
           borderTopColor: 'transparent',
-          borderRightColor: color === 'orange' ? '#E49B3F' : color === 'gray' ? '#666666' : '#ffffff',
-          borderBottomColor: color === 'orange' ? '#E49B3F' : color === 'gray' ? '#666666' : '#ffffff',
-          borderLeftColor: color === 'orange' ? '#E49B3F' : color === 'gray' ? '#666666' : '#ffffff',
+          borderRightColor: colorHex[color],
+          borderBottomColor: colorHex[color],
+          borderLeftColor: colorHex[color],
         }}
       />
       {text && (
-        <p className={`text-junya-gray ${textSizeClasses[size]} animate-pulse`}>
+        <p className={`text-navy-300 font-black tracking-[0.3em] uppercase ${textSizeClasses[size]} animate-pulse`}>
           {text}
         </p>
       )}

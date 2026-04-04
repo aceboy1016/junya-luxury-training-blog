@@ -60,10 +60,10 @@ const ArticleTags = ({ content, title, existingTags = [], className = '' }: Arti
 
   if (isLoading) {
     return (
-      <div className={`py-8 border-t border-junya-border ${className}`}>
-        <div className="flex items-center space-x-2 text-junya-gray">
-          <div className="w-4 h-4 border-2 border-junya-gold border-t-transparent rounded-full animate-spin"></div>
-          <span className="text-sm">関連タグを生成中...</span>
+      <div className={`py-12 border-t border-zinc-100 ${className}`}>
+        <div className="flex items-center space-x-3 text-navy-300 mb-6">
+          <div className="w-4 h-4 border-2 border-navy-500 border-t-transparent rounded-full animate-spin"></div>
+          <span className="text-[10px] font-black tracking-[0.2em] uppercase">Analyzing Expertise...</span>
         </div>
       </div>
     )
@@ -74,36 +74,31 @@ const ArticleTags = ({ content, title, existingTags = [], className = '' }: Arti
   }
 
   return (
-    <div className={`py-8 border-t border-junya-border ${className}`}>
-      <div className="flex items-center space-x-2 mb-4">
-        <span className="text-2xl">🏷️</span>
-        <h3 className="text-lg font-semibold text-junya-text">関連タグ</h3>
+    <div className={`py-16 border-t border-zinc-100 ${className}`}>
+      <div className="flex items-center space-x-4 mb-10">
+        <span className="w-10 h-10 bg-navy-500 flex items-center justify-center text-white text-sm font-outfit uppercase">TAG</span>
+        <h3 className="text-xl font-black text-navy-500 tracking-tighter uppercase font-outfit">Related Assets</h3>
       </div>
       
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-4">
         {allTags.map((tag, index) => (
           <span
             key={index}
-            className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 ${
+            className={`inline-flex items-center px-6 py-2 text-[10px] font-black tracking-widest uppercase transition-all duration-500 ${
               existingTags.includes(tag)
-                ? 'bg-junya-gold text-white shadow-lg'
-                : 'bg-gradient-to-r from-orange-100 to-amber-100 text-junya-text border border-junya-border hover:shadow-md'
+                ? 'bg-navy-500 text-white shadow-xl scale-105'
+                : 'bg-zinc-50 text-navy-400 border border-zinc-100 hover:border-navy-500'
             }`}
           >
-            <span className="mr-1">#</span>
+            <span className="mr-1 opacity-40">#</span>
             {tag}
-            {!existingTags.includes(tag) && (
-              <span className="ml-2 text-xs bg-white bg-opacity-30 px-1 rounded">
-                AI
-              </span>
-            )}
           </span>
         ))}
       </div>
       
       {autoTags.length > 0 && (
-        <p className="text-xs text-junya-gray mt-3 italic">
-          ※ AIタグは記事内容を分析して自動生成されました
+        <p className="text-[8px] text-zinc-400 font-bold tracking-widest uppercase mt-8 italic ml-1">
+          ※ Smart Analysis generated professional tags based on article content
         </p>
       )}
     </div>

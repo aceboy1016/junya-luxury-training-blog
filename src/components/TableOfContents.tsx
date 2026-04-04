@@ -44,7 +44,7 @@ const TableOfContents = ({ className = '' }: TableOfContentsProps) => {
       
       let current = ''
       for (const heading of headings) {
-        if (heading && heading.offsetTop <= window.scrollY + 100) {
+        if (heading && heading.offsetTop <= window.scrollY + 120) {
           current = heading.id
         }
       }
@@ -61,9 +61,15 @@ const TableOfContents = ({ className = '' }: TableOfContentsProps) => {
   const scrollToHeading = (id: string) => {
     const element = document.getElementById(id)
     if (element) {
-      element.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
+      const offset = 100
+      const bodyRect = document.body.getBoundingClientRect().top
+      const elementRect = element.getBoundingClientRect().top
+      const elementPosition = elementRect - bodyRect
+      const offsetPosition = elementPosition - offset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
       })
     }
   }
@@ -71,26 +77,24 @@ const TableOfContents = ({ className = '' }: TableOfContentsProps) => {
   if (tocItems.length === 0) return null
 
   return (
-    <nav className={`card p-6 sticky top-24 ${className}`}>
-      <h3 className="text-lg font-semibold text-junya-text mb-4 flex items-center">
-        <svg className="w-5 h-5 text-junya-orange mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-        </svg>
-        目次
-      </h3>
-      <ul className="space-y-2">
+    <nav className={`bg-white border border-zinc-100 p-8 sticky top-24 ${className}`}>
+      <div className="flex items-center space-x-3 mb-8">
+        <span className="w-8 h-8 bg-navy-500 flex items-center justify-center text-white text-[10px] font-black font-outfit uppercase tracking-tighter">TOC</span>
+        <h3 className="text-sm font-black text-navy-500 tracking-[0.2em] uppercase font-outfit">Contents</h3>
+      </div>
+      <ul className="space-y-4">
         {tocItems.map((item) => (
           <li key={item.id}>
             <button
               onClick={() => scrollToHeading(item.id)}
               className={`
-                block w-full text-left text-sm transition-colors duration-200 hover:text-junya-orange
-                ${item.level === 2 ? 'font-medium' : ''}
+                block w-full text-left text-[11px] leading-relaxed transition-all duration-300 uppercase tracking-widest
+                ${item.level === 2 ? 'font-black' : 'font-medium'}
                 ${item.level === 3 ? 'pl-4' : ''}
                 ${item.level === 4 ? 'pl-8' : ''}
                 ${activeId === item.id 
-                  ? 'text-junya-orange font-medium border-l-2 border-junya-orange pl-3' 
-                  : 'text-junya-gray'
+                  ? 'text-navy-500 border-l-2 border-navy-500 pl-3' 
+                  : 'text-zinc-400 hover:text-navy-300 hover:translate-x-1'
                 }
               `}
             >

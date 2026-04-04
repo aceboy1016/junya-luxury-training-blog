@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { PortableText } from '@portabletext/react'
 
 interface AutoTagGeneratorProps {
   content: any // Portable Text content
@@ -57,43 +56,51 @@ const AutoTagGenerator = ({ content, title, onTagsGenerated, className = '' }: A
   }
 
   return (
-    <div className={`border border-junya-border rounded-junya-lg p-6 bg-junya-light ${className}`}>
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-junya-text">🏷️ 自動タグ生成</h3>
+    <div className={`bg-white border border-zinc-100 p-10 ${className}`}>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-8">
+        <div>
+          <div className="flex items-center space-x-3 mb-2">
+            <span className="w-8 h-8 bg-navy-500 flex items-center justify-center text-white text-[10px] font-black font-outfit uppercase tracking-tighter">AI</span>
+            <h3 className="text-xl font-black text-navy-500 tracking-tighter uppercase font-outfit">Tag Engine</h3>
+          </div>
+          <p className="text-[10px] text-zinc-400 font-bold tracking-[0.2em] uppercase">
+            記事の内容を分析して、最適なタグを自動生成します。
+          </p>
+        </div>
         <button
           onClick={generateTags}
           disabled={isGenerating}
-          className={`px-4 py-2 rounded-junya font-medium transition-all duration-300 ${
+          className={`flex items-center px-8 py-4 text-[10px] font-black tracking-widest uppercase transition-all duration-500 ${
             isGenerating
-              ? 'bg-junya-gray text-white cursor-not-allowed'
-              : 'bg-junya-gold text-white hover:bg-junya-gold-dark'
+              ? 'bg-zinc-100 text-zinc-400 cursor-not-allowed'
+              : 'bg-navy-500 text-white hover:bg-navy-600 shadow-xl'
           }`}
         >
           {isGenerating ? (
-            <div className="flex items-center space-x-2">
-              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-              <span>生成中...</span>
+            <div className="flex items-center space-x-3">
+              <div className="w-4 h-4 border-2 border-zinc-400 border-t-transparent rounded-full animate-spin"></div>
+              <span>Generating...</span>
             </div>
           ) : (
-            'タグを生成'
+            <>
+              <i className="ri-magic-line mr-3 text-lg" />
+              Generate Assets
+            </>
           )}
         </button>
       </div>
 
-      <p className="text-sm text-junya-gray mb-4">
-        記事の内容を分析して、関連するタグを自動生成します。
-      </p>
-
       {generatedTags.length > 0 && (
-        <div>
-          <h4 className="text-sm font-medium text-junya-text mb-3">生成されたタグ:</h4>
-          <div className="flex flex-wrap gap-2">
+        <div className="pt-8 border-t border-zinc-50">
+          <h4 className="text-[10px] font-black text-zinc-400 tracking-[0.3em] uppercase mb-6">Generated Assets:</h4>
+          <div className="flex flex-wrap gap-3">
             {generatedTags.map((tag, index) => (
               <span
                 key={index}
-                className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-junya-gold text-white shadow-sm"
+                className="inline-flex items-center px-6 py-2 text-[10px] font-black tracking-widest uppercase bg-zinc-50 text-navy-400 border border-zinc-100"
               >
-                #{tag}
+                <span className="mr-1 opacity-50">#</span>
+                {tag}
               </span>
             ))}
           </div>

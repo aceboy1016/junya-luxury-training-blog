@@ -15,8 +15,8 @@ const YouTubeEmbed = ({ url, title }: { url: string; title: string }) => {
   if (!videoId) return null
 
   return (
-    <div className="my-8">
-      <div className="aspect-video relative rounded-junya overflow-hidden shadow-junya-card">
+    <div className="my-16">
+      <div className="aspect-video relative overflow-hidden shadow-2xl border border-zinc-100">
         <iframe
           src={`https://www.youtube.com/embed/${videoId}`}
           title={title}
@@ -26,7 +26,7 @@ const YouTubeEmbed = ({ url, title }: { url: string; title: string }) => {
         />
       </div>
       {title && (
-        <p className="text-sm text-junya-gray text-center mt-2 italic">
+        <p className="text-[10px] font-black text-zinc-400 text-center mt-4 uppercase tracking-[0.3em]">
           {title}
         </p>
       )}
@@ -34,61 +34,61 @@ const YouTubeEmbed = ({ url, title }: { url: string; title: string }) => {
   )
 }
 
-// コールアウトコンポーネント
+// コールアウトコンポーネント - Professional Navy Style
 const Callout = ({ type, title, content }: { type: string; title?: string; content: string }) => {
   const typeStyles = {
     tip: {
-      icon: '💡',
-      bgColor: 'bg-blue-50',
-      borderColor: 'border-blue-200',
-      textColor: 'text-blue-800',
-      iconBg: 'bg-blue-100'
+      icon: 'ri-lightbulb-line',
+      bgColor: 'bg-zinc-50',
+      borderColor: 'border-navy-500',
+      textColor: 'text-navy-500',
+      iconColor: 'text-navy-500'
     },
     warning: {
-      icon: '⚠️',
-      bgColor: 'bg-yellow-50',
-      borderColor: 'border-yellow-200', 
-      textColor: 'text-yellow-800',
-      iconBg: 'bg-yellow-100'
+      icon: 'ri-error-warning-line',
+      bgColor: 'bg-zinc-50',
+      borderColor: 'border-zinc-300', 
+      textColor: 'text-zinc-600',
+      iconColor: 'text-zinc-400'
     },
     danger: {
-      icon: '❌',
-      bgColor: 'bg-red-50',
-      borderColor: 'border-red-200',
-      textColor: 'text-red-800',
-      iconBg: 'bg-red-100'
+      icon: 'ri-close-circle-line',
+      bgColor: 'bg-zinc-900',
+      borderColor: 'border-white/10',
+      textColor: 'text-white/80',
+      iconColor: 'text-white'
     },
     info: {
-      icon: 'ℹ️',
-      bgColor: 'bg-gray-50',
-      borderColor: 'border-gray-200',
-      textColor: 'text-gray-800',
-      iconBg: 'bg-gray-100'
+      icon: 'ri-information-line',
+      bgColor: 'bg-zinc-100',
+      borderColor: 'border-zinc-200',
+      textColor: 'text-navy-400',
+      iconColor: 'text-navy-300'
     },
     success: {
-      icon: '✅',
-      bgColor: 'bg-green-50',
-      borderColor: 'border-green-200',
+      icon: 'ri-checkbox-circle-line',
+      bgColor: 'bg-zinc-50',
+      borderColor: 'border-green-500',
       textColor: 'text-green-800',
-      iconBg: 'bg-green-100'
+      iconColor: 'text-green-500'
     }
   }
 
   const style = typeStyles[type as keyof typeof typeStyles] || typeStyles.info
 
   return (
-    <div className={`my-6 p-4 rounded-junya border-l-4 ${style.bgColor} ${style.borderColor}`}>
-      <div className="flex items-start space-x-3">
-        <div className={`flex-shrink-0 w-8 h-8 rounded-full ${style.iconBg} flex items-center justify-center text-sm`}>
-          {style.icon}
+    <div className={`my-12 p-10 border-l-4 ${style.bgColor} ${style.borderColor}`}>
+      <div className="flex items-start space-x-6">
+        <div className={`flex-shrink-0 text-2xl ${style.iconColor}`}>
+          <i className={style.icon} />
         </div>
         <div className="flex-1">
           {title && (
-            <h4 className={`font-semibold ${style.textColor} mb-2`}>
+            <h4 className={`text-sm font-black uppercase tracking-widest ${style.textColor} mb-4 font-outfit`}>
               {title}
             </h4>
           )}
-          <p className={`${style.textColor} leading-relaxed`}>
+          <p className={`text-sm leading-loose ${style.textColor} font-medium`}>
             {content}
           </p>
         </div>
@@ -104,19 +104,19 @@ const components = {
       if (!value?.asset?._ref) return null
 
       return (
-        <div className="my-8">
-          <div className="relative rounded-junya overflow-hidden shadow-junya-card">
+        <div className="my-16">
+          <div className="relative overflow-hidden shadow-2xl grayscale group hover:grayscale-0 transition-all duration-1000 border border-zinc-100">
             <Image
-              src={urlFor(value).width(800).quality(90).url()}
+              src={urlFor(value).width(1200).quality(100).url()}
               alt={value.alt || ''}
-              width={800}
-              height={450}
-              className="w-full h-auto"
-              sizes="(max-width: 768px) 100vw, 800px"
+              width={1200}
+              height={675}
+              className="w-full h-auto transition-transform duration-1000 hover:scale-105"
+              sizes="(max-width: 768px) 100vw, 1200px"
             />
           </div>
           {value.caption && (
-            <p className="text-sm text-junya-gray text-center mt-2 italic">
+            <p className="text-[10px] font-black text-zinc-400 text-center mt-6 uppercase tracking-[0.4em] italic prose-none">
               {value.caption}
             </p>
           )}
@@ -144,7 +144,7 @@ const components = {
           href={value?.href}
           target={target}
           rel={rel}
-          className="text-junya-orange hover:text-junya-text underline transition-colors duration-300"
+          className="text-navy-500 hover:text-navy-300 underline underline-offset-8 decoration-1 transition-all duration-500 font-bold"
         >
           {children}
         </a>
@@ -157,71 +157,71 @@ const components = {
       return (
         <Link 
           href={`/blog/${slug}`}
-          className="text-junya-orange hover:text-junya-text underline transition-colors duration-300"
+          className="text-navy-500 hover:text-navy-300 underline underline-offset-8 decoration-1 transition-all duration-500 font-bold"
         >
           {children}
         </Link>
       )
     },
     highlight: ({ children }: any) => (
-      <mark className="bg-junya-orange text-white px-1 py-0.5 rounded">
+      <mark className="bg-navy-500 text-white px-2 py-0.5 uppercase font-black tracking-widest text-[0.8em]">
         {children}
       </mark>
     ),
   },
   block: {
     h1: ({ children }: any) => (
-      <h1 className="text-3xl md:text-4xl font-bold text-junya-text mt-8 mb-4 leading-tight">
+      <h1 className="text-4xl md:text-5xl font-black text-navy-500 mt-24 mb-10 leading-none tracking-tighter uppercase font-outfit">
         {children}
       </h1>
     ),
     h2: ({ children }: any) => (
-      <h2 className="text-2xl md:text-3xl font-semibold text-junya-text mt-8 mb-4 pb-2 border-b-2 border-junya-orange">
+      <h2 className="text-3xl md:text-4xl font-black text-navy-500 mt-24 mb-8 pb-6 border-b border-zinc-100 leading-none tracking-tighter uppercase font-outfit">
         {children}
       </h2>
     ),
     h3: ({ children }: any) => (
-      <h3 className="text-xl md:text-2xl font-semibold text-junya-text mt-6 mb-3">
+      <h3 className="text-2xl md:text-3xl font-black text-navy-500 mt-16 mb-6 leading-none tracking-tighter uppercase font-outfit">
         {children}
       </h3>
     ),
     h4: ({ children }: any) => (
-      <h4 className="text-lg md:text-xl font-semibold text-junya-text mt-6 mb-3">
+      <h4 className="text-xl md:text-2xl font-black text-navy-500 mt-12 mb-4 leading-none tracking-tighter uppercase font-outfit">
         {children}
       </h4>
     ),
     blockquote: ({ children }: any) => (
-      <blockquote className="border-l-4 border-junya-orange bg-junya-light p-4 my-6 italic text-junya-text rounded-r-junya">
+      <blockquote className="border-l-4 border-navy-500 bg-zinc-50 p-10 my-16 italic text-navy-500 text-xl font-medium leading-relaxed font-outfit">
         {children}
       </blockquote>
     ),
     normal: ({ children }: any) => (
-      <p className="text-junya-text leading-relaxed mb-4">
+      <p className="text-zinc-600 leading-loose mb-10 text-lg font-medium">
         {children}
       </p>
     ),
   },
   list: {
     bullet: ({ children }: any) => (
-      <ul className="list-disc list-inside space-y-2 mb-4 text-junya-text">
+      <ul className="list-none space-y-6 mb-12 text-zinc-600">
         {children}
       </ul>
     ),
     number: ({ children }: any) => (
-      <ol className="list-decimal list-inside space-y-2 mb-4 text-junya-text">
+      <ol className="list-decimal list-inside space-y-6 mb-12 text-zinc-600 font-outfit">
         {children}
       </ol>
     ),
   },
   listItem: {
     bullet: ({ children }: any) => (
-      <li className="ml-4">
-        <span className="text-junya-orange font-bold mr-2">•</span>
-        {children}
+      <li className="flex items-start space-x-4">
+        <span className="w-1.5 h-1.5 bg-navy-500 mt-3 flex-shrink-0" />
+        <span className="flex-1 text-lg leading-relaxed">{children}</span>
       </li>
     ),
     number: ({ children }: any) => (
-      <li className="ml-4">{children}</li>
+      <li className="text-lg leading-relaxed">{children}</li>
     ),
   },
 }
@@ -233,7 +233,7 @@ interface PortableTextProps {
 
 const PortableText = ({ value, className = '' }: PortableTextProps) => {
   return (
-    <div className={`prose prose-lg max-w-none ${className}`}>
+    <div className={`prose prose-zinc prose-lg max-w-none ${className}`}>
       <SanityPortableText value={value} components={components} />
     </div>
   )

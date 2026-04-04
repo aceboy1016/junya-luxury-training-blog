@@ -68,201 +68,182 @@ const SEOAnalysis = ({ content, title, existingTags = [], className = '' }: SEOA
   }
 
   const getScoreColor = (score: number) => {
-    if (score >= 80) return 'text-green-600 bg-green-100'
-    if (score >= 60) return 'text-yellow-600 bg-yellow-100'
-    return 'text-red-600 bg-red-100'
+    if (score >= 80) return 'text-white bg-green-500'
+    if (score >= 60) return 'text-white bg-navy-300'
+    return 'text-white bg-zinc-400'
   }
 
   const getScoreLabel = (score: number) => {
-    if (score >= 80) return '優秀'
-    if (score >= 60) return '良好'
-    if (score >= 40) return '要改善'
-    return '要大幅改善'
+    if (score >= 80) return 'EXCELLENT'
+    if (score >= 60) return 'GOOD'
+    if (score >= 40) return 'NEED WORK'
+    return 'CRITICAL'
   }
 
   return (
-    <div className={`border border-junya-border rounded-junya-xl bg-white shadow-junya-card ${className}`}>
-      <div className="p-6 border-b border-junya-border">
-        <div className="flex items-center justify-between">
-          <div>
-            <h3 className="text-xl font-bold text-junya-text mb-2">
-              🔍 SEO分析・最適化
-            </h3>
-            <p className="text-junya-gray text-sm">
-              記事のSEOパフォーマンスを分析し、改善提案を提供します
-            </p>
+    <div className={`bg-white border border-zinc-200 shadow-2xl ${className}`}>
+      <div className="p-10 border-b border-zinc-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
+        <div>
+          <div className="flex items-center space-x-3 mb-3">
+            <span className="w-10 h-10 bg-navy-500 flex items-center justify-center text-white text-[10px] font-black font-outfit uppercase tracking-tighter">SEO</span>
+            <h3 className="text-2xl font-black text-navy-500 tracking-tighter uppercase font-outfit">Optimization</h3>
           </div>
-          <button
-            onClick={performSEOAnalysis}
-            disabled={isAnalyzing}
-            className={`px-6 py-3 rounded-junya font-medium transition-all duration-300 ${
-              isAnalyzing
-                ? 'bg-junya-gray text-white cursor-not-allowed'
-                : 'bg-junya-gold text-white hover:bg-junya-gold-dark shadow-lg hover:shadow-xl'
-            }`}
-          >
-            {isAnalyzing ? (
-              <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                <span>分析中...</span>
-              </div>
-            ) : (
-              <div className="flex items-center space-x-2">
-                <span>🚀</span>
-                <span>SEO分析実行</span>
-              </div>
-            )}
-          </button>
+          <p className="text-[10px] text-zinc-400 font-bold tracking-[0.3em] uppercase">
+            アルゴリズムに基づき、記事のパフォーマンスを分析します
+          </p>
         </div>
+        <button
+          onClick={performSEOAnalysis}
+          disabled={isAnalyzing}
+          className={`flex items-center px-10 py-5 text-[10px] font-black tracking-[0.4em] uppercase transition-all duration-500 ${
+            isAnalyzing
+              ? 'bg-zinc-100 text-zinc-400 cursor-not-allowed'
+              : 'bg-navy-500 text-white hover:bg-navy-600 shadow-2xl'
+          }`}
+        >
+          {isAnalyzing ? (
+            <div className="flex items-center space-x-3">
+              <div className="w-4 h-4 border-2 border-zinc-400 border-t-transparent rounded-full animate-spin"></div>
+              <span>Analyzing...</span>
+            </div>
+          ) : (
+            <>
+              <i className="ri-rocket-2-line mr-3 text-lg" />
+              Analyze Post
+            </>
+          )}
+        </button>
       </div>
 
       {seoResult && (
         <div>
           {/* タブナビゲーション */}
-          <div className="flex border-b border-junya-border">
+          <div className="flex border-b border-zinc-100 bg-zinc-50">
             {[
-              { key: 'overview', label: '📊 概要', icon: '📊' },
-              { key: 'keywords', label: '🏷️ キーワード', icon: '🏷️' },
-              { key: 'suggestions', label: '💡 提案', icon: '💡' },
-              { key: 'technical', label: '⚙️ 技術的', icon: '⚙️' }
+              { key: 'overview', label: 'Overview', icon: 'ri-dashboard-line' },
+              { key: 'keywords', label: 'Keywords', icon: 'ri-key-2-line' },
+              { key: 'suggestions', label: 'Insight', icon: 'ri-lightbulb-line' },
+              { key: 'technical', label: 'Technical', icon: 'ri-settings-3-line' }
             ].map(tab => (
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key as any)}
-                className={`flex-1 py-3 px-4 text-sm font-medium transition-all duration-300 ${
+                className={`flex-1 py-5 px-6 text-[10px] font-black tracking-widest uppercase transition-all duration-500 flex items-center justify-center ${
                   activeTab === tab.key
-                    ? 'bg-junya-gold text-white border-b-2 border-junya-gold'
-                    : 'text-junya-gray hover:text-junya-text hover:bg-junya-light'
+                    ? 'bg-white text-navy-500 border-b-2 border-navy-500'
+                    : 'text-zinc-400 hover:text-navy-300 hover:bg-white'
                 }`}
               >
-                <span className="mr-2">{tab.icon}</span>
+                <i className={`${tab.icon} mr-3 text-sm`} />
                 {tab.label}
               </button>
             ))}
           </div>
 
-          <div className="p-6">
+          <div className="p-10">
             {/* 概要タブ */}
             {activeTab === 'overview' && (
-              <div className="space-y-6">
-                {/* SEOスコア */}
+              <div className="space-y-12">
                 <div className="text-center">
-                  <div className={`inline-flex items-center px-6 py-3 rounded-full text-2xl font-bold ${getScoreColor(seoResult.seoScore)}`}>
-                    <span className="mr-2">🎯</span>
-                    {seoResult.seoScore}/100
-                    <span className="ml-2 text-sm font-normal">({getScoreLabel(seoResult.seoScore)})</span>
+                  <div className={`inline-flex flex-col items-center p-12 w-48 h-48 rounded-full border-4 border-white shadow-2xl justify-center ${getScoreColor(seoResult.seoScore)}`}>
+                    <div className="text-4xl font-black font-outfit mb-2">{seoResult.seoScore}</div>
+                    <div className="text-[8px] font-black tracking-[0.2em]">{getScoreLabel(seoResult.seoScore)}</div>
                   </div>
                 </div>
 
-                {/* 基本情報 */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="bg-blue-50 rounded-junya p-4 text-center">
-                    <div className="text-2xl mb-2">⏱️</div>
-                    <div className="text-sm text-junya-gray">読了時間</div>
-                    <div className="text-lg font-bold text-junya-text">{seoResult.readingTime}分</div>
-                  </div>
-                  <div className="bg-green-50 rounded-junya p-4 text-center">
-                    <div className="text-2xl mb-2">🏷️</div>
-                    <div className="text-sm text-junya-gray">生成タグ</div>
-                    <div className="text-lg font-bold text-junya-text">{seoResult.autoGeneratedTags.length}個</div>
-                  </div>
-                  <div className="bg-purple-50 rounded-junya p-4 text-center">
-                    <div className="text-2xl mb-2">🔤</div>
-                    <div className="text-sm text-junya-gray">文字数</div>
-                    <div className="text-lg font-bold text-junya-text">{seoResult.analysis.contentAnalysis.wordCount}</div>
-                  </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  {[
+                    { i: 'ri-time-line', l: 'READ TIME', v: `${seoResult.readingTime} min` },
+                    { i: 'ri-price-tag-3-line', l: 'TAGS', v: `${seoResult.autoGeneratedTags.length} items` },
+                    { i: 'ri-text-spacing', l: 'WORDS', v: seoResult.analysis.contentAnalysis.wordCount }
+                  ].map(stat => (
+                    <div key={stat.l} className="bg-zinc-50 p-6 text-center border border-zinc-100">
+                      <i className={`${stat.i} text-navy-200 text-2xl mb-3 block`} />
+                      <div className="text-[8px] text-zinc-400 font-black tracking-widest mb-1">{stat.l}</div>
+                      <div className="text-xl font-black text-navy-500 font-outfit tracking-tighter">{stat.v}</div>
+                    </div>
+                  ))}
                 </div>
 
-                {/* メタデータプレビュー */}
-                <div className="bg-gray-50 rounded-junya p-4">
-                  <h4 className="font-semibold text-junya-text mb-3">🔍 検索結果プレビュー</h4>
-                  <div className="bg-white rounded border p-4 max-w-md">
-                    <div className="text-blue-600 text-lg font-medium line-clamp-1">{seoResult.metaTitle}</div>
-                    <div className="text-green-600 text-sm">junya-personal-training.com</div>
-                    <div className="text-gray-600 text-sm mt-1 line-clamp-2">{seoResult.metaDescription}</div>
+                <div className="bg-zinc-950 p-8 text-white">
+                  <h4 className="text-[10px] font-black tracking-[0.4em] uppercase mb-6 flex items-center">
+                    <i className="ri-google-fill mr-3 text-lg" />
+                    SERP Preview
+                  </h4>
+                  <div className="space-y-2 border-l-2 border-navy-500 pl-6">
+                    <div className="text-blue-400 text-lg font-bold line-clamp-1">{seoResult.metaTitle}</div>
+                    <div className="text-zinc-500 text-[10px] tracking-widest uppercase">junya-official-site.com</div>
+                    <div className="text-zinc-400 text-xs leading-relaxed line-clamp-2">{seoResult.metaDescription}</div>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* キーワードタブ */}
             {activeTab === 'keywords' && (
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-semibold text-junya-text mb-3">🎯 主要キーワード</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {seoResult.analysis.keywordAnalysis.primaryKeywords.map((keyword: string, index: number) => (
-                      <span key={index} className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">
-                        🔥 {keyword}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-junya-text mb-3">📈 関連キーワード</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {seoResult.analysis.keywordAnalysis.secondaryKeywords.map((keyword: string, index: number) => (
-                      <span key={index} className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
-                        📊 {keyword}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-junya-text mb-3">🎯 ロングテールキーワード</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {seoResult.analysis.keywordAnalysis.longTailKeywords.map((keyword: string, index: number) => (
-                      <span key={index} className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
-                        🌱 {keyword}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* 提案タブ */}
-            {activeTab === 'suggestions' && (
-              <div className="space-y-4">
-                <h4 className="font-semibold text-junya-text mb-3">💡 改善提案</h4>
-                {seoResult.suggestions.map((suggestion, index) => (
-                  <div key={index} className="flex items-start space-x-3 p-3 bg-blue-50 rounded-junya">
-                    <span className="text-blue-600 mt-0.5">💡</span>
-                    <span className="text-sm text-blue-800">{suggestion}</span>
+              <div className="space-y-12">
+                {[
+                  { l: 'Primary Keywords', k: seoResult.analysis.keywordAnalysis.primaryKeywords, c: 'bg-navy-500 text-white' },
+                  { l: 'Secondary Keywords', k: seoResult.analysis.keywordAnalysis.secondaryKeywords, c: 'bg-zinc-100 text-navy-400' },
+                  { l: 'Long Tail Strategy', k: seoResult.analysis.keywordAnalysis.longTailKeywords, c: 'bg-zinc-50 text-zinc-400 border border-zinc-100' }
+                ].map(group => (
+                  <div key={group.l}>
+                    <h4 className="text-[10px] font-black text-navy-500 tracking-[0.4em] uppercase mb-6">{group.l}</h4>
+                    <div className="flex flex-wrap gap-3">
+                      {group.k.map((keyword: string, index: number) => (
+                        <span key={index} className={`px-6 py-2 text-[10px] font-black tracking-widest uppercase ${group.c}`}>
+                          {keyword}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
             )}
 
-            {/* 技術的タブ */}
-            {activeTab === 'technical' && (
+            {activeTab === 'suggestions' && (
               <div className="space-y-6">
+                <h4 className="text-[10px] font-black text-navy-500 tracking-[0.4em] uppercase mb-8">AI Insights</h4>
+                {seoResult.suggestions.map((suggestion, index) => (
+                  <div key={index} className="flex items-start space-x-6 p-6 bg-zinc-50 border border-zinc-100 hover:border-navy-500 transition-colors">
+                    <i className="ri-lightbulb-flash-line text-navy-300 text-xl" />
+                    <span className="text-sm text-navy-500 font-medium leading-loose">{suggestion}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {activeTab === 'technical' && (
+              <div className="space-y-12">
                 <div>
-                  <h4 className="font-semibold text-junya-text mb-3">📊 コンテンツ構造</h4>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-gray-50 rounded p-3">
-                      <div className="text-sm text-junya-gray">段落数</div>
-                      <div className="text-lg font-bold">{seoResult.analysis.contentAnalysis.paragraphCount}</div>
+                  <h4 className="text-[10px] font-black text-navy-500 tracking-[0.4em] uppercase mb-6">Asset Structure</h4>
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="bg-zinc-50 p-6 border border-zinc-100 text-center">
+                      <div className="text-[8px] text-zinc-400 font-black tracking-widest mb-1 uppercase">Paragraphs</div>
+                      <div className="text-3xl font-black text-navy-500 font-outfit">{seoResult.analysis.contentAnalysis.paragraphCount}</div>
                     </div>
-                    <div className="bg-gray-50 rounded p-3">
-                      <div className="text-sm text-junya-gray">見出し数</div>
-                      <div className="text-lg font-bold">{seoResult.analysis.contentAnalysis.headingCount}</div>
+                    <div className="bg-zinc-50 p-6 border border-zinc-100 text-center">
+                      <div className="text-[8px] text-zinc-400 font-black tracking-widest mb-1 uppercase">Headings</div>
+                      <div className="text-3xl font-black text-navy-500 font-outfit">{seoResult.analysis.contentAnalysis.headingCount}</div>
                     </div>
                   </div>
                 </div>
 
-                <div>
-                  <h4 className="font-semibold text-junya-text mb-3">🔍 メタデータ</h4>
-                  <div className="space-y-3">
+                <div className="space-y-8">
+                  <h4 className="text-[10px] font-black text-navy-500 tracking-[0.4em] uppercase mb-6">Metadata Audit</h4>
+                  <div className="space-y-6">
                     <div>
-                      <label className="text-sm font-medium text-junya-gray">タイトル ({seoResult.metaTitle.length}/60文字)</label>
-                      <div className="bg-gray-50 rounded p-2 text-sm font-mono">{seoResult.metaTitle}</div>
+                      <div className="flex justify-between items-end mb-3">
+                        <label className="text-[10px] font-black text-zinc-400 tracking-widest uppercase">Meta Title</label>
+                        <span className="text-[8px] font-black font-outfit text-navy-300">{seoResult.metaTitle.length}/60</span>
+                      </div>
+                      <div className="p-4 bg-zinc-50 border border-zinc-100 text-[10px] font-mono text-navy-400">{seoResult.metaTitle}</div>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-junya-gray">ディスクリプション ({seoResult.metaDescription.length}/160文字)</label>
-                      <div className="bg-gray-50 rounded p-2 text-sm font-mono">{seoResult.metaDescription}</div>
+                      <div className="flex justify-between items-end mb-3">
+                        <label className="text-[10px] font-black text-zinc-400 tracking-widest uppercase">Meta Description</label>
+                        <span className="text-[8px] font-black font-outfit text-navy-300">{seoResult.metaDescription.length}/160</span>
+                      </div>
+                      <div className="p-4 bg-zinc-50 border border-zinc-100 text-[10px] font-mono text-navy-400 leading-relaxed">{seoResult.metaDescription}</div>
                     </div>
                   </div>
                 </div>

@@ -27,30 +27,30 @@ const TagsList = ({
   const getTagStyles = () => {
     switch (variant) {
       case 'compact':
-        return 'px-2 py-1 text-xs bg-white bg-opacity-25 text-white backdrop-blur-sm hover:bg-white hover:bg-opacity-35'
+        return 'px-3 py-1 text-[8px] bg-white/10 text-white backdrop-blur-md hover:bg-white/20'
       case 'outlined':
-        return 'px-3 py-1 text-sm border border-junya-orange text-junya-orange hover:bg-junya-orange hover:text-white'
+        return 'px-4 py-1.5 text-[10px] border border-navy-100 text-navy-400 hover:border-navy-500 hover:text-navy-500'
       default:
-        return 'px-3 py-1.5 text-sm bg-junya-orange/15 text-junya-orange hover:bg-junya-orange/25'
+        return 'px-5 py-2 text-[10px] bg-zinc-100 text-navy-400 hover:bg-navy-500 hover:text-white'
     }
   }
 
   const baseTagStyles = `
-    inline-flex items-center rounded-full font-medium transition-all duration-200
+    inline-flex items-center font-black tracking-widest uppercase transition-all duration-500
     ${getTagStyles()}
   `
 
   return (
-    <div className={`flex flex-wrap gap-2 ${className}`}>
+    <div className={`flex flex-wrap gap-3 ${className}`}>
       {tags.map((tag, index) => (
         clickable ? (
           <Link
             key={index}
             href={`/blog/search?q=${encodeURIComponent(tag)}`}
             onClick={() => handleTagClick(tag)}
-            className={`${baseTagStyles} hover:scale-105`}
+            className={`${baseTagStyles} hover:shadow-xl hover:-translate-y-0.5`}
           >
-            <span className="mr-1">#</span>
+            <span className="mr-1 opacity-40">#</span>
             {tag}
           </Link>
         ) : (
@@ -58,7 +58,7 @@ const TagsList = ({
             key={index}
             className={baseTagStyles}
           >
-            <span className="mr-1">#</span>
+            <span className="mr-1 opacity-40">#</span>
             {tag}
           </span>
         )

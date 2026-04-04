@@ -11,37 +11,26 @@ interface BreadcrumbProps {
 
 const Breadcrumb = ({ items }: BreadcrumbProps) => {
   return (
-    <nav className="flex items-center space-x-2 text-sm text-junya-gray mb-6" aria-label="パンくず">
+    <nav className="flex items-center space-x-3 text-[10px] font-black tracking-[0.2em] text-zinc-400 mb-10 uppercase font-outfit" aria-label=" Breadcrumb">
       <Link 
         href="/" 
-        className="hover:text-junya-orange transition-colors duration-300"
+        className="hover:text-navy-500 transition-colors duration-300"
       >
-        ホーム
+        HOME
       </Link>
       
       {items.map((item, index) => (
-        <div key={index} className="flex items-center space-x-2">
-          <svg 
-            className="w-4 h-4 text-junya-border" 
-            fill="currentColor" 
-            viewBox="0 0 20 20"
-          >
-            <path 
-              fillRule="evenodd" 
-              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" 
-              clipRule="evenodd" 
-            />
-          </svg>
-          
+        <div key={index} className="flex items-center space-x-3">
+          <span className="text-zinc-200">/</span>
           {item.href ? (
             <Link 
               href={item.href}
-              className="hover:text-junya-orange transition-colors duration-300"
+              className="hover:text-navy-500 transition-colors duration-300"
             >
               {item.label}
             </Link>
           ) : (
-            <span className="text-junya-text font-medium">
+            <span className="text-navy-500">
               {item.label}
             </span>
           )}

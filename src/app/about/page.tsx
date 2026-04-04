@@ -5,96 +5,88 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'About | JUNYA ISHIHARA PERSONAL TRAINING',
+  title: 'About | J. ISHIHARA PERSONAL TRAINING',
   description: 'プロフェッショナルパーソナルトレーナー石原淳哉のプロフィール、経歴、資格、トレーニングへの想いをご紹介します。',
-  keywords: ['石原淳哉', 'パーソナルトレーナー', 'NASM-PES', 'コンディショニング', 'TOPFORM', 'HALLEL'],
-  openGraph: {
-    title: 'About | JUNYA ISHIHARA PERSONAL TRAINING',
-    description: 'プロフェッショナルパーソナルトレーナー石原淳哉のプロフィール、経歴、資格、トレーニングへの想いをご紹介します。',
-    type: 'website',
-    locale: 'ja_JP',
-  },
 }
 
 export default function AboutPage() {
+  const career = [
+    { y: '2014 - 2017', t: '都内フィットネスクラブ在籍', d: '月間150本以上のセッションを担当し、エリア指名数No.1を獲得。' },
+    { y: '2017 - 2019', t: 'パーソナルトレーナーとして独立', d: 'より一人ひとりに寄り添った指導を開始。測定機器の営業経験も積む。' },
+    { y: '2019 - Present', t: 'TOPFORM / HALLEL 参画', d: 'コンディショニングジム「HALLEL」の立ち上げに参画。' },
+    { y: 'Current', t: '湘南学院高等学校 男子バレーボール部', d: 'ストレングストレーナーとしてチームに帯同。' }
+  ]
+
   return (
     <>
       <Header />
       <main className="min-h-screen bg-white">
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-junya-light to-white py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-junya-text mb-6">
-                ABOUT{' '}
-                <span className="bg-gradient-to-r from-junya-gold to-junya-amber bg-clip-text text-transparent">
-                  JUNYA
-                </span>
-              </h1>
-              <p className="text-xl text-junya-gray max-w-3xl mx-auto leading-relaxed">
-                コンディショニングを重視したパーソナルトレーニングで、<br />
-                お客様の身体の問題解決と目標達成をサポートしています。
-              </p>
+        <section className="bg-zinc-950 py-32 text-center overflow-hidden relative">
+          <div className="absolute inset-0 opacity-10 grayscale mix-blend-overlay">
+            <Image src="/about-hero.jpg" alt="About" fill className="object-cover" />
+          </div>
+          <div className="relative z-10">
+            <div className="inline-block px-8 py-2 bg-navy-500 text-white text-[10px] font-black tracking-[0.5em] uppercase mb-8">
+              The Professional
             </div>
+            <h1 className="text-5xl md:text-8xl font-black text-white tracking-tighter uppercase font-outfit mb-6">
+              Junya <span className="italic font-light opacity-50">Ishihara</span>
+            </h1>
+            <div className="w-12 h-1 bg-navy-500 mx-auto" />
           </div>
         </section>
 
         {/* Profile Section */}
-        <section className="py-20">
+        <section className="py-32">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              {/* プロフィール画像 */}
-              <div className="relative">
-                <div className="aspect-[4/5] relative overflow-hidden rounded-2xl shadow-junya-card">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+              <div className="relative group">
+                <div className="aspect-[4/5] relative overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-1000 shadow-2xl">
                   <Image
                     src="/profile-junya.jpg"
-                    alt="石原淳哉 プロフィール写真"
+                    alt="石原淳哉"
                     fill
-                    className="object-cover"
+                    className="object-cover transform group-hover:scale-105 transition-transform duration-1000"
                     priority
-                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
                 </div>
+                <div className="absolute -bottom-6 -right-6 w-32 h-32 border-navy-500 border-b-8 border-r-8 -z-10" />
               </div>
 
-              {/* プロフィール情報 */}
-              <div className="space-y-8">
+              <div className="space-y-12">
                 <div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-junya-text mb-4">
+                  <h2 className="text-5xl md:text-6xl font-black text-navy-500 tracking-tighter uppercase font-outfit mb-2">
                     石原 淳哉
-                    <span className="block text-xl font-normal text-junya-gray mt-2">
-                      Junya Ishihara
-                    </span>
                   </h2>
-                  <p className="text-lg text-junya-gold font-semibold">
-                    パーソナルトレーナー
+                  <p className="text-[10px] font-black text-zinc-400 tracking-[0.4em] uppercase flex items-center">
+                    <span className="w-12 h-[1px] bg-navy-500 mr-4"></span>
+                    JUNYA ISHIHARA
                   </p>
                 </div>
 
-                <div className="space-y-6">
-                  <p className="text-junya-gray leading-relaxed">
-                    高校時代は「ホネカワスネオ」と呼ばれるほど痩せ型で運動に苦労した経験があります。その経験を活かし、運動初心者の方にも安心してトレーニングを受けていただけるよう心がけています。
+                <div className="space-y-8">
+                  <p className="text-xl text-navy-500 font-bold leading-relaxed italic border-l-4 border-navy-500 pl-8 mb-10">
+                    「ホネカワスネオ」と呼ばれた過去から、トレーニングを通じて人生を変えた経験を持つパーソナルトレーナー。
                   </p>
-                  
-                  <p className="text-junya-gray leading-relaxed">
-                    単なる筋力トレーニングではなく、身体の動きを改善し、機能的な状態に整えるコンディショニングアプローチで、日常生活の質向上を目指します。
+                  <p className="text-lg text-zinc-600 leading-loose font-medium">
+                    単なるボディメイクにとどまらず、機能解剖学に基づいた「動ける身体づくり」と「痛みのない生活」を提供することを信条としています。
+                  </p>
+                  <p className="text-lg text-zinc-600 leading-loose font-medium">
+                    大手フィットネスクラブでの指導経験、スポーツ現場での帯同経験を経て、現在は「HALLEL」にて、一般の方からアスリートまで幅広いクライアントの目標達成をサポートしています。
                   </p>
 
-                  {/* 実績 */}
-                  <div className="grid grid-cols-3 gap-4 py-6 border-t border-b border-junya-border">
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-junya-gold mb-1">3000+</div>
-                      <div className="text-sm text-junya-gray">指導実績</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-junya-gold mb-1">10+</div>
-                      <div className="text-sm text-junya-gray">年の経験</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-junya-gold mb-1">100%</div>
-                      <div className="text-sm text-junya-gray">満足度</div>
-                    </div>
+                  <div className="grid grid-cols-3 gap-8 py-10 border-t border-b border-zinc-100">
+                    {[
+                      { l: 'CLIENTS', v: '3000+' },
+                      { l: 'EXPERIENCE', v: '10+ YRS' },
+                      { l: 'QUALITY', v: 'No.1' }
+                    ].map(stat => (
+                      <div key={stat.l} className="text-center">
+                        <div className="text-[10px] font-black text-zinc-400 tracking-widest mb-2 font-outfit">{stat.l}</div>
+                        <div className="text-2xl font-black text-navy-500 font-outfit tracking-tighter">{stat.v}</div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -102,178 +94,40 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Mission Section */}
-        <section className="py-20 bg-junya-light">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-junya-text mb-8">
-              トレーナーとして目指したいこと
-            </h2>
-            
-            <blockquote className="text-2xl md:text-3xl font-bold text-junya-text mb-12 leading-relaxed">
-              「自分に関わる人たちすべてが、毎朝を笑顔で過ごし、<br className="hidden md:block" />
-              人生を心から楽しめる健康な状態になってほしい」
+        {/* Timeline */}
+        <section className="py-32 bg-zinc-50">
+          <div className="max-w-4xl mx-auto px-4">
+            <h2 className="text-xs font-black text-navy-500 tracking-[0.5em] uppercase mb-24 text-center">Career Journey</h2>
+            <div className="space-y-16">
+              {career.map((item, index) => (
+                <div key={index} className="flex flex-col md:flex-row gap-8 md:gap-20 group">
+                  <div className="md:w-32 text-left md:text-right">
+                    <span className="text-[10px] font-black text-navy-300 font-outfit tracking-widest uppercase">{item.y}</span>
+                  </div>
+                  <div className="flex-1 border-l border-zinc-100 pl-10 relative group-hover:border-navy-500 transition-colors">
+                    <div className="absolute top-0 left-0 w-2 h-2 bg-navy-500 -translate-x-1.5" />
+                    <h3 className="text-lg font-black text-navy-500 uppercase tracking-tighter font-outfit mb-3">{item.t}</h3>
+                    <p className="text-sm font-bold text-zinc-500 leading-relaxed uppercase tracking-widest">{item.d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Mission */}
+        <section className="py-40 bg-zinc-950 text-white overflow-hidden relative">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[300px] font-black text-white/[0.02] font-outfit select-none whitespace-nowrap">
+            VISION
+          </div>
+          <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
+            <blockquote className="text-2xl md:text-4xl font-black text-white leading-tight tracking-tighter mb-16 font-outfit uppercase">
+              「自分に関わる人たちすべてが、毎朝を笑顔で過ごし、人生を心から楽しめる健康な状態になってほしい」
             </blockquote>
-
-            <div className="space-y-8 text-left">
-              <p className="text-lg text-junya-gray leading-relaxed">
-                毎朝、目覚めが良く、家族との時間を楽しめ、仕事でも活き活きと過ごせる。そんな「当たり前の幸せ」を支えられることが、トレーナーとしての使命だと考えています。
-              </p>
-              
-              <p className="text-lg text-junya-gray leading-relaxed">
-                多くの方が思い浮かべるパーソナルトレーナーの姿は、「重いウエイトを持ってスクワット」かもしれません。もちろん、それも効果的な方法の一つです。しかし私は、そこにコンディショニングという視点を組み合わせることで、お客様により良いサービスを提供できると考えています。
-              </p>
-              
-              <p className="text-lg text-junya-gray leading-relaxed">
-                私は一人一人の「できない」を「できた！」に変える喜びを共有しながら、皆様の人生に寄り添えるトレーナーでありたいと思っています。そして、多くの方に「石原さんに会えてよかった」と心から感じていただけるよう、これからも謙虚に、そして真摯に学びを重ねていきます。
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Qualifications Section */}
-        <section className="py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-              {/* 学歴・資格 */}
-              <div className="card p-8">
-                <h3 className="text-2xl font-bold text-junya-text mb-6 border-l-4 border-junya-gold pl-4">
-                  学歴・資格
-                </h3>
-                <div className="space-y-4">
-                  <div className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-junya-gold rounded-full mt-2 flex-shrink-0"></div>
-                    <div>
-                      <p className="font-semibold text-junya-text">日本大学文理学部体育学科</p>
-                      <p className="text-sm text-junya-gray">卒業</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-junya-gold rounded-full mt-2 flex-shrink-0"></div>
-                    <div>
-                      <p className="font-semibold text-junya-text">NASM-PES</p>
-                      <p className="text-sm text-junya-gray">全米スポーツ医学協会認定パフォーマンス向上専門資格</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* 専門分野・強み */}
-              <div className="card p-8">
-                <h3 className="text-2xl font-bold text-junya-text mb-6 border-l-4 border-junya-gold pl-4">
-                  専門分野・強み
-                </h3>
-                <div className="space-y-4">
-                  <div className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-junya-gold rounded-full mt-2 flex-shrink-0"></div>
-                    <p className="text-junya-gray">世界基準のフィジカルテスト実施</p>
-                  </div>
-                  <div className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-junya-gold rounded-full mt-2 flex-shrink-0"></div>
-                    <p className="text-junya-gray">疼痛改善・姿勢改善指導</p>
-                  </div>
-                  <div className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-junya-gold rounded-full mt-2 flex-shrink-0"></div>
-                    <p className="text-junya-gray">ボディメイク・パフォーマンス向上指導</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Career History */}
-        <section className="py-20 bg-junya-light">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-junya-text mb-12 text-center">
-              職歴・経験
-            </h2>
-            
-            <div className="space-y-8">
-              <div className="flex items-start space-x-6">
-                <div className="flex-shrink-0 w-24 text-right">
-                  <span className="text-sm font-semibold text-junya-gold">2014-2017</span>
-                </div>
-                <div className="flex-1">
-                  <p className="text-junya-text font-semibold">都内フィットネスクラブ在籍</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-6">
-                <div className="flex-shrink-0 w-24 text-right">
-                  <span className="text-sm font-semibold text-junya-gold">2017-2019</span>
-                </div>
-                <div className="flex-1">
-                  <p className="text-junya-text font-semibold">都内パーソナルトレーニングジム在籍</p>
-                  <p className="text-sm text-junya-gray">パーソナルトレーニング/測定機器の営業経験（スポルテック2018出展）</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-6">
-                <div className="flex-shrink-0 w-24 text-right">
-                  <span className="text-sm font-semibold text-junya-gold">2019-</span>
-                </div>
-                <div className="flex-1">
-                  <p className="text-junya-text font-semibold">パーソナルトレーニングジム「ダ・ヴィンチ」勤務</p>
-                  <p className="text-sm text-junya-gray">（TOPFORMの前身）</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-6">
-                <div className="flex-shrink-0 w-24 text-right">
-                  <span className="text-sm font-semibold text-junya-gold">2023-</span>
-                </div>
-                <div className="flex-1">
-                  <p className="text-junya-text font-semibold">株式会社HALLEL 運営に携わる</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-6">
-                <div className="flex-shrink-0 w-24 text-right">
-                  <span className="text-sm font-semibold text-junya-gold">2025年1月-</span>
-                </div>
-                <div className="flex-1">
-                  <p className="text-junya-text font-semibold">湘南学院高等学校男子バレーボール部</p>
-                  <p className="text-sm text-junya-gray">ストレングストレーナー</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-6">
-                <div className="flex-shrink-0 w-24 text-right">
-                  <span className="text-sm font-semibold text-junya-gold">現在</span>
-                </div>
-                <div className="flex-1">
-                  <p className="text-junya-text font-semibold">TOPFORM恵比寿店・半蔵門店で勤務</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Contact CTA */}
-        <section className="py-20">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-junya-text mb-6">
-              あなたの目標達成をサポートします
-            </h2>
-            <p className="text-xl text-junya-gray mb-12 leading-relaxed">
-              『しなきゃ』を『したい！』に変えるパーソナルトレーニングで、<br className="hidden md:block" />
-              健康で充実した毎日を始めませんか？
+            <p className="text-zinc-400 text-lg leading-relaxed max-w-3xl mx-auto font-medium">
+              毎朝、目覚めが良く、家族との時間を楽しめ、仕事でも活き活きと過ごせる。
+              そんな「当たり前の幸せ」を支えられることが、トレーナーとしての使命だと考えています。
             </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/contact"
-                className="btn-primary text-lg py-4 px-8"
-              >
-                お問い合わせ・体験予約
-              </Link>
-              <Link
-                href="/service"
-                className="btn-secondary text-lg py-4 px-8"
-              >
-                サービス詳細を見る
-              </Link>
-            </div>
           </div>
         </section>
       </main>
