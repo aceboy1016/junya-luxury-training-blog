@@ -19,8 +19,8 @@ export default function Home() {
         <section id="home" className="relative h-screen flex items-center justify-center bg-zinc-950 overflow-hidden">
           <div className="absolute inset-0 opacity-30 grayscale mix-blend-overlay">
             <Image
-              src="/hero-bg.jpg"
-              alt="Background"
+              src="https://images.unsplash.com/photo-1549476464-37392f719918?q=80&w=1920&auto=format&fit=crop"
+              alt="Luxury Background"
               fill
               className="object-cover"
               priority
@@ -208,8 +208,8 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
               {[
-                { name: 'HALLEL 半蔵門店', addr: '〒102-0082 東京都千代田区一番町10-8 一番町ウエストビルB1', access: '半蔵門駅 徒歩2分', img: '/hallel-hanzomon.jpg' },
-                { name: 'HALLEL 恵比寿店', addr: '〒150-0022 東京都渋谷区恵比寿南2-3-11 グレース青山2F', access: '恵比寿駅 徒歩3分', img: '/hallel-ebisu.jpg' },
+                { name: 'HALLEL 半蔵門店', addr: '〒102-0082 東京都千代田区一番町10-8 一番町ウエストビルB1', access: '半蔵門駅 徒歩2分', img: 'https://ishihara-official-site.vercel.app/hallel-hanzomon.jpg' },
+                { name: 'HALLEL 恵比寿店', addr: '〒150-0022 東京都渋谷区恵比寿南2-3-11 グレース青山2F', access: '恵比寿駅 徒歩3分', img: 'https://ishihara-official-site.vercel.app/hallel-ebisu.jpg' },
               ].map(loc => (
                 <div key={loc.name} className="group">
                   <div className="aspect-video relative overflow-hidden bg-zinc-200 grayscale group-hover:grayscale-0 transition-all duration-1000 mb-8 border border-zinc-100">
@@ -332,7 +332,7 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-24 items-center mb-40">
               <div className="lg:col-span-5 relative">
                 <div className="aspect-[4/5] relative grayscale border border-zinc-200 shadow-2xl">
-                  <Image src="/profile-junya.jpg" alt="石原淳哉" fill className="object-cover" />
+                  <Image src="/junya-profile.png" alt="石原淳哉" fill className="object-cover" />
                 </div>
                 <div className="absolute -bottom-10 -right-10 w-64 h-64 border-navy-500 border-b-8 border-r-8 -z-10" />
               </div>

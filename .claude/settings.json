@@ -1,0 +1,18 @@
+{
+  "project": "Junya Luxury Training Blog",
+  "author": "Junya Ishihara",
+  "version": "1.0.0",
+  "context": {
+    "primary_objective": "Luxury branding & professional health content management",
+    "main_deployment": "Vercel",
+    "cms": "Sanity.io"
+  },
+  "claude_settings": {
+    "agent_engine_preference": "claude-3-haiku-20240307",
+    "security_warning_enabled": true,
+    "readonly_paths": [
+      ".vercel/**",
+      "node_modules/**"
+    ]
+  }
+}
