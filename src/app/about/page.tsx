@@ -5,131 +5,119 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'About | J. ISHIHARA PERSONAL TRAINING',
-  description: 'プロフェッショナルパーソナルトレーナー石原淳哉のプロフィール、経歴、資格、トレーニングへの想いをご紹介します。',
+  title: 'About | J. ISHIHARA Premium Personal Training',
+  description: 'プロフェッショナルパーソナルトレーナー石原淳哉のプロフィール、経歴、資格、そしてトレーニングに込めた「魂のミッション」をご紹介します。',
 }
 
 export default function AboutPage() {
-  const career = [
-    { y: '2014 - 2017', t: '都内フィットネスクラブ在籍', d: '月間150本以上のセッションを担当し、エリア指名数No.1を獲得。' },
-    { y: '2017 - 2019', t: 'パーソナルトレーナーとして独立', d: 'より一人ひとりに寄り添った指導を開始。測定機器の営業経験も積む。' },
-    { y: '2019 - Present', t: 'TOPFORM / HALLEL 参画', d: 'コンディショニングジム「HALLEL」の立ち上げに参画。' },
-    { y: 'Current', t: '湘南学院高等学校 男子バレーボール部', d: 'ストレングストレーナーとしてチームに帯同。' }
-  ]
-
   return (
     <>
       <Header />
       <main className="min-h-screen bg-white">
-        {/* Hero Section */}
-        <section className="bg-zinc-950 py-32 text-center overflow-hidden relative">
-          <div className="absolute inset-0 opacity-10 grayscale mix-blend-overlay">
-            <Image src="/about-hero.jpg" alt="About" fill className="object-cover" />
+        
+        {/* Profile Hero */}
+        <section className="bg-zinc-950 py-40 overflow-hidden relative border-b border-white/5">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[400px] font-black text-white/5 font-outfit select-none pointer-events-none">
+            ISHIHARA
           </div>
-          <div className="relative z-10">
-            <div className="inline-block px-8 py-2 bg-navy-500 text-white text-[10px] font-black tracking-[0.5em] uppercase mb-8">
-              The Professional
-            </div>
-            <h1 className="text-5xl md:text-8xl font-black text-white tracking-tighter uppercase font-outfit mb-6">
-              Junya <span className="italic font-light opacity-50">Ishihara</span>
-            </h1>
-            <div className="w-12 h-1 bg-navy-500 mx-auto" />
-          </div>
-        </section>
-
-        {/* Profile Section */}
-        <section className="py-32">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
-              <div className="relative group">
-                <div className="aspect-[4/5] relative overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-1000 shadow-2xl">
-                  <Image
-                    src="/profile-junya.jpg"
-                    alt="石原淳哉"
-                    fill
-                    className="object-cover transform group-hover:scale-105 transition-transform duration-1000"
-                    priority
-                  />
-                </div>
-                <div className="absolute -bottom-6 -right-6 w-32 h-32 border-navy-500 border-b-8 border-r-8 -z-10" />
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+            <div>
+              <span className="text-navy-300 text-[10px] font-black tracking-[0.5em] uppercase mb-8 block">The Professional</span>
+              <h1 className="text-5xl md:text-8xl font-black text-white tracking-tighter uppercase font-outfit mb-12 leading-none">
+                石原 淳哉
+              </h1>
+              <div className="flex items-center gap-8 mb-16">
+                <span className="w-16 h-[1px] bg-navy-500"></span>
+                <span className="text-[10px] font-black text-zinc-400 tracking-[0.4em] uppercase">JUNYA ISHIHARA</span>
               </div>
-
-              <div className="space-y-12">
-                <div>
-                  <h2 className="text-5xl md:text-6xl font-black text-navy-500 tracking-tighter uppercase font-outfit mb-2">
-                    石原 淳哉
-                  </h2>
-                  <p className="text-[10px] font-black text-zinc-400 tracking-[0.4em] uppercase flex items-center">
-                    <span className="w-12 h-[1px] bg-navy-500 mr-4"></span>
-                    JUNYA ISHIHARA
-                  </p>
-                </div>
-
-                <div className="space-y-8">
-                  <p className="text-xl text-navy-500 font-bold leading-relaxed italic border-l-4 border-navy-500 pl-8 mb-10">
-                    「ホネカワスネオ」と呼ばれた過去から、トレーニングを通じて人生を変えた経験を持つパーソナルトレーナー。
-                  </p>
-                  <p className="text-lg text-zinc-600 leading-loose font-medium">
-                    単なるボディメイクにとどまらず、機能解剖学に基づいた「動ける身体づくり」と「痛みのない生活」を提供することを信条としています。
-                  </p>
-                  <p className="text-lg text-zinc-600 leading-loose font-medium">
-                    大手フィットネスクラブでの指導経験、スポーツ現場での帯同経験を経て、現在は「HALLEL」にて、一般の方からアスリートまで幅広いクライアントの目標達成をサポートしています。
-                  </p>
-
-                  <div className="grid grid-cols-3 gap-8 py-10 border-t border-b border-zinc-100">
-                    {[
-                      { l: 'CLIENTS', v: '3000+' },
-                      { l: 'EXPERIENCE', v: '10+ YRS' },
-                      { l: 'QUALITY', v: 'No.1' }
-                    ].map(stat => (
-                      <div key={stat.l} className="text-center">
-                        <div className="text-[10px] font-black text-zinc-400 tracking-widest mb-2 font-outfit">{stat.l}</div>
-                        <div className="text-2xl font-black text-navy-500 font-outfit tracking-tighter">{stat.v}</div>
-                      </div>
-                    ))}
+              <p className="text-xl md:text-2xl text-white font-medium italic border-l-8 border-navy-500 pl-12 max-w-xl leading-relaxed mb-12">
+                「ホネカワスネオ」と呼ばれた過去から、トレーニングを通じて人生を変えた経験を持つ。
+              </p>
+              <div className="grid grid-cols-3 gap-12 border-t border-white/10 pt-12">
+                {[{ n: '3000+', l: 'Sessions' }, { n: '10+', l: 'Years' }, { n: 'NASM', l: 'PES' }].map(s => (
+                  <div key={s.l}>
+                    <div className="text-3xl font-black text-navy-400 font-outfit">{s.n}</div>
+                    <div className="text-[8px] font-bold text-zinc-500 tracking-widest uppercase mt-2">{s.l}</div>
                   </div>
-                </div>
+                ))}
               </div>
+            </div>
+            <div className="relative">
+              <div className="aspect-[3/4] relative grayscale shadow-2xl border border-white/10">
+                <Image src="/profile-junya.jpg" alt="石原淳哉" fill className="object-cover" />
+              </div>
+              <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-navy-500 -z-10" />
             </div>
           </div>
         </section>
 
-        {/* Timeline */}
-        <section className="py-32 bg-zinc-50">
-          <div className="max-w-4xl mx-auto px-4">
-            <h2 className="text-xs font-black text-navy-500 tracking-[0.5em] uppercase mb-24 text-center">Career Journey</h2>
-            <div className="space-y-16">
-              {career.map((item, index) => (
-                <div key={index} className="flex flex-col md:flex-row gap-8 md:gap-20 group">
-                  <div className="md:w-32 text-left md:text-right">
-                    <span className="text-[10px] font-black text-navy-300 font-outfit tracking-widest uppercase">{item.y}</span>
-                  </div>
-                  <div className="flex-1 border-l border-zinc-100 pl-10 relative group-hover:border-navy-500 transition-colors">
-                    <div className="absolute top-0 left-0 w-2 h-2 bg-navy-500 -translate-x-1.5" />
-                    <h3 className="text-lg font-black text-navy-500 uppercase tracking-tighter font-outfit mb-3">{item.t}</h3>
-                    <p className="text-sm font-bold text-zinc-500 leading-relaxed uppercase tracking-widest">{item.d}</p>
-                  </div>
+        {/* Mission Section (Restored from 0c4779c) */}
+        <section className="py-40 bg-white">
+          <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+            <span className="text-navy-300 text-[10px] font-black tracking-[0.5em] uppercase mb-12 block">Our Mission</span>
+            <blockquote className="text-3xl md:text-5xl font-black text-navy-500 tracking-tighter mb-20 leading-tight">
+              「自分に関わる人たちすべてが、<br />毎朝を笑顔で過ごし、人生を心から楽しめる健康な状態になってほしい」
+            </blockquote>
+            <div className="space-y-12 text-lg text-zinc-600 font-medium leading-offset-loose text-left max-w-2xl mx-auto">
+              <p>
+                毎朝、目覚めが良く、家族との時間を楽しめ、仕事でも活き活きと過ごせる。そんな「当たり前の幸せ」を支えられることが、私のトレーナーとしての使命です。
+              </p>
+              <p>
+                多くの方が思い浮かべるパーソナルトレーニングは、「重いウエイトを挙げること」かもしれません。私はそこにコンディショニングという視点を組み合わせ、身体の「機能」を整えることで、日常の質を劇的に変えるアプローチを提供します。
+              </p>
+              <p>
+                一人ひとりの「できない」を「できた！」に変える喜びを共有し、人生に伴走できる、謙虚で真摯なトレーナーであり続けたいと考えています。
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Career Timeline (Restored from 0c4779c) */}
+        <section className="py-40 bg-zinc-50 overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <h2 className="text-4xl md:text-6xl font-black text-navy-500 tracking-tighter uppercase font-outfit mb-32 flex items-end gap-8">
+              Career <span className="text-zinc-300 italic font-light lowercase">Journey</span>
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 border-l border-zinc-200 pl-12 relative">
+              {[
+                { y: '2014-2018', t: '都内フィットネスクラブ勤務', d: '月間150本以上のセッションを担当。エリア指名数No.1を達成し、多くの運動初心者の方をサポート。' },
+                { y: '2018-Present', t: 'フリーランス・HALLEL参画', d: 'より専門的なコンディショニングを追求。TOPFORMの前身から現在まで、一貫して「機能的な身体づくり」を指導。' },
+                { y: 'Current', t: '湘南学院高等学校 男子バレー部', d: 'ストレングストレーナーとして、次世代のアスリートの身体能力向上と怪我予防に貢献。' },
+              ].map(tl => (
+                <div key={tl.y} className="relative group">
+                  <div className="absolute -left-[54px] top-4 w-4 h-4 bg-navy-500 rounded-full group-hover:scale-150 transition-transform duration-500" />
+                  <div className="text-[10px] font-black text-navy-300 font-outfit tracking-widest uppercase mb-4">{tl.y}</div>
+                  <h3 className="text-2xl font-black text-navy-500 uppercase tracking-tighter mb-6">{tl.t}</h3>
+                  <p className="text-sm font-medium text-zinc-500 leading-loose">{tl.d}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Mission */}
-        <section className="py-40 bg-zinc-950 text-white overflow-hidden relative">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[300px] font-black text-white/[0.02] font-outfit select-none whitespace-nowrap">
-            VISION
-          </div>
-          <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-            <blockquote className="text-2xl md:text-4xl font-black text-white leading-tight tracking-tighter mb-16 font-outfit uppercase">
-              「自分に関わる人たちすべてが、毎朝を笑顔で過ごし、人生を心から楽しめる健康な状態になってほしい」
-            </blockquote>
-            <p className="text-zinc-400 text-lg leading-relaxed max-w-3xl mx-auto font-medium">
-              毎朝、目覚めが良く、家族との時間を楽しめ、仕事でも活き活きと過ごせる。
-              そんな「当たり前の幸せ」を支えられることが、トレーナーとしての使命だと考えています。
-            </p>
+        {/* CTA (Restored from 0c4779c) */}
+        <section className="py-40 bg-white">
+          <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+            <h2 className="text-4xl font-black text-navy-500 mb-12 tracking-tighter uppercase font-outfit leading-none">
+              あなたの毎朝を、<br /><span className="text-zinc-300 lowercase italic font-light">笑顔に変える</span>お手伝いを。
+            </h2>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
+              <Link
+                href="/contact"
+                className="w-full sm:w-auto px-16 py-6 bg-navy-500 text-white text-[10px] font-black tracking-[0.5em] uppercase hover:bg-zinc-950 transition-all duration-700 shadow-2xl"
+              >
+                Experience Session
+              </Link>
+              <Link
+                href="/service"
+                className="w-full sm:w-auto px-16 py-6 border border-zinc-100 text-navy-500 text-[10px] font-black tracking-[0.5em] uppercase hover:bg-zinc-50 transition-all duration-700"
+              >
+                View Services
+              </Link>
+            </div>
           </div>
         </section>
+
       </main>
       <Footer />
     </>
