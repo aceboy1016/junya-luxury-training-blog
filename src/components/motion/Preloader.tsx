@@ -68,29 +68,29 @@ export default function Preloader() {
   if (done) return null
 
   return (
-    <div ref={root} className="preloader fixed inset-0 z-[200] bg-ink text-white" aria-hidden="true">
+    <div ref={root} className="preloader fixed inset-0 z-[200] bg-breeze-50 text-navy-500" aria-hidden="true">
       <div data-pl="inner" className="absolute inset-0 flex flex-col justify-between p-6 md:p-10">
-        <div className="flex justify-between text-[10px] font-semibold tracking-[0.4em] uppercase text-white/40 font-outfit">
+        <div className="flex justify-between text-[10px] font-semibold tracking-[0.4em] uppercase text-zinc-400 font-outfit">
           <span>Junya Ishihara</span>
           <span>Personal Training — Tokyo</span>
         </div>
 
         <div className="relative mx-auto text-center">
           <div className="overflow-hidden">
-            <p data-pl="must" className="font-black tracking-tight text-[clamp(3rem,12vw,9rem)] leading-[1.05] text-white/35">
+            <p data-pl="must" className="font-bold tracking-tight text-[clamp(3rem,12vw,9rem)] leading-[1.05] text-navy-200">
               しなきゃ
             </p>
           </div>
           <div className="absolute inset-0 overflow-hidden">
-            <p data-pl="want" className="font-black tracking-tight text-[clamp(3rem,12vw,9rem)] leading-[1.05] translate-y-[110%]">
+            <p data-pl="want" className="font-bold tracking-tight text-[clamp(3rem,12vw,9rem)] leading-[1.05] translate-y-[110%]">
               したい！
             </p>
           </div>
         </div>
 
         <div className="flex items-end justify-between gap-8">
-          <div className="flex-1 h-px bg-white/10 relative overflow-hidden self-center">
-            <div data-pl="bar" className="absolute inset-0 bg-white origin-left scale-x-0" />
+          <div className="flex-1 h-px bg-navy-500/10 relative overflow-hidden self-center">
+            <div data-pl="bar" className="absolute inset-0 bg-breeze-500 origin-left scale-x-0" />
           </div>
           <span data-pl="count" className="font-outfit font-light text-5xl md:text-7xl tabular-nums leading-none">
             000

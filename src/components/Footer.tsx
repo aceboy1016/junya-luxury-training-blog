@@ -21,7 +21,7 @@ const Footer = () => {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="relative bg-ink text-white overflow-hidden">
+    <footer className="relative bg-navy-500 text-white overflow-hidden">
       <div className="px-5 md:px-10 pt-24 md:pt-32">
         <div className="grid grid-cols-2 md:grid-cols-12 gap-y-14 gap-x-6 pb-20 md:pb-28 border-b border-white/10">
           <div className="col-span-2 md:col-span-5">

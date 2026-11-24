@@ -109,7 +109,7 @@ const Header = () => {
       <div
         ref={overlay}
         id="site-menu"
-        className="fixed inset-0 z-[90] bg-ink text-white invisible flex flex-col justify-between pt-28 pb-10 px-5 md:px-10"
+        className="fixed inset-0 z-[90] bg-navy-500 text-white invisible flex flex-col justify-between pt-28 pb-10 px-5 md:px-10"
         style={{ clipPath: 'inset(0% 0% 100% 0%)' }}
         aria-hidden={!open}
       >

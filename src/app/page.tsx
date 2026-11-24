@@ -134,21 +134,21 @@ export default function Home() {
       <Header />
       <main className="bg-white text-navy-500">
         {/* ─── 01 Hero ─── */}
-        <section id="home" className="relative min-h-[100svh] bg-ink text-white overflow-hidden flex flex-col">
+        <section id="home" className="relative min-h-[100svh] bg-breeze-50 text-navy-500 overflow-hidden flex flex-col">
           <div className="hero-glow" aria-hidden />
           <div className="relative flex-1 grid grid-cols-12 gap-x-6 px-5 md:px-10 pt-28 md:pt-36 pb-10">
             <div className="col-span-12 lg:col-span-8 flex flex-col justify-end order-2 lg:order-1 relative z-10">
-              <p data-hero="fade" className="font-outfit text-[11px] font-semibold tracking-[0.35em] uppercase text-white/50 mb-8 md:mb-12">
+              <p data-hero="fade" className="font-outfit text-[11px] font-semibold tracking-[0.35em] uppercase text-zinc-500 mb-8 md:mb-12">
                 Conditioning &amp; Personal Training — Hanzomon / Ebisu
               </p>
 
-              <h1 className="font-black tracking-[-0.04em] leading-[1.04] text-[clamp(2.75rem,12.4vw,7.5rem)]">
+              <h1 className="font-bold tracking-[-0.03em] leading-[1.08] text-[clamp(2.75rem,12.4vw,7.5rem)]">
                 <span className="block overflow-hidden pb-[0.06em]">
                   <span data-hero="line" className="block">
                     「
                     <span className="relative inline-block">
                       <span data-hero="dim">しなきゃ</span>
-                      <span data-hero="strike" className="absolute left-[-2%] right-[-2%] top-[54%] h-[0.06em] bg-white origin-left scale-x-0" aria-hidden />
+                      <span data-hero="strike" className="absolute left-[-2%] right-[-2%] top-[54%] h-[0.07em] bg-breeze-500 origin-left scale-x-0" aria-hidden />
                     </span>
                     」を
                   </span>
@@ -159,14 +159,14 @@ export default function Home() {
                   </span>
                 </span>
                 <span className="block overflow-hidden pb-[0.06em]">
-                  <span data-hero="line" className="block font-outfit text-navy-200/90">
-                    変える<span className="text-white">.</span>
+                  <span data-hero="line" className="block text-breeze-500">
+                    変える<span className="font-outfit text-navy-500">.</span>
                   </span>
                 </span>
               </h1>
 
               <div className="mt-10 md:mt-12 flex flex-col md:flex-row md:items-end gap-8 md:gap-16">
-                <p data-hero="fade" className="text-base md:text-lg text-white/70 leading-relaxed max-w-xl">
+                <p data-hero="fade" className="text-base md:text-lg text-zinc-600 leading-relaxed max-w-xl">
                   変化を実感するから、自然と続けたくなる。
                   <br />
                   根本から改善するアプローチで、見た目も体調も確実に。
@@ -175,7 +175,7 @@ export default function Home() {
                   data-hero="fade"
                   href="#contact"
                   data-cursor="Book"
-                  className="btn-circle group shrink-0"
+                  className="btn-circle btn-circle--light group shrink-0"
                 >
                   <span className="relative z-10 font-outfit text-[11px] font-semibold tracking-[0.25em] uppercase">Book a Session</span>
                 </Link>
@@ -183,18 +183,18 @@ export default function Home() {
             </div>
 
             <div className="col-span-12 lg:col-span-4 order-1 lg:order-2 flex lg:justify-end lg:items-start mb-10 lg:mb-0">
-              <figure className="relative w-[46vw] max-w-[240px] lg:w-full lg:max-w-[340px] ml-auto lg:ml-0">
-                <div data-hero="image" className="relative aspect-[3/4] overflow-hidden bg-navy-700">
+              <figure className="relative w-[46vw] max-w-[240px] lg:w-full lg:max-w-[360px] ml-auto lg:ml-0">
+                <div data-hero="image" className="relative aspect-[3/4] overflow-hidden rounded-t-full bg-gradient-to-b from-white via-breeze-50 to-breeze-200 ring-1 ring-breeze-200/70">
                   <Image
-                    src="/junya-portrait.jpg"
+                    src="/junya-portrait-cut.webp"
                     alt="パーソナルトレーナー 石原淳哉"
                     fill
                     priority
                     sizes="(min-width:1024px) 340px, 46vw"
-                    className="object-cover object-[50%_20%] portrait-tone"
+                    className="object-contain object-bottom portrait-tone"
                   />
                 </div>
-                <figcaption data-hero="fade" className="mt-3 flex justify-between gap-2 tracking-[0.15em] md:tracking-[0.25em]  font-outfit text-[10px] uppercase text-white/45">
+                <figcaption data-hero="fade" className="mt-3 flex justify-between gap-2 tracking-[0.15em] md:tracking-[0.25em]  font-outfit text-[10px] uppercase text-zinc-400">
                   <span>Junya Ishihara</span>
                   <span className="hidden sm:inline">NASM-PES</span>
                 </figcaption>
@@ -202,14 +202,14 @@ export default function Home() {
             </div>
           </div>
 
-          <div data-hero="fade" className="relative grid grid-cols-2 md:grid-cols-4 border-t border-white/10 font-outfit text-[10px] tracking-[0.25em] uppercase text-white/50">
+          <div data-hero="fade" className="relative grid grid-cols-2 md:grid-cols-4 border-t border-navy-500/10 font-outfit text-[10px] tracking-[0.25em] uppercase text-zinc-500">
             {[
               { k: '3,000+', v: 'Sessions' },
               { k: '10+', v: 'Years' },
               { k: '100%', v: 'Satisfaction' },
             ].map((s) => (
-              <div key={s.v} className="px-5 md:px-10 py-5 border-r border-white/10 flex items-baseline gap-3">
-                <span className="text-white text-base md:text-lg font-semibold tracking-tight tabular-nums">{s.k}</span>
+              <div key={s.v} className="px-5 md:px-10 py-5 border-r border-navy-500/10 flex items-baseline gap-3">
+                <span className="text-navy-500 text-base md:text-lg font-semibold tracking-tight tabular-nums">{s.k}</span>
                 <span>{s.v}</span>
               </div>
             ))}
@@ -228,10 +228,10 @@ export default function Home() {
             <div className="col-span-12 lg:col-span-5">
               <div className="lg:sticky lg:top-32">
                 <Label index="02">Methodology</Label>
-                <h2 data-split className="mt-8 font-outfit font-black uppercase tracking-[-0.045em] leading-[0.9] text-[clamp(2.6rem,5.2vw,5.25rem)]">
+                <h2 data-split className="mt-8 font-outfit font-extrabold uppercase tracking-[-0.045em] leading-[0.9] text-[clamp(2.6rem,5.2vw,5.25rem)]">
                   The Science
                   <br />
-                  of <span className="text-zinc-300">Conditioning</span>
+                  of <span className="text-breeze-400">Conditioning</span>
                 </h2>
                 <p data-reveal className="mt-10 text-lg leading-relaxed font-medium text-zinc-500 max-w-md">
                   科学的根拠と豊富な経験に基づいた独自のメソッドで、確実な結果と最高級の体験をお約束します。
@@ -246,7 +246,7 @@ export default function Home() {
                   <div data-reveal className="grid grid-cols-[auto_1fr] gap-x-6 md:gap-x-10">
                     <span className="font-outfit text-sm font-semibold text-zinc-400 tabular-nums pt-3">{m.n}</span>
                     <div>
-                      <h3 className="font-outfit font-black uppercase tracking-[-0.04em] text-4xl md:text-6xl leading-none transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)] group-hover:translate-x-3">
+                      <h3 className="font-outfit font-extrabold uppercase tracking-[-0.04em] text-4xl md:text-6xl leading-none transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)] group-hover:translate-x-3">
                         {m.t}
                       </h3>
                       <p className="mt-3 text-xs font-bold tracking-[0.3em] text-zinc-400">{m.s}</p>
@@ -260,25 +260,25 @@ export default function Home() {
         </section>
 
         {/* ─── 03 Why Me ─── */}
-        <section id="why-me" className="relative bg-navy-500 text-white px-5 md:px-10 py-28 md:py-44 overflow-hidden">
-          <Label index="03" light>
+        <section id="why-me" className="relative bg-breeze-100 text-navy-500 px-5 md:px-10 py-28 md:py-44 overflow-hidden">
+          <Label index="03">
             Why Choose Me
           </Label>
           <h2 className="sr-only">選ばれる理由</h2>
           <p
             data-scrub-words
-            className="mt-12 md:mt-16 font-black tracking-[-0.03em] leading-[1.2] text-[clamp(2rem,6vw,5.5rem)] max-w-[16em]"
+            className="mt-12 md:mt-16 font-bold tracking-[-0.02em] leading-[1.3] text-[clamp(2rem,6vw,5.5rem)] max-w-[16em]"
           >
             「鍛える」前に「整える」。マイナスをゼロにし、そこから機能的なプラスを作り出す。
           </p>
 
-          <div className="mt-24 md:mt-36 grid grid-cols-1 md:grid-cols-3 gap-px bg-white/10 border-y border-white/10">
+          <div className="mt-24 md:mt-36 grid grid-cols-1 md:grid-cols-3 gap-px bg-navy-500/10 border-y border-navy-500/10">
             {reasons.map((r) => (
-              <article key={r.n} className="reason-card group bg-navy-500 p-8 md:p-10 lg:p-12 md:min-h-[22rem] flex flex-col justify-between gap-12">
-                <span className="font-outfit text-[11px] tracking-[0.3em] text-white/40 tabular-nums">REASON — {r.n}</span>
+              <article key={r.n} className="reason-card group bg-breeze-100 p-8 md:p-10 lg:p-12 md:min-h-[22rem] flex flex-col justify-between gap-12">
+                <span className="font-outfit text-[11px] tracking-[0.3em] text-zinc-400 tabular-nums">REASON — {r.n}</span>
                 <div data-reveal>
                   <h3 className="text-2xl md:text-3xl font-black tracking-tight mb-6">{r.t}</h3>
-                  <p className="text-base leading-relaxed text-white/60 group-hover:text-white/85 transition-colors duration-700">{r.d}</p>
+                  <p className="text-base leading-relaxed text-zinc-500 group-hover:text-navy-500 transition-colors duration-700">{r.d}</p>
                 </div>
               </article>
             ))}
@@ -288,7 +288,7 @@ export default function Home() {
         {/* ─── 04 Concept ─── */}
         <section id="concept" className="relative py-28 md:py-44 overflow-hidden">
           <div className="whitespace-nowrap select-none pointer-events-none" aria-hidden>
-            <div data-marquee="1" className="inline-block font-outfit font-black uppercase tracking-[-0.05em] leading-none text-[clamp(5rem,16vw,15rem)] text-zinc-100">
+            <div data-marquee="1" className="inline-block font-outfit font-extrabold uppercase tracking-[-0.05em] leading-none text-[clamp(5rem,16vw,15rem)] text-breeze-100">
               Science · Personalized · Holistic · Luxury · Science · Personalized ·
             </div>
           </div>
@@ -297,9 +297,9 @@ export default function Home() {
             <div className="grid grid-cols-12 gap-x-6">
               <div className="col-span-12 md:col-span-8 lg:col-span-6 lg:col-start-4">
                 <Label index="04">Concept — Synergy</Label>
-                <h2 data-split className="mt-8 font-black tracking-[-0.04em] leading-[1.1] text-[clamp(2.25rem,5.5vw,4.75rem)]">
+                <h2 data-split className="mt-8 font-bold tracking-[-0.03em] leading-[1.15] text-[clamp(2.25rem,5.5vw,4.75rem)]">
                   科学的メソッド
-                  <span className="font-outfit font-extralight text-zinc-300 ml-2">×</span>
+                  <span className="font-outfit font-extralight text-breeze-400 ml-2">×</span>
                   <br />
                   最高級サービス
                 </h2>
@@ -310,7 +310,7 @@ export default function Home() {
               {concept.map((c, i) => (
                 <div key={c.t} className="relative py-10 sm:pr-8 lg:pl-0 sm:[&:nth-child(even)]:pl-8 lg:[&:nth-child(even)]:pl-8 lg:[&:nth-child(n+2)]:pl-8 border-b border-zinc-200 sm:border-b-0 lg:border-l-0 lg:[&:nth-child(n+2)]:border-l sm:[&:nth-child(even)]:border-l border-zinc-200">
                   <span className="font-outfit text-[11px] tracking-[0.3em] text-zinc-400 tabular-nums">0{i + 1}</span>
-                  <h3 className="mt-10 font-outfit font-black uppercase tracking-[-0.03em] text-2xl lg:text-3xl leading-none">{c.t}</h3>
+                  <h3 className="mt-10 font-outfit font-extrabold uppercase tracking-[-0.03em] text-2xl lg:text-3xl leading-none">{c.t}</h3>
                   <p className="mt-2 text-xs font-bold tracking-[0.3em] text-zinc-400">{c.s}</p>
                   <p className="mt-6 text-base leading-relaxed font-medium text-zinc-600">{c.d}</p>
                 </div>
@@ -320,11 +320,11 @@ export default function Home() {
         </section>
 
         {/* ─── 05 Service Flow ─── */}
-        <section id="service-flow" className="relative bg-zinc-50 px-5 md:px-10 py-28 md:py-44">
+        <section id="service-flow" className="relative bg-breeze-50 px-5 md:px-10 py-28 md:py-44">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-10">
             <div>
               <Label index="05">Process</Label>
-              <h2 data-split className="mt-8 font-black tracking-[-0.04em] leading-[1.05] text-[clamp(2.5rem,6vw,5.5rem)]">
+              <h2 data-split className="mt-8 font-bold tracking-[-0.03em] leading-[1.1] text-[clamp(2.5rem,6vw,5.5rem)]">
                 初回サービスの流れ
               </h2>
             </div>
@@ -335,12 +335,12 @@ export default function Home() {
 
           <div className="relative mt-20 md:mt-28">
             <div className="absolute left-0 right-0 top-[11px] h-px bg-zinc-200 hidden md:block" aria-hidden>
-              <div data-draw data-draw-scrub className="absolute inset-0 bg-navy-500" />
+              <div data-draw data-draw-scrub className="absolute inset-0 bg-breeze-500" />
             </div>
             <ol className="grid grid-cols-1 md:grid-cols-4 gap-x-8 gap-y-14">
               {flow.map((f) => (
                 <li key={f.n} data-reveal className="relative md:pt-14">
-                  <span className="hidden md:block absolute top-[6px] left-0 w-[11px] h-[11px] rounded-full bg-zinc-50 border border-navy-500" aria-hidden />
+                  <span className="hidden md:block absolute top-[6px] left-0 w-[11px] h-[11px] rounded-full bg-breeze-50 border border-breeze-500" aria-hidden />
                   <div className="flex items-baseline justify-between border-b md:border-0 border-zinc-200 pb-4 md:pb-0">
                     <span className="font-outfit font-black text-6xl md:text-7xl tracking-[-0.05em] leading-none tabular-nums">{f.n}</span>
                     <span className="font-outfit text-[11px] font-semibold tracking-[0.3em] uppercase text-zinc-400">{f.e}</span>
@@ -358,10 +358,10 @@ export default function Home() {
           <div className="grid grid-cols-12 gap-x-6 gap-y-10">
             <div className="col-span-12 lg:col-span-7">
               <Label index="06">Studios</Label>
-              <h2 data-split className="mt-8 font-outfit font-black uppercase tracking-[-0.045em] leading-[0.9] text-[clamp(2.75rem,7vw,6.5rem)]">
+              <h2 data-split className="mt-8 font-outfit font-extrabold uppercase tracking-[-0.045em] leading-[0.9] text-[clamp(2.75rem,7vw,6.5rem)]">
                 Exclusive
                 <br />
-                <span className="text-zinc-300">Studios</span>
+                <span className="text-breeze-400">Studios</span>
               </h2>
             </div>
             <p data-reveal className="col-span-12 lg:col-span-4 lg:col-start-9 self-end text-base md:text-lg font-medium text-zinc-500 leading-relaxed">
@@ -378,30 +378,30 @@ export default function Home() {
                 rel="noopener noreferrer"
                 data-cursor="Map"
                 data-reveal
-                className="studio-card group relative block bg-ink text-white overflow-hidden p-7 md:p-10 min-h-[22rem] md:min-h-[36rem]"
+                className="studio-card group relative block bg-breeze-100 text-navy-500 hover:bg-navy-500 hover:text-white transition-colors duration-700 ease-[cubic-bezier(.16,1,.3,1)] overflow-hidden p-7 md:p-10 min-h-[22rem] md:min-h-[36rem]"
               >
                 <div className="studio-grid" aria-hidden />
                 <div className="relative h-full flex flex-col justify-between min-h-[inherit]">
-                  <div className="flex justify-between font-outfit text-[10px] tracking-[0.3em] uppercase text-white/45">
+                  <div className="flex justify-between font-outfit text-[10px] tracking-[0.3em] uppercase opacity-55">
                     <span>{s.coord}</span>
                     <span className="transition-transform duration-700 group-hover:translate-x-1 group-hover:-translate-y-1">↗</span>
                   </div>
 
                   <div>
-                    <p className="font-outfit font-black uppercase tracking-[-0.06em] leading-[0.85] text-[clamp(3rem,6.8vw,7rem)] studio-word">
+                    <p className="font-outfit font-extrabold uppercase tracking-[-0.06em] leading-[0.85] text-[clamp(3rem,6.8vw,7rem)] studio-word">
                       {s.key}
                     </p>
-                    <div className="mt-8 md:mt-10 grid grid-cols-[1fr_auto] items-end gap-6 border-t border-white/15 pt-6">
+                    <div className="mt-8 md:mt-10 grid grid-cols-[1fr_auto] items-end gap-6 border-t border-navy-500/15 group-hover:border-white/20 transition-colors duration-700 pt-6">
                       <div>
                         <h3 className="text-xl md:text-2xl font-black tracking-tight">{s.name}</h3>
-                        <p className="mt-2 text-sm text-white/55 leading-relaxed">{s.addr}</p>
+                        <p className="mt-2 text-sm opacity-60 leading-relaxed">{s.addr}</p>
                       </div>
                       <p className="text-right">
                         <span className="block font-outfit font-black text-5xl md:text-6xl tracking-[-0.05em] leading-none">
                           {s.min}
                           <span className="text-lg font-semibold tracking-normal ml-1">min</span>
                         </span>
-                        <span className="text-xs text-white/55">{s.station} 徒歩</span>
+                        <span className="text-xs opacity-60">{s.station} 徒歩</span>
                       </p>
                     </div>
                   </div>
@@ -412,19 +412,19 @@ export default function Home() {
         </section>
 
         {/* ─── 07 Pricing ─── */}
-        <section id="pricing" className="relative bg-ink text-white px-5 md:px-10 py-28 md:py-44">
+        <section id="pricing" className="relative bg-breeze-50 text-navy-500 px-5 md:px-10 py-28 md:py-44">
           <div className="grid grid-cols-12 gap-x-6 gap-y-10">
             <div className="col-span-12 lg:col-span-6">
-              <Label index="07" light>
+              <Label index="07">
                 Investment
               </Label>
-              <h2 data-split className="mt-8 font-outfit font-black uppercase tracking-[-0.045em] leading-[0.9] text-[clamp(2.75rem,7vw,6.5rem)]">
+              <h2 data-split className="mt-8 font-outfit font-extrabold uppercase tracking-[-0.045em] leading-[0.9] text-[clamp(2.75rem,7vw,6.5rem)]">
                 Choose
                 <br />
-                Your <span className="text-white/30">Luxury</span>
+                Your <span className="text-breeze-400">Luxury</span>
               </h2>
             </div>
-            <p data-reveal className="col-span-12 lg:col-span-4 lg:col-start-9 self-end text-sm text-white/50 leading-relaxed">
+            <p data-reveal className="col-span-12 lg:col-span-4 lg:col-start-9 self-end text-sm text-zinc-500 leading-relaxed">
               ※すべて税込価格です。場所や頻度につきましては、お気軽にご相談ください。
             </p>
           </div>
@@ -437,19 +437,19 @@ export default function Home() {
               <div key={group.title}>
                 <div className="flex items-baseline justify-between pb-6">
                   <h3 className="text-xl md:text-2xl font-black tracking-tight">{group.title}</h3>
-                  <span className="font-outfit text-[10px] tracking-[0.3em] uppercase text-white/40">{group.en}</span>
+                  <span className="font-outfit text-[10px] tracking-[0.3em] uppercase text-zinc-400">{group.en}</span>
                 </div>
-                <ul className="border-t border-white/15">
+                <ul className="border-t border-navy-500/10">
                   {group.items.map((p) => (
-                    <li key={p.t} className="price-row group relative border-b border-white/15">
+                    <li key={p.t} className="price-row group relative border-b border-navy-500/10">
                       <div className="relative z-10 grid grid-cols-[1fr_auto] md:grid-cols-[7rem_1fr_auto] items-center gap-x-6 gap-y-3 py-7 md:py-8">
                         <span className="font-outfit font-black text-4xl md:text-5xl tracking-[-0.05em] leading-none tabular-nums">
                           {p.t}
                           <span className="text-xs font-semibold tracking-[0.1em] ml-1 align-top">min</span>
                         </span>
-                        <span className="col-span-2 md:col-span-1 order-last md:order-none text-sm text-white/55 leading-relaxed group-hover:text-white/85 transition-colors duration-500">{p.d}</span>
+                        <span className="col-span-2 md:col-span-1 order-last md:order-none text-sm text-zinc-500 leading-relaxed group-hover:text-navy-500 transition-colors duration-500">{p.d}</span>
                         <span className="font-outfit font-semibold text-xl md:text-3xl tracking-[-0.03em] tabular-nums whitespace-nowrap">
-                          <span className="text-sm md:text-base mr-0.5 text-white/60">¥</span>
+                          <span className="text-sm md:text-base mr-0.5 text-zinc-500">¥</span>
                           {p.p}
                         </span>
                       </div>
@@ -464,14 +464,14 @@ export default function Home() {
         {/* ─── 08 Testimonials ─── */}
         <section id="testimonials" className="relative px-5 md:px-10 py-28 md:py-44">
           <Label index="08">Voices</Label>
-          <h2 data-split className="mt-8 font-outfit font-black uppercase tracking-[-0.045em] leading-[0.9] text-[clamp(2.75rem,7vw,6.5rem)]">
-            Voice of <span className="text-zinc-300">Peak</span>
+          <h2 data-split className="mt-8 font-outfit font-extrabold uppercase tracking-[-0.045em] leading-[0.9] text-[clamp(2.75rem,7vw,6.5rem)]">
+            Voice of <span className="text-breeze-400">Peak</span>
           </h2>
 
           <div className="mt-20 md:mt-28 grid grid-cols-1 lg:grid-cols-3 gap-x-10 gap-y-16">
             {testimonials.map((t, i) => (
               <figure key={t.name} data-reveal={String(i * 0.12)} className={`relative ${i === 1 ? 'lg:mt-24' : i === 2 ? 'lg:mt-48' : ''}`}>
-                <span className="block font-serif italic text-[7rem] leading-[0.6] text-navy-100 select-none" aria-hidden>
+                <span className="block font-serif italic text-[7rem] leading-[0.6] text-breeze-300 select-none" aria-hidden>
                   “
                 </span>
                 <blockquote className="mt-4 text-lg md:text-xl leading-[1.9] font-medium text-navy-500">{t.text}</blockquote>
@@ -498,20 +498,20 @@ export default function Home() {
         </section>
 
         {/* ─── 09 Profile ─── */}
-        <section id="profile" className="relative bg-zinc-50 px-5 md:px-10 py-28 md:py-44 overflow-hidden">
+        <section id="profile" className="relative bg-breeze-50 px-5 md:px-10 py-28 md:py-44 overflow-hidden">
           <Label index="09">The Professional</Label>
 
           <div className="mt-14 md:mt-20 grid grid-cols-12 gap-x-6 gap-y-16">
             <div className="col-span-12 md:col-span-5 lg:col-span-4">
-              <div data-clip className="relative aspect-[3/4] overflow-hidden bg-zinc-200">
+              <div data-clip style={{ maxWidth: 420 }} className="mx-auto md:mx-0 w-4/5 md:w-full relative aspect-[3/4] overflow-hidden rounded-t-full bg-gradient-to-b from-white via-breeze-50 to-breeze-200 ring-1 ring-breeze-200/70">
                 <div data-parallax="0.15" className="absolute inset-[-8%_0]">
-                  <Image src="/junya-portrait.jpg" alt="石原淳哉" fill sizes="(min-width:768px) 40vw, 100vw" className="object-cover object-[50%_25%] portrait-tone" />
+                  <Image src="/junya-portrait-cut.webp" alt="石原淳哉" fill sizes="(min-width:768px) 40vw, 100vw" className="object-cover object-[50%_15%] portrait-tone" />
                 </div>
               </div>
             </div>
 
             <div className="col-span-12 md:col-span-7 lg:col-span-7 lg:col-start-6">
-              <h2 data-split className="font-black tracking-[-0.04em] leading-none text-[clamp(3.5rem,9vw,8rem)]">
+              <h2 data-split className="font-bold tracking-[-0.03em] leading-none text-[clamp(3.5rem,9vw,8rem)]">
                 石原 淳哉
               </h2>
               <p data-reveal className="mt-5 font-outfit text-sm font-semibold tracking-[0.4em] uppercase text-zinc-400">
@@ -547,11 +547,11 @@ export default function Home() {
               <h3 className="font-outfit text-[11px] font-semibold tracking-[0.3em] uppercase text-zinc-500 mb-12">経歴・実績 / Career</h3>
               <ol className="relative pl-8">
                 <span className="absolute left-0 top-2 bottom-2 w-px bg-zinc-200" aria-hidden>
-                  <span data-draw="y" data-draw-scrub className="absolute inset-0 bg-navy-500" />
+                  <span data-draw="y" data-draw-scrub className="absolute inset-0 bg-breeze-500" />
                 </span>
                 {timeline.map((tl) => (
                   <li key={tl.y} data-reveal className="relative pb-12 last:pb-0">
-                    <span className="absolute -left-8 top-[0.55rem] -translate-x-1/2 w-[9px] h-[9px] rounded-full bg-zinc-50 border border-navy-500" aria-hidden />
+                    <span className="absolute -left-8 top-[0.55rem] -translate-x-1/2 w-[9px] h-[9px] rounded-full bg-breeze-50 border border-breeze-500" aria-hidden />
                     <p className="font-outfit text-xs font-semibold tracking-[0.25em] uppercase text-zinc-400">{tl.y}</p>
                     <h4 className="mt-2 text-xl md:text-2xl font-black tracking-tight">{tl.t}</h4>
                     <p className="mt-2 text-base leading-relaxed font-medium text-zinc-600">{tl.d}</p>
@@ -583,7 +583,7 @@ export default function Home() {
                   { t: 'Education', n: '日本大学文理学部\n体育学科 卒業' },
                   { t: 'Certification', n: '全米スポーツ医学協会\nNASM-PES' },
                 ].map((q) => (
-                  <div key={q.t} className="bg-zinc-50 p-7">
+                  <div key={q.t} className="bg-breeze-50 p-7">
                     <dt className="font-outfit text-[10px] font-semibold tracking-[0.3em] uppercase text-zinc-400">{q.t}</dt>
                     <dd className="mt-4 text-base font-bold leading-relaxed whitespace-pre-line">{q.n}</dd>
                   </div>
@@ -594,14 +594,14 @@ export default function Home() {
         </section>
 
         {/* ─── 10 Contact ─── */}
-        <section id="contact" className="relative bg-ink text-white px-5 md:px-10 pt-28 md:pt-44 pb-24 md:pb-32 overflow-hidden">
-          <div className="hero-glow hero-glow--low" aria-hidden />
+        <section id="contact" className="relative bg-breeze-200/60 text-navy-500 px-5 md:px-10 pt-28 md:pt-44 pb-24 md:pb-32 overflow-hidden">
+          <div className="contact-sky" aria-hidden />
           <div className="relative">
-            <Label index="10" light>
+            <Label index="10">
               Contact
             </Label>
             <h2 className="sr-only">CONTACT</h2>
-            <p data-split className="mt-10 font-black tracking-[-0.045em] leading-[1.02] text-[clamp(3rem,10vw,9rem)]">
+            <p data-split className="mt-10 font-bold tracking-[-0.035em] leading-[1.08] text-[clamp(3rem,10vw,9rem)]">
               さあ、
               <br />
               「したい！」を
@@ -609,18 +609,18 @@ export default function Home() {
               はじめよう。
             </p>
 
-            <ul className="mt-20 md:mt-28 border-t border-white/15">
+            <ul className="mt-20 md:mt-28 border-t border-navy-500/15">
               {contacts.map((c) => (
                 <li key={c.t}>
-                  <a href={c.href} data-cursor="Open" className="contact-row group relative grid grid-cols-[1fr_auto] md:grid-cols-[12rem_1fr_auto] items-center gap-x-6 gap-y-2 py-8 md:py-10 border-b border-white/15 overflow-hidden">
-                    <span className="relative z-10 font-outfit text-[11px] font-semibold tracking-[0.3em] uppercase text-white/45 group-hover:text-navy-500/60 transition-colors duration-500 col-span-2 md:col-span-1">
+                  <a href={c.href} data-cursor="Open" className="contact-row group relative grid grid-cols-[1fr_auto] md:grid-cols-[12rem_1fr_auto] items-center gap-x-6 gap-y-2 py-8 md:py-10 border-b border-navy-500/15 overflow-hidden">
+                    <span className="relative z-10 font-outfit text-[11px] font-semibold tracking-[0.3em] uppercase text-navy-400 group-hover:text-white/60 transition-colors duration-500 col-span-2 md:col-span-1">
                       {c.e}
                     </span>
                     <span className="relative z-10">
-                      <span className="block text-2xl md:text-4xl font-black tracking-tight group-hover:text-navy-500 transition-colors duration-500">{c.t}</span>
-                      <span className="block mt-2 text-sm text-white/55 group-hover:text-navy-500/70 transition-colors duration-500">{c.d}</span>
+                      <span className="block text-2xl md:text-4xl font-bold tracking-tight group-hover:text-white transition-colors duration-500">{c.t}</span>
+                      <span className="block mt-2 text-sm text-zinc-600 group-hover:text-white/70 transition-colors duration-500">{c.d}</span>
                     </span>
-                    <span className="relative z-10 text-3xl md:text-5xl font-outfit font-light transition-all duration-700 ease-[cubic-bezier(.16,1,.3,1)] group-hover:text-navy-500 group-hover:-rotate-45">→</span>
+                    <span className="relative z-10 text-3xl md:text-5xl font-outfit font-light transition-all duration-700 ease-[cubic-bezier(.16,1,.3,1)] group-hover:text-white group-hover:-rotate-45">→</span>
                   </a>
                 </li>
               ))}
