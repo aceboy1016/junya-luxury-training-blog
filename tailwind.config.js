@@ -20,6 +20,7 @@ module.exports = {
           800: '#171721',
           900: '#12121A',
         },
+        ink: '#12121A',
         'junya-navy': '#262636',
         'junya-navy-light': '#3D3D52',
         'junya-text': '#333333',

@@ -3,466 +3,634 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import Preloader from '@/components/motion/Preloader'
+import MotionProvider from '@/components/motion/MotionProvider'
+import TokyoClock from '@/components/motion/TokyoClock'
 
 export const metadata: Metadata = {
   title: 'J. ISHIHARA | Premium Personal Training & Conditioning',
-  description: '変化を実感するから自然と続けたくなる。根本から改善するアプローチで、見た目も体調も確実に変化を実感。半蔵門・恵比寿のプレミアムパーソナルトレーニング。',
+  description:
+    '「しなきゃ」を「したい！」に変える。半蔵門・恵比寿のパーソナルトレーニング。コンディショニングを軸に、見た目も体調も根本から変える石原淳哉のセッション。',
 }
+
+/* ──────────────────────────────────────────
+   Content
+   ────────────────────────────────────────── */
+
+const methodology = [
+  { n: '01', t: 'Assessment', s: '詳細分析', d: 'お客様の体組成、姿勢、動作パターン、ライフスタイルを徹底的に分析。最新の測定機器を使用した科学的アプローチで現状を正確に把握します。' },
+  { n: '02', t: 'Design', s: '完全オーダーメイド', d: '分析結果をもとに、お客様だけの専用プログラムを設計。目標達成への最短ルートを科学的根拠に基づいて構築いたします。' },
+  { n: '03', t: 'Execution', s: '精密実行', d: '洗練されたテクニックと最新理論を駆使したトレーニング指導。一つ一つの動作を丁寧に指導し、効果を最大化します。' },
+  { n: '04', t: 'Evolution', s: '継続進化', d: '定期的な評価と調整により、常にプログラムを最適化。お客様の進歩に合わせて継続的にアップデートし続けます。' },
+]
+
+const reasons = [
+  { n: '01', t: '多角的なアプローチ', d: '単なる筋トレだけではありません。身体の機能を高めるための要素（筋力・柔軟性・持久力・栄養）をバランスよく組み合わせます。' },
+  { n: '02', t: '確実なステップアップ', d: 'いきなりハードな運動は行いません。評価・改善・強化・定着のサイクルを回し、身体の状態に合わせて段階的に負荷を上げます。' },
+  { n: '03', t: 'コンディショニング重視', d: '「鍛える」前に「整える」。マイナスをゼロにし、そこから機能的なプラスを作り出すアプローチで不調を根本改善します。' },
+]
+
+const concept = [
+  { t: 'Science-Based', s: '科学的根拠', d: '最新のスポーツ科学と栄養学に基づいた、効果実証済みのメソッド。' },
+  { t: 'Personalized', s: '完全個別対応', d: '一人ひとりの体質・目標・ライフスタイルに完全カスタマイズ。' },
+  { t: 'Holistic', s: '統合的アプローチ', d: '運動・栄養・回復・メンタルケアを統合した全体的なサポート。' },
+  { t: 'Luxury', s: '最高級体験', d: '上質な環境とプレミアムサービスで、最高のフィットネス体験を。' },
+]
+
+const flow = [
+  { n: '01', t: 'お申し込み', e: 'Apply', d: 'トレーニング目標の調整を行います。' },
+  { n: '02', t: 'ご来店', e: 'Visit', d: 'ご案内した施設（半蔵門・恵比寿）にお越しください。' },
+  { n: '03', t: 'カウンセリング', e: 'Counsel', d: '入念なカウンセリング・世界基準のフィジカルテストを行い、カラダの現状を的確に把握します。' },
+  { n: '04', t: 'コンディション', e: 'Condition', d: 'お悩みやカラダの問題を解決するための、具体的なアプローチを開始します。' },
+]
+
+const studios = [
+  {
+    key: 'Hanzomon',
+    name: 'HALLEL 半蔵門店',
+    addr: '〒102-0082 東京都千代田区一番町10-8 一番町ウエストビルB1',
+    station: '半蔵門駅',
+    min: '2',
+    coord: '35.6852° N / 139.7413° E',
+    map: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('東京都千代田区一番町10-8 一番町ウエストビル'),
+  },
+  {
+    key: 'Ebisu',
+    name: 'HALLEL 恵比寿店',
+    addr: '〒150-0022 東京都渋谷区恵比寿南2-3-11 グレース青山2F',
+    station: '恵比寿駅',
+    min: '3',
+    coord: '35.6467° N / 139.7101° E',
+    map: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('東京都渋谷区恵比寿南2-3-11'),
+  },
+]
+
+const pricing = {
+  studio: [
+    { t: '60', p: '13,200', d: '基本的なトレーニングを集中して行いたい方向け。' },
+    { t: '90', p: '19,050', d: 'トレーニングとコンディショニングを組み合わせた総合ケア。' },
+    { t: '120', p: '24,400', d: 'より深く、時間をかけて身体と向き合いたい方に最適。' },
+  ],
+  visit: [
+    { t: '60', p: '18,000', d: 'ご指定の場所で質の高いトレーニングを手軽に。' },
+    { t: '90', p: '26,250', d: '店舗と変わらないプレミアムなトレーニングをご自宅で。' },
+  ],
+}
+
+const testimonials = [
+  { name: 'A.K様', info: '20代女性・会社員', text: 'トレーニング初心者の私でも、石原さんの丁寧で分かりやすい指導のおかげで、3ヶ月で理想の体型に近づくことができました。科学的なアプローチで効率的に結果が出て驚いています。' },
+  { name: 'M.T様', info: '40代男性・経営者', text: '長年の腰痛に悩んでいましたが、石原さんのコンディショニング指導により大幅に改善されました。プロフェッショナルな知識と技術、そして親身なサポートに本当に感謝しています。' },
+  { name: 'R.S様', info: '30代男性・アスリート', text: '競技パフォーマンス向上のためのトレーニングを依頼しました。最新の科学的知識に基づいた指導で、明確な改善が実感できています。プロとしての経験と知識の深さが違います。' },
+]
+
+const stats = [
+  { n: '98%', l: '満足度', e: 'Satisfaction' },
+  { n: '3000+', l: '指導実績', e: 'Sessions' },
+  { n: '95%', l: '継続率', e: 'Retention' },
+  { n: '10+', l: '年の経験', e: 'Years' },
+]
+
+const timeline = [
+  { y: '2014 — 2018', t: '都内フィットネスクラブ勤務', d: '月間150本以上のセッションを担当し、エリア指名数No.1を獲得。' },
+  { y: '2018', t: 'フリーランスとして独立', d: 'パーソナルトレーナーとして独立。より一人ひとりに寄り添った指導を開始。' },
+  { y: '2019 — Present', t: 'TOPFORM / HALLEL 参画', d: 'コンディショニングジム「HALLEL」の立ち上げに参画。' },
+  { y: 'Current', t: '湘南学院高等学校 男子バレーボール部', d: 'ストレングストレーナーとしてチームに帯同。' },
+]
+
+const skills = [
+  { s: '姿勢改善・機能改善', v: 100 },
+  { s: '疼痛改善（腰痛・肩こり等）', v: 95 },
+  { s: 'スポーツパフォーマンス向上', v: 90 },
+]
+
+const contacts = [
+  { t: 'Googleフォーム', e: 'Form', d: '体験のご予約やご質問など、お気軽にお問い合わせください。', href: '#' },
+  { t: 'LINE公式', e: 'LINE', d: 'チャットで迅速に対応します。まずはお友だち追加から。', href: '#' },
+  { t: 'メール', e: 'Mail', d: 'junya1995@gmail.com', href: 'mailto:junya1995@gmail.com' },
+]
+
+/* ──────────────────────────────────────────
+   Parts
+   ────────────────────────────────────────── */
+
+function Label({ index, children, light = false }: { index: string; children: React.ReactNode; light?: boolean }) {
+  return (
+    <div data-reveal className={`flex items-center gap-4 font-outfit text-[11px] font-semibold tracking-[0.3em] uppercase ${light ? 'text-white/50' : 'text-zinc-500'}`}>
+      <span className="tabular-nums">({index})</span>
+      <span className={`h-px w-10 ${light ? 'bg-white/30' : 'bg-zinc-300'}`} />
+      <span>{children}</span>
+    </div>
+  )
+}
+
+/* ──────────────────────────────────────────
+   Page
+   ────────────────────────────────────────── */
 
 export default function Home() {
   return (
     <>
+      <Preloader />
       <Header />
-      <main className="min-h-screen bg-white">
-        
-        {/* ─── 01 Hero Section (Restored from 0c4779c) ─── */}
-        <section id="home" className="relative h-screen flex items-center justify-center bg-zinc-950 overflow-hidden">
-          <div className="absolute inset-0 opacity-30 grayscale mix-blend-overlay">
-            <Image
-              src="https://images.unsplash.com/photo-1549476464-37392f719918?q=80&w=1920&auto=format&fit=crop"
-              alt="Luxury Background"
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
-          <div className="relative z-10 text-center px-4 max-w-6xl">
-            <div className="inline-block px-8 py-2 bg-navy-500 text-white text-[10px] font-black tracking-[0.6em] uppercase mb-12 animate-fade-in-down">
-              Premium Personal Training
-            </div>
-            <h1 className="text-5xl md:text-8xl font-black text-white leading-none tracking-tighter mb-12 font-outfit uppercase">
-              <span className="text-navy-300">変化</span>を実感するから<br />
-              <span className="italic font-light opacity-60 lowercase">自然と</span>続けたくなる
-            </h1>
-            <p className="text-white text-lg md:text-2xl font-medium tracking-[0.1em] mb-20 max-w-3xl mx-auto leading-relaxed">
-              根本から改善するアプローチで、<br className="md:hidden" />
-              見た目も体調も確実に変化を実感。
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-8 mb-24">
-              <Link
-                href="#contact"
-                className="w-full sm:w-auto px-16 py-6 bg-navy-500 text-white text-[10px] font-black tracking-[0.5em] uppercase hover:bg-white hover:text-navy-500 transition-all duration-700 shadow-2xl"
-              >
-                Book Session
-              </Link>
-              <Link
-                href="#service-flow"
-                className="w-full sm:w-auto px-16 py-6 border border-white/20 text-white text-[10px] font-black tracking-[0.5em] uppercase hover:bg-white hover:text-navy-500 transition-all duration-700"
-              >
-                Learn More
-              </Link>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-4xl mx-auto border-t border-white/10 pt-16">
-              {[
-                { n: '3000+', l: '指導実績', s: 'Proven Track Record' },
-                { n: '10+', l: '年の経験', s: 'Years of Excellence' },
-                { n: '100%', l: '満足度', s: 'Customer Satisfaction' }
-              ].map(stat => (
-                <div key={stat.l} className="text-center group">
-                  <div className="text-4xl font-black text-navy-400 font-outfit mb-2 group-hover:scale-110 transition-transform duration-700">{stat.n}</div>
-                  <div className="text-[10px] font-black text-white tracking-widest uppercase mb-1">{stat.l}</div>
-                  <div className="text-[8px] text-zinc-500 font-bold tracking-[0.2em] uppercase">{stat.s}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/30 animate-bounce">
-            <i className="ri-arrow-down-line text-2xl" />
-          </div>
-        </section>
-
-        {/* ─── 02 Methodology Section (Restored from 0c4779c) ─── */}
-        <section id="methodology" className="py-40 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-24">
-              <span className="text-navy-300 text-[10px] font-black tracking-[0.5em] uppercase mb-4 block">Elite Methodology</span>
-              <h2 className="text-4xl md:text-6xl font-black text-navy-500 tracking-tighter uppercase font-outfit leading-none mb-8">
-                The Science of <br /><span className="text-zinc-300">Conditioning</span>
-              </h2>
-              <p className="text-lg text-zinc-500 max-w-3xl mx-auto font-medium leading-loose">
-                科学的根拠と豊富な経験に基づいた独自のメソッドで、<br className="hidden md:block" />
-                確実な結果と最高級の体験をお約束します。
+      <main className="bg-white text-navy-500">
+        {/* ─── 01 Hero ─── */}
+        <section id="home" className="relative min-h-[100svh] bg-ink text-white overflow-hidden flex flex-col">
+          <div className="hero-glow" aria-hidden />
+          <div className="relative flex-1 grid grid-cols-12 gap-x-6 px-5 md:px-10 pt-28 md:pt-36 pb-10">
+            <div className="col-span-12 lg:col-span-8 flex flex-col justify-end order-2 lg:order-1 relative z-10">
+              <p data-hero="fade" className="font-outfit text-[11px] font-semibold tracking-[0.35em] uppercase text-white/50 mb-8 md:mb-12">
+                Conditioning &amp; Personal Training — Hanzomon / Ebisu
               </p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {[
-                { n: '01', t: 'ASSESSMENT', s: '詳細分析', d: 'お客様の体組成、姿勢、動作パターン、ライフスタイルを徹底的に分析。最新の測定機器を使用した科学的アプローチで現状を正確に把握します。' },
-                { n: '02', t: 'DESIGN', s: '完全オーダーメイド', d: '分析結果をもとに、お客様だけの専用プログラムを設計。目標達成への最短ルートを科学的根拠に基づいて構築いたします。' },
-                { n: '03', t: 'EXECUTION', s: '精密実行', d: '洗練されたテクニックと最新理論を駆使したトレーニング指導。一つ一つの動作を丁寧に指導し、効果を最大化します。' },
-                { n: '04', t: 'EVOLUTION', s: '継続進化', d: '定期的な評価と調整により、常にプログラムを最適化。お客様の進歩に合わせて継続的にアップデートし続けます。' },
-              ].map(item => (
-                <div key={item.n} className="p-10 bg-zinc-50 border border-zinc-100 hover:border-navy-500 transition-all duration-700 shadow-sm group">
-                  <div className="w-16 h-16 bg-navy-500 text-white flex items-center justify-center text-xl font-black font-outfit mb-8 group-hover:bg-zinc-950 transition-colors">
-                    {item.n}
-                  </div>
-                  <h3 className="text-xl font-black text-navy-500 uppercase font-outfit tracking-tighter mb-2">{item.t}</h3>
-                  <div className="text-[10px] font-black text-navy-300 tracking-[0.3em] uppercase mb-6">{item.s}</div>
-                  <p className="text-sm text-zinc-500 leading-offset-loose font-medium">{item.d}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
-        {/* ─── 03 Why Me Section (Restored from 0c4779c) ─── */}
-        <section id="why-me" className="py-40 bg-zinc-950 text-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-24">
-              <span className="text-navy-300 text-[10px] font-black tracking-[0.5em] uppercase mb-4 block">Why Choose Me</span>
-              <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase font-outfit mb-8">選ばれる<span className="text-navy-400">理由</span></h2>
-              <div className="w-16 h-1 bg-navy-500 mx-auto" />
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
-              {[
-                { n: '01', t: '多角的なアプローチ', d: '単なる筋トレだけではありません。身体の機能を高めるための要素（筋力・柔軟性・持久力・栄養）をバランスよく組み合わせます。' },
-                { n: '02', t: '確実なステップアップ', d: 'いきなりハードな運動は行いません。評価・改善・強化・定着のサイクルを回し、身体の状態に合わせて段階的に負荷を上げます。' },
-                { n: '03', t: 'コンディショニング重視', d: '「鍛える」前に「整える」。マイナスをゼロにし、そこから機能的なプラスを作り出すアプローチで不調を根本改善します。' }
-              ].map(reason => (
-                <div key={reason.n} className="p-12 border border-white/5 hover:bg-white/5 transition-all duration-1000 group">
-                  <div className="flex items-center gap-6 mb-8">
-                    <div className="w-10 h-10 bg-navy-500 text-white flex items-center justify-center text-sm font-black font-outfit">
-                      {reason.n}
-                    </div>
-                    <h3 className="text-2xl font-black tracking-tighter uppercase font-outfit">{reason.t}</h3>
-                  </div>
-                  <p className="text-zinc-400 leading-offset-loose text-lg font-medium">{reason.d}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+              <h1 className="font-black tracking-[-0.04em] leading-[1.04] text-[clamp(2.75rem,12.4vw,7.5rem)]">
+                <span className="block overflow-hidden pb-[0.06em]">
+                  <span data-hero="line" className="block">
+                    「
+                    <span className="relative inline-block">
+                      <span data-hero="dim">しなきゃ</span>
+                      <span data-hero="strike" className="absolute left-[-2%] right-[-2%] top-[54%] h-[0.06em] bg-white origin-left scale-x-0" aria-hidden />
+                    </span>
+                    」を
+                  </span>
+                </span>
+                <span className="block overflow-hidden pb-[0.06em]">
+                  <span data-hero="line" className="block">
+                    「したい！」に
+                  </span>
+                </span>
+                <span className="block overflow-hidden pb-[0.06em]">
+                  <span data-hero="line" className="block font-outfit text-navy-200/90">
+                    変える<span className="text-white">.</span>
+                  </span>
+                </span>
+              </h1>
 
-        {/* ─── 04 Concept Section (Restored from 0c4779c) ─── */}
-        <section className="py-40 bg-white relative overflow-hidden">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[300px] font-black text-zinc-50 font-outfit select-none whitespace-nowrap">
-            SYNERGY
-          </div>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <h2 className="text-4xl md:text-6xl font-black text-navy-500 mb-12 tracking-tighter uppercase font-outfit leading-none">
-              科学的メソッド <span className="italic font-light opacity-30 lowercase">×</span> 最高級サービス
-            </h2>
-            <p className="text-lg text-zinc-500 font-bold tracking-[0.4em] uppercase mb-24">
-              Science / Personalized / Holistic / Luxury
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {[
-                { icon: 'ri-flask-line', t: 'SCIENCE-BASED', s: '科学的根拠', d: '最新のスポーツ科学と栄養学に基づいた\n効果実証済みのメソッド' },
-                { icon: 'ri-user-settings-line', t: 'PERSONALIZED', s: '完全個別対応', d: '一人ひとりの体質・目標・ライフスタイルに\n完全カスタマイズ' },
-                { icon: 'ri-focus-3-line', t: 'HOLISTIC', s: '統合的アプローチ', d: '運動・栄養・回復・メンタルケアを統合した\n全体的なサポート' },
-                { icon: 'ri-vip-crown-line', t: 'LUXURY', s: '最高級体験', d: '上質な環境とプレミアムサービスで\n最高のフィットネス体験を提供' },
-              ].map(item => (
-                <div key={item.t} className="p-12 border border-zinc-100 bg-white shadow-sm hover:shadow-2xl transition-all duration-700 group">
-                  <div className="text-4xl text-navy-300 group-hover:text-navy-500 transition-colors mb-8 flex justify-center">
-                    <i className={item.icon} />
-                  </div>
-                  <h3 className="text-lg font-black text-navy-500 uppercase font-outfit tracking-tighter mb-2">{item.t}</h3>
-                  <div className="text-[10px] font-black text-navy-300 tracking-[0.4em] uppercase mb-6">{item.s}</div>
-                  <p className="text-xs text-zinc-500 font-medium leading-relaxed whitespace-pre-line">{item.d}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ─── 05 Service Flow Section (Restored from 0c4779c) ─── */}
-        <section id="service-flow" className="py-40 bg-zinc-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-24">
-              <span className="text-navy-300 text-[10px] font-black tracking-[0.5em] uppercase mb-4 block">Process</span>
-              <h2 className="text-4xl md:text-6xl font-black text-navy-500 tracking-tighter uppercase font-outfit leading-none mb-8">
-                初回サービスの<span className="text-zinc-300">流れ</span>
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {[
-                { n: '01', t: 'お申し込み', d: 'トレーニング目標の調整を行います。' },
-                { n: '02', t: 'ご来店', d: 'ご案内した施設（半蔵門・恵比寿）にお越しください。' },
-                { n: '03', t: 'カウンセリング', d: '入念なカウンセリング・世界基準のフィジカルテストを行い、カラダの現状を的確に把握します。' },
-                { n: '04', t: 'コンディション', d: 'お悩みやカラダの問題を解決するための、具体的なアプローチを開始します。' },
-              ].map(step => (
-                <div key={step.n} className="p-12 bg-white border border-zinc-50 transition-all duration-700 group">
-                  <div className="text-6xl font-black text-zinc-50 font-outfit mb-8 group-hover:text-navy-500 transition-colors">
-                    {step.n}
-                  </div>
-                  <h3 className="text-xl font-black text-navy-500 uppercase font-outfit tracking-tighter mb-4">{step.t}</h3>
-                  <p className="text-sm text-zinc-500 leading-loose font-medium">{step.d}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ─── 06 Locations Section (Restored from 0c4779c) ─── */}
-        <section id="locations" className="py-40 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col lg:flex-row justify-between items-end mb-24 gap-8">
-              <div>
-                <span className="text-navy-300 text-[10px] font-black tracking-[0.5em] uppercase mb-4 block">Destinations</span>
-                <h2 className="text-4xl md:text-6xl font-black text-navy-500 tracking-tighter uppercase font-outfit leading-none">
-                  Exclusive <br /><span className="text-zinc-300">Studios</span>
-                </h2>
-              </div>
-              <p className="text-lg text-zinc-500 font-medium tracking-widest max-w-sm lg:text-right border-l-4 lg:border-l-0 lg:border-r-4 border-navy-500 pl-8 lg:pl-0 lg:pr-8">
-                2つの便利な立地で、<br />最高水準のトレーニング体験を提供いたします。
-              </p>
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-              {[
-                { name: 'HALLEL 半蔵門店', addr: '〒102-0082 東京都千代田区一番町10-8 一番町ウエストビルB1', access: '半蔵門駅 徒歩2分', img: 'https://ishihara-official-site.vercel.app/hallel-hanzomon.jpg' },
-                { name: 'HALLEL 恵比寿店', addr: '〒150-0022 東京都渋谷区恵比寿南2-3-11 グレース青山2F', access: '恵比寿駅 徒歩3分', img: 'https://ishihara-official-site.vercel.app/hallel-ebisu.jpg' },
-              ].map(loc => (
-                <div key={loc.name} className="group">
-                  <div className="aspect-video relative overflow-hidden bg-zinc-200 grayscale group-hover:grayscale-0 transition-all duration-1000 mb-8 border border-zinc-100">
-                    <Image src={loc.img} alt={loc.name} fill className="object-cover transform group-hover:scale-105 transition-transform duration-1000" />
-                  </div>
-                  <h3 className="text-2xl font-black text-navy-500 uppercase tracking-tighter font-outfit mb-4">{loc.name}</h3>
-                  <div className="flex items-start gap-4">
-                    <i className="ri-map-pin-2-line text-xl text-navy-300" />
-                    <div className="text-sm text-zinc-500 font-medium leading-relaxed">
-                      <p>{loc.addr}</p>
-                      <p className="text-navy-500 font-bold tracking-widest mt-2">{loc.access}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ─── 07 Pricing Section (Restored from 0c4779c) ─── */}
-        <section id="pricing" className="py-40 bg-zinc-950 text-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-24">
-              <span className="text-navy-300 text-[10px] font-black tracking-[0.5em] uppercase mb-4 block">Investment</span>
-              <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase font-outfit mb-8">Choose Your <span className="text-navy-400">Luxury</span></h2>
-              <div className="w-16 h-1 bg-navy-500 mx-auto" />
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-24">
-              <div>
-                <h3 className="text-2xl font-black text-white uppercase tracking-tighter font-outfit mb-12 flex items-center">
-                  <span className="w-8 h-0.5 bg-navy-500 mr-6" />通常セッション
-                </h3>
-                <div className="space-y-12">
-                  {[
-                    { t: '60分', p: '¥13,200', d: '基本的なトレーニングを集中して行いたい方向け。' },
-                    { t: '90分', p: '¥19,050', d: 'トレーニングとコンディショニングを組み合わせた総合ケア。' },
-                    { t: '120分', p: '¥24,400', d: 'より深く、時間をかけて身体と向き合いたい方に最適。' }
-                  ].map(p => (
-                    <div key={p.t} className="flex justify-between items-end border-b border-white/5 pb-8 group">
-                      <div className="max-w-md">
-                        <h4 className="text-xl font-black font-outfit mb-2 uppercase">{p.t}コース</h4>
-                        <p className="text-xs text-zinc-500 font-medium leading-relaxed group-hover:text-zinc-300 transition-colors">{p.d}</p>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-3xl font-black font-outfit tracking-tighter group-hover:text-navy-400 transition-colors">{p.p}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <h3 className="text-2xl font-black text-white uppercase tracking-tighter font-outfit mb-12 flex items-center">
-                  <span className="w-8 h-0.5 bg-navy-500 mr-6" />出張セッション
-                </h3>
-                <div className="space-y-12">
-                  {[
-                    { t: '60分', p: '¥18,000', d: 'ご指定の場所で質の高いトレーニングを手軽に。' },
-                    { t: '90分', p: '¥26,250', d: '店舗と変わらないプレミアムなトレーニングをご自宅で。' }
-                  ].map(p => (
-                    <div key={p.t} className="flex justify-between items-end border-b border-white/5 pb-8 group">
-                      <div className="max-w-md">
-                        <h4 className="text-xl font-black font-outfit mb-2 uppercase">{p.t}コース</h4>
-                        <p className="text-xs text-zinc-500 font-medium leading-relaxed group-hover:text-zinc-300 transition-colors">{p.d}</p>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-3xl font-black font-outfit tracking-tighter group-hover:text-navy-400 transition-colors">{p.p}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-16 p-8 bg-white/5 border border-white/5 text-center">
-                  <p className="text-[10px] font-black tracking-widest text-zinc-500 uppercase">
-                    ※すべて税込価格です。場所や頻度につきましては、お気軽にご相談ください。
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ─── 08 Testimonials Section (Restored from 0c4779c) ─── */}
-        <section id="testimonials" className="py-40 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-24">
-              <span className="text-navy-300 text-[10px] font-black tracking-[0.5em] uppercase mb-4 block">Proven Success</span>
-              <h2 className="text-4xl md:text-6xl font-black text-navy-500 tracking-tighter uppercase font-outfit leading-none mb-8">
-                Voice of <span className="text-zinc-300">Peak</span>
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-32">
-              {[
-                { name: 'A.K様', info: '20代女性・会社員', text: 'トレーニング初心者の私でも、石原さんの丁寧で分かりやすい指導のおかげで、3ヶ月で理想の体型に近づくことができました。科学的なアプローチで効率的に結果が出て驚いています。' },
-                { name: 'M.T様', info: '40代男性・経営者', text: '長年の腰痛に悩んでいましたが、石原さんのコンディショニング指導により大幅に改善されました。プロフェッショナルな知識と技術、そして親身なサポートに本当に感謝しています。' },
-                { name: 'R.S様', info: '30代男性・アスリート', text: '競技パフォーマンス向上のためのトレーニングを依頼しました。最新の科学的知識に基づいた指導で、明確な改善が実感できています。プロとしての経験と知識の深さが違います。' },
-              ].map(testi => (
-                <div key={testi.name} className="p-12 border border-zinc-100 hover:shadow-2xl transition-all duration-1000 group">
-                  <i className="ri-double-quotes-l text-4xl text-navy-100 block mb-8" />
-                  <p className="text-lg text-navy-500 font-medium leading-loose mb-10 italic">「{testi.text}」</p>
-                  <div>
-                    <div className="text-xs font-black text-navy-500 uppercase tracking-widest">{testi.name}</div>
-                    <div className="text-[10px] font-bold text-zinc-400 mt-1 uppercase tracking-widest">{testi.info}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-12 py-20 border-t border-b border-zinc-100">
-              {[{ n: '98%', l: '満足度' }, { n: '3000+', l: '指導実績' }, { n: '95%', l: '継続率' }, { n: '10+', l: '年の経験' }].map(s => (
-                <div key={s.l} className="text-center group">
-                  <div className="text-4xl font-black text-navy-500 font-outfit tracking-tighter mb-2 group-hover:scale-110 transition-transform duration-700">{s.n}</div>
-                  <div className="text-[10px] font-black text-zinc-400 tracking-[0.3em] uppercase">{s.l}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ─── 09 Profile Section (Restored from 0c4779c) ─── */}
-        <section id="profile" className="py-40 bg-zinc-50 overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-24 items-center mb-40">
-              <div className="lg:col-span-5 relative">
-                <div className="aspect-[4/5] relative grayscale border border-zinc-200 shadow-2xl">
-                  <Image src="/junya-profile.png" alt="石原淳哉" fill className="object-cover" />
-                </div>
-                <div className="absolute -bottom-10 -right-10 w-64 h-64 border-navy-500 border-b-8 border-r-8 -z-10" />
-              </div>
-              <div className="lg:col-span-7">
-                <span className="text-navy-300 text-[10px] font-black tracking-[0.5em] uppercase mb-4 block">The Professional</span>
-                <h2 className="text-5xl md:text-7xl font-black text-navy-500 tracking-tighter uppercase font-outfit mb-8 leading-none">
-                  石原 淳哉
-                </h2>
-                <p className="text-[10px] font-black text-zinc-400 tracking-[0.4em] uppercase flex items-center mb-12">
-                  <span className="w-12 h-[1px] bg-navy-500 mr-4"></span>
-                  JUNYA ISHIHARA
+              <div className="mt-10 md:mt-12 flex flex-col md:flex-row md:items-end gap-8 md:gap-16">
+                <p data-hero="fade" className="text-base md:text-lg text-white/70 leading-relaxed max-w-xl">
+                  変化を実感するから、自然と続けたくなる。
+                  <br />
+                  根本から改善するアプローチで、見た目も体調も確実に。
                 </p>
-                <div className="space-y-8 prose prose-zinc prose-lg lg:prose-xl">
-                  <p className="text-xl text-navy-500 font-bold italic border-l-4 border-navy-500 pl-8 leading-relaxed mb-10">
-                    「ホネカワスネオ」と呼ばれた過去から、トレーニングを通じて人生を変えた経験を持つパーソナルトレーナー。
-                  </p>
-                  <p className="text-lg text-zinc-600 leading-offset-loose font-medium mb-8">
-                    単なるボディメイクにとどまらず、機能解剖学に基づいた「動ける身体づくり」と「痛みのない生活」を提供することを信条としています。
-                  </p>
-                  <p className="text-lg text-zinc-600 leading-offset-loose font-medium mb-12">
-                    大手フィットネスクラブでの指導経験、スポーツ現場での帯同経験を経て、現在は「HALLEL」にて、一般の方からアスリートまで幅広いクライアントの目標達成をサポートしています。
-                  </p>
-                </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-12 border-t border-zinc-200">
-                  {[{ i: 'ri-user-star-line', n: '指名No.1', s: 'エリア実績' }, { i: 'ri-medal-line', n: '10年+', s: '指導歴' }, { i: 'ri-group-line', n: '3000+', s: 'セッション数' }, { i: 'ri-book-open-line', n: 'NASM', s: '国際資格' }].map(q => (
-                    <div key={q.n} className="text-center group">
-                      <div className="text-2xl text-navy-300 group-hover:text-navy-500 transition-colors mb-4"><i className={q.i} /></div>
-                      <div className="text-xs font-black text-navy-500 uppercase tracking-tighter">{q.n}</div>
-                      <div className="text-[8px] text-zinc-400 font-bold uppercase tracking-widest mt-1">{q.s}</div>
-                    </div>
-                  ))}
-                </div>
+                <Link
+                  data-hero="fade"
+                  href="#contact"
+                  data-cursor="Book"
+                  className="btn-circle group shrink-0"
+                >
+                  <span className="relative z-10 font-outfit text-[11px] font-semibold tracking-[0.25em] uppercase">Book a Session</span>
+                </Link>
               </div>
             </div>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-24">
-              <div>
-                <h3 className="text-2xl font-black text-navy-500 uppercase tracking-tighter font-outfit mb-16 flex items-center">
-                  <span className="w-10 h-0.5 bg-navy-500 mr-8" />経歴・実績
-                </h3>
-                <div className="space-y-16 border-l border-zinc-100 ml-4">
-                  {[
-                    { y: '2014 - 2018', t: '都内フィットネスクラブ勤務', d: '月間150本以上のセッションを担当し、エリア指名数No.1を獲得。' },
-                    { y: '2018', t: 'フリーランスとして独立', d: 'パーソナルトレーナーとして独立。より一人ひとりに寄り添った指導を開始。' },
-                    { y: '2019 - Present', t: 'TOPFORM / HALLEL 参画', d: 'コンディショニングジム「HALLEL」の立ち上げに参画。' },
-                    { y: 'Current', t: '湘南学院高等学校 男子バレーボール部', d: 'ストレングストレーナーとしてチームに帯同。' },
-                  ].map(tl => (
-                    <div key={tl.y} className="relative pl-12 group">
-                      <div className="absolute -left-[5px] top-1 w-2.5 h-2.5 bg-navy-500 rounded-full group-hover:scale-150 transition-transform duration-500" />
-                      <div className="text-[10px] font-black text-navy-300 font-outfit tracking-widest title mb-3 uppercase">{tl.y}</div>
-                      <h4 className="text-xl font-black text-navy-500 uppercase tracking-tighter font-outfit mb-2">{tl.t}</h4>
-                      <p className="text-sm font-medium text-zinc-500 leading-loose">{tl.d}</p>
-                    </div>
-                  ))}
+
+            <div className="col-span-12 lg:col-span-4 order-1 lg:order-2 flex lg:justify-end lg:items-start mb-10 lg:mb-0">
+              <figure className="relative w-[46vw] max-w-[240px] lg:w-full lg:max-w-[340px] ml-auto lg:ml-0">
+                <div data-hero="image" className="relative aspect-[3/4] overflow-hidden bg-navy-700">
+                  <Image
+                    src="/junya-portrait.jpg"
+                    alt="パーソナルトレーナー 石原淳哉"
+                    fill
+                    priority
+                    sizes="(min-width:1024px) 340px, 46vw"
+                    className="object-cover object-[50%_20%] portrait-tone"
+                  />
                 </div>
+                <figcaption data-hero="fade" className="mt-3 flex justify-between gap-2 tracking-[0.15em] md:tracking-[0.25em]  font-outfit text-[10px] uppercase text-white/45">
+                  <span>Junya Ishihara</span>
+                  <span className="hidden sm:inline">NASM-PES</span>
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div data-hero="fade" className="relative grid grid-cols-2 md:grid-cols-4 border-t border-white/10 font-outfit text-[10px] tracking-[0.25em] uppercase text-white/50">
+            {[
+              { k: '3,000+', v: 'Sessions' },
+              { k: '10+', v: 'Years' },
+              { k: '100%', v: 'Satisfaction' },
+            ].map((s) => (
+              <div key={s.v} className="px-5 md:px-10 py-5 border-r border-white/10 flex items-baseline gap-3">
+                <span className="text-white text-base md:text-lg font-semibold tracking-tight tabular-nums">{s.k}</span>
+                <span>{s.v}</span>
               </div>
-              <div>
-                <h3 className="text-2xl font-black text-navy-500 uppercase tracking-tighter font-outfit mb-16 flex items-center">
-                  <span className="w-10 h-0.5 bg-navy-500 mr-8" />専門分野 / 資格
-                </h3>
-                <div className="space-y-12">
-                  {[
-                    { s: '姿勢改善・機能改善', v: 100 },
-                    { s: '疼痛改善（腰痛・肩こり等）', v: 95 },
-                    { s: 'スポーツパフォーマンス向上', v: 90 }
-                  ].map(sk => (
-                    <div key={sk.s}>
-                      <div className="flex justify-between items-end mb-4">
-                        <span className="text-[10px] font-black text-navy-500 uppercase tracking-[0.3em]">{sk.s}</span>
-                        <span className="text-[10px] font-black text-zinc-300 font-outfit">{sk.v}%</span>
-                      </div>
-                      <div className="h-0.5 bg-zinc-100 relative">
-                        <div className="absolute inset-y-0 left-0 bg-navy-500 transition-all duration-1000" style={{ width: `${sk.v}%` }} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-24">
-                  {[
-                    { i: 'ri-graduation-cap-line', t: 'Education', n: '日本大学文理学部\n体育学科 卒業' },
-                    { i: 'ri-global-line', t: 'Certification', n: '全米スポーツ医学協会\nNASM-PES' }
-                  ].map(q => (
-                    <div key={q.n} className="p-8 bg-white border border-zinc-100 flex flex-col items-center text-center shadow-sm hover:shadow-2xl transition-all duration-700">
-                      <div className="text-3xl text-navy-300 mb-6"><i className={q.i} /></div>
-                      <div className="text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-4">{q.t}</div>
-                      <div className="text-xs font-bold text-navy-500 tracking-widest uppercase whitespace-pre-line leading-relaxed">{q.n}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            ))}
+            <div className="px-5 md:px-10 py-5 flex items-center justify-between gap-3">
+              <span>
+                Tokyo <TokyoClock />
+              </span>
+              <span className="scroll-cue" aria-hidden />
             </div>
           </div>
         </section>
 
-        {/* ─── 10 Contact Section (Restored from 0c4779c) ─── */}
-        <section id="contact" className="py-40 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-24">
-              <span className="text-navy-300 text-[10px] font-black tracking-[0.5em] uppercase mb-4 block">Get In Touch</span>
-              <h2 className="text-4xl md:text-6xl font-black text-navy-500 tracking-tighter uppercase font-outfit leading-none mb-8">
-                CONTACT
-              </h2>
-              <div className="w-16 h-1 bg-navy-500 mx-auto" />
+        {/* ─── 02 Methodology ─── */}
+        <section id="methodology" className="relative px-5 md:px-10 py-28 md:py-44">
+          <div className="grid grid-cols-12 gap-x-6 gap-y-16">
+            <div className="col-span-12 lg:col-span-5">
+              <div className="lg:sticky lg:top-32">
+                <Label index="02">Methodology</Label>
+                <h2 data-split className="mt-8 font-outfit font-black uppercase tracking-[-0.045em] leading-[0.9] text-[clamp(2.6rem,5.2vw,5.25rem)]">
+                  The Science
+                  <br />
+                  of <span className="text-zinc-300">Conditioning</span>
+                </h2>
+                <p data-reveal className="mt-10 text-lg leading-relaxed font-medium text-zinc-500 max-w-md">
+                  科学的根拠と豊富な経験に基づいた独自のメソッドで、確実な結果と最高級の体験をお約束します。
+                </p>
+              </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-zinc-100">
-              {[
-                { i: 'ri-file-list-3-line', t: 'Googleフォーム', d: '体験のご予約やご質問など、お気軽にお問い合わせください。', btn: 'Open Form', href: '#' },
-                { i: 'ri-line-fill', t: 'LINE公式', d: 'チャットで迅速に対応します。まずはお友だち追加から。', btn: 'Add Friend', href: '#' },
-                { i: 'ri-mail-send-line', t: 'メール', d: '直接のメールでのご連絡はこちらのボタンからどうぞ。', btn: 'Send Email', href: 'mailto:junya1995@gmail.com' },
-              ].map(c => (
-                <div key={c.t} className="p-16 text-center border border-zinc-100 hover:bg-zinc-50 transition-colors group flex flex-col justify-between h-full">
-                  <div>
-                    <div className="text-5xl text-navy-300 mb-10 group-hover:text-navy-500 transition-colors inline-block">
-                      <i className={c.i} />
+
+            <ol className="col-span-12 lg:col-span-6 lg:col-start-7">
+              {methodology.map((m) => (
+                <li key={m.n} className="group relative py-10 md:py-14">
+                  <span data-draw className="absolute top-0 left-0 right-0 h-px bg-zinc-200" aria-hidden />
+                  <div data-reveal className="grid grid-cols-[auto_1fr] gap-x-6 md:gap-x-10">
+                    <span className="font-outfit text-sm font-semibold text-zinc-400 tabular-nums pt-3">{m.n}</span>
+                    <div>
+                      <h3 className="font-outfit font-black uppercase tracking-[-0.04em] text-4xl md:text-6xl leading-none transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)] group-hover:translate-x-3">
+                        {m.t}
+                      </h3>
+                      <p className="mt-3 text-xs font-bold tracking-[0.3em] text-zinc-400">{m.s}</p>
+                      <p className="mt-6 text-base md:text-lg leading-relaxed font-medium text-zinc-600 max-w-xl">{m.d}</p>
                     </div>
-                    <h3 className="text-xl font-black text-navy-500 uppercase tracking-tighter font-outfit mb-2">{c.t}</h3>
-                    <div className="w-8 h-0.5 bg-navy-500 mx-auto mb-8 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                    <p className="text-sm text-zinc-500 leading-loose font-medium mb-12">{c.d}</p>
                   </div>
-                  <a href={c.href} className="inline-block px-8 py-4 bg-navy-500 text-white text-[10px] font-black tracking-[0.4em] uppercase hover:bg-zinc-950 transition-all duration-700 shadow-xl">
-                    {c.btn}
-                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        {/* ─── 03 Why Me ─── */}
+        <section id="why-me" className="relative bg-navy-500 text-white px-5 md:px-10 py-28 md:py-44 overflow-hidden">
+          <Label index="03" light>
+            Why Choose Me
+          </Label>
+          <h2 className="sr-only">選ばれる理由</h2>
+          <p
+            data-scrub-words
+            className="mt-12 md:mt-16 font-black tracking-[-0.03em] leading-[1.2] text-[clamp(2rem,6vw,5.5rem)] max-w-[16em]"
+          >
+            「鍛える」前に「整える」。マイナスをゼロにし、そこから機能的なプラスを作り出す。
+          </p>
+
+          <div className="mt-24 md:mt-36 grid grid-cols-1 md:grid-cols-3 gap-px bg-white/10 border-y border-white/10">
+            {reasons.map((r) => (
+              <article key={r.n} className="reason-card group bg-navy-500 p-8 md:p-10 lg:p-12 md:min-h-[22rem] flex flex-col justify-between gap-12">
+                <span className="font-outfit text-[11px] tracking-[0.3em] text-white/40 tabular-nums">REASON — {r.n}</span>
+                <div data-reveal>
+                  <h3 className="text-2xl md:text-3xl font-black tracking-tight mb-6">{r.t}</h3>
+                  <p className="text-base leading-relaxed text-white/60 group-hover:text-white/85 transition-colors duration-700">{r.d}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        {/* ─── 04 Concept ─── */}
+        <section id="concept" className="relative py-28 md:py-44 overflow-hidden">
+          <div className="whitespace-nowrap select-none pointer-events-none" aria-hidden>
+            <div data-marquee="1" className="inline-block font-outfit font-black uppercase tracking-[-0.05em] leading-none text-[clamp(5rem,16vw,15rem)] text-zinc-100">
+              Science · Personalized · Holistic · Luxury · Science · Personalized ·
+            </div>
+          </div>
+
+          <div className="px-5 md:px-10 mt-10 md:mt-6 relative">
+            <div className="grid grid-cols-12 gap-x-6">
+              <div className="col-span-12 md:col-span-8 lg:col-span-6 lg:col-start-4">
+                <Label index="04">Concept — Synergy</Label>
+                <h2 data-split className="mt-8 font-black tracking-[-0.04em] leading-[1.1] text-[clamp(2.25rem,5.5vw,4.75rem)]">
+                  科学的メソッド
+                  <span className="font-outfit font-extralight text-zinc-300 ml-2">×</span>
+                  <br />
+                  最高級サービス
+                </h2>
+              </div>
+            </div>
+
+            <div data-stagger className="mt-20 md:mt-28 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-t border-zinc-200">
+              {concept.map((c, i) => (
+                <div key={c.t} className="relative py-10 sm:pr-8 lg:pl-0 sm:[&:nth-child(even)]:pl-8 lg:[&:nth-child(even)]:pl-8 lg:[&:nth-child(n+2)]:pl-8 border-b border-zinc-200 sm:border-b-0 lg:border-l-0 lg:[&:nth-child(n+2)]:border-l sm:[&:nth-child(even)]:border-l border-zinc-200">
+                  <span className="font-outfit text-[11px] tracking-[0.3em] text-zinc-400 tabular-nums">0{i + 1}</span>
+                  <h3 className="mt-10 font-outfit font-black uppercase tracking-[-0.03em] text-2xl lg:text-3xl leading-none">{c.t}</h3>
+                  <p className="mt-2 text-xs font-bold tracking-[0.3em] text-zinc-400">{c.s}</p>
+                  <p className="mt-6 text-base leading-relaxed font-medium text-zinc-600">{c.d}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
+        {/* ─── 05 Service Flow ─── */}
+        <section id="service-flow" className="relative bg-zinc-50 px-5 md:px-10 py-28 md:py-44">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-10">
+            <div>
+              <Label index="05">Process</Label>
+              <h2 data-split className="mt-8 font-black tracking-[-0.04em] leading-[1.05] text-[clamp(2.5rem,6vw,5.5rem)]">
+                初回サービスの流れ
+              </h2>
+            </div>
+            <p data-reveal className="text-base md:text-lg font-medium text-zinc-500 leading-relaxed max-w-sm">
+              お申し込みから最初のセッションまで。はじめての方も、迷わず進めるように。
+            </p>
+          </div>
+
+          <div className="relative mt-20 md:mt-28">
+            <div className="absolute left-0 right-0 top-[11px] h-px bg-zinc-200 hidden md:block" aria-hidden>
+              <div data-draw data-draw-scrub className="absolute inset-0 bg-navy-500" />
+            </div>
+            <ol className="grid grid-cols-1 md:grid-cols-4 gap-x-8 gap-y-14">
+              {flow.map((f) => (
+                <li key={f.n} data-reveal className="relative md:pt-14">
+                  <span className="hidden md:block absolute top-[6px] left-0 w-[11px] h-[11px] rounded-full bg-zinc-50 border border-navy-500" aria-hidden />
+                  <div className="flex items-baseline justify-between border-b md:border-0 border-zinc-200 pb-4 md:pb-0">
+                    <span className="font-outfit font-black text-6xl md:text-7xl tracking-[-0.05em] leading-none tabular-nums">{f.n}</span>
+                    <span className="font-outfit text-[11px] font-semibold tracking-[0.3em] uppercase text-zinc-400">{f.e}</span>
+                  </div>
+                  <h3 className="mt-6 text-xl md:text-2xl font-black tracking-tight">{f.t}</h3>
+                  <p className="mt-3 text-base leading-relaxed font-medium text-zinc-600">{f.d}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        {/* ─── 06 Locations ─── */}
+        <section id="locations" className="relative px-5 md:px-10 py-28 md:py-44">
+          <div className="grid grid-cols-12 gap-x-6 gap-y-10">
+            <div className="col-span-12 lg:col-span-7">
+              <Label index="06">Studios</Label>
+              <h2 data-split className="mt-8 font-outfit font-black uppercase tracking-[-0.045em] leading-[0.9] text-[clamp(2.75rem,7vw,6.5rem)]">
+                Exclusive
+                <br />
+                <span className="text-zinc-300">Studios</span>
+              </h2>
+            </div>
+            <p data-reveal className="col-span-12 lg:col-span-4 lg:col-start-9 self-end text-base md:text-lg font-medium text-zinc-500 leading-relaxed">
+              都心の2拠点、コンディショニングジム「HALLEL」。最高水準のトレーニング体験を、通いやすい場所で。
+            </p>
+          </div>
+
+          <div className="mt-20 md:mt-28 grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {studios.map((s) => (
+              <a
+                key={s.key}
+                href={s.map}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor="Map"
+                data-reveal
+                className="studio-card group relative block bg-ink text-white overflow-hidden p-7 md:p-10 min-h-[22rem] md:min-h-[36rem]"
+              >
+                <div className="studio-grid" aria-hidden />
+                <div className="relative h-full flex flex-col justify-between min-h-[inherit]">
+                  <div className="flex justify-between font-outfit text-[10px] tracking-[0.3em] uppercase text-white/45">
+                    <span>{s.coord}</span>
+                    <span className="transition-transform duration-700 group-hover:translate-x-1 group-hover:-translate-y-1">↗</span>
+                  </div>
+
+                  <div>
+                    <p className="font-outfit font-black uppercase tracking-[-0.06em] leading-[0.85] text-[clamp(3rem,6.8vw,7rem)] studio-word">
+                      {s.key}
+                    </p>
+                    <div className="mt-8 md:mt-10 grid grid-cols-[1fr_auto] items-end gap-6 border-t border-white/15 pt-6">
+                      <div>
+                        <h3 className="text-xl md:text-2xl font-black tracking-tight">{s.name}</h3>
+                        <p className="mt-2 text-sm text-white/55 leading-relaxed">{s.addr}</p>
+                      </div>
+                      <p className="text-right">
+                        <span className="block font-outfit font-black text-5xl md:text-6xl tracking-[-0.05em] leading-none">
+                          {s.min}
+                          <span className="text-lg font-semibold tracking-normal ml-1">min</span>
+                        </span>
+                        <span className="text-xs text-white/55">{s.station} 徒歩</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        {/* ─── 07 Pricing ─── */}
+        <section id="pricing" className="relative bg-ink text-white px-5 md:px-10 py-28 md:py-44">
+          <div className="grid grid-cols-12 gap-x-6 gap-y-10">
+            <div className="col-span-12 lg:col-span-6">
+              <Label index="07" light>
+                Investment
+              </Label>
+              <h2 data-split className="mt-8 font-outfit font-black uppercase tracking-[-0.045em] leading-[0.9] text-[clamp(2.75rem,7vw,6.5rem)]">
+                Choose
+                <br />
+                Your <span className="text-white/30">Luxury</span>
+              </h2>
+            </div>
+            <p data-reveal className="col-span-12 lg:col-span-4 lg:col-start-9 self-end text-sm text-white/50 leading-relaxed">
+              ※すべて税込価格です。場所や頻度につきましては、お気軽にご相談ください。
+            </p>
+          </div>
+
+          <div className="mt-20 md:mt-28 grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-20">
+            {[
+              { title: '通常セッション', en: 'Studio Session', items: pricing.studio },
+              { title: '出張セッション', en: 'Private Visit', items: pricing.visit },
+            ].map((group) => (
+              <div key={group.title}>
+                <div className="flex items-baseline justify-between pb-6">
+                  <h3 className="text-xl md:text-2xl font-black tracking-tight">{group.title}</h3>
+                  <span className="font-outfit text-[10px] tracking-[0.3em] uppercase text-white/40">{group.en}</span>
+                </div>
+                <ul className="border-t border-white/15">
+                  {group.items.map((p) => (
+                    <li key={p.t} className="price-row group relative border-b border-white/15">
+                      <div className="relative z-10 grid grid-cols-[1fr_auto] md:grid-cols-[7rem_1fr_auto] items-center gap-x-6 gap-y-3 py-7 md:py-8">
+                        <span className="font-outfit font-black text-4xl md:text-5xl tracking-[-0.05em] leading-none tabular-nums">
+                          {p.t}
+                          <span className="text-xs font-semibold tracking-[0.1em] ml-1 align-top">min</span>
+                        </span>
+                        <span className="col-span-2 md:col-span-1 order-last md:order-none text-sm text-white/55 leading-relaxed group-hover:text-white/85 transition-colors duration-500">{p.d}</span>
+                        <span className="font-outfit font-semibold text-xl md:text-3xl tracking-[-0.03em] tabular-nums whitespace-nowrap">
+                          <span className="text-sm md:text-base mr-0.5 text-white/60">¥</span>
+                          {p.p}
+                        </span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ─── 08 Testimonials ─── */}
+        <section id="testimonials" className="relative px-5 md:px-10 py-28 md:py-44">
+          <Label index="08">Voices</Label>
+          <h2 data-split className="mt-8 font-outfit font-black uppercase tracking-[-0.045em] leading-[0.9] text-[clamp(2.75rem,7vw,6.5rem)]">
+            Voice of <span className="text-zinc-300">Peak</span>
+          </h2>
+
+          <div className="mt-20 md:mt-28 grid grid-cols-1 lg:grid-cols-3 gap-x-10 gap-y-16">
+            {testimonials.map((t, i) => (
+              <figure key={t.name} data-reveal={String(i * 0.12)} className={`relative ${i === 1 ? 'lg:mt-24' : i === 2 ? 'lg:mt-48' : ''}`}>
+                <span className="block font-serif italic text-[7rem] leading-[0.6] text-navy-100 select-none" aria-hidden>
+                  “
+                </span>
+                <blockquote className="mt-4 text-lg md:text-xl leading-[1.9] font-medium text-navy-500">{t.text}</blockquote>
+                <figcaption className="mt-8 pt-6 border-t border-zinc-200 flex justify-between items-baseline">
+                  <span className="font-black">{t.name}</span>
+                  <span className="text-xs text-zinc-400 tracking-wider">{t.info}</span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+
+          <dl className="mt-28 md:mt-40 grid grid-cols-2 lg:grid-cols-4 border-t border-zinc-200">
+            {stats.map((s, i) => (
+              <div key={s.l} className={`py-10 md:py-14 ${i % 2 === 1 ? 'pl-6 md:pl-10 border-l border-zinc-200' : ''} ${i === 2 ? 'lg:pl-10 lg:border-l border-zinc-200' : ''} ${i >= 2 ? 'border-t lg:border-t-0 border-zinc-200' : ''}`}>
+                <dt className="font-outfit text-[11px] font-semibold tracking-[0.3em] uppercase text-zinc-400">
+                  {s.e} <span className="tracking-normal">/ {s.l}</span>
+                </dt>
+                <dd data-count className="mt-4 font-outfit font-black text-[clamp(2.6rem,5.4vw,5.5rem)] tracking-[-0.05em] leading-none tabular-nums">
+                  {s.n}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+        {/* ─── 09 Profile ─── */}
+        <section id="profile" className="relative bg-zinc-50 px-5 md:px-10 py-28 md:py-44 overflow-hidden">
+          <Label index="09">The Professional</Label>
+
+          <div className="mt-14 md:mt-20 grid grid-cols-12 gap-x-6 gap-y-16">
+            <div className="col-span-12 md:col-span-5 lg:col-span-4">
+              <div data-clip className="relative aspect-[3/4] overflow-hidden bg-zinc-200">
+                <div data-parallax="0.15" className="absolute inset-[-8%_0]">
+                  <Image src="/junya-portrait.jpg" alt="石原淳哉" fill sizes="(min-width:768px) 40vw, 100vw" className="object-cover object-[50%_25%] portrait-tone" />
+                </div>
+              </div>
+            </div>
+
+            <div className="col-span-12 md:col-span-7 lg:col-span-7 lg:col-start-6">
+              <h2 data-split className="font-black tracking-[-0.04em] leading-none text-[clamp(3.5rem,9vw,8rem)]">
+                石原 淳哉
+              </h2>
+              <p data-reveal className="mt-5 font-outfit text-sm font-semibold tracking-[0.4em] uppercase text-zinc-400">
+                Junya Ishihara — Personal Trainer
+              </p>
+
+              <p data-reveal className="mt-12 md:mt-16 text-xl md:text-2xl font-bold leading-[1.7] tracking-tight max-w-2xl">
+                「ホネカワスネオ」と呼ばれた過去から、トレーニングを通じて人生を変えた経験を持つパーソナルトレーナー。
+              </p>
+              <div data-reveal className="mt-8 space-y-6 text-lg leading-relaxed font-medium text-zinc-600 max-w-2xl">
+                <p>単なるボディメイクにとどまらず、機能解剖学に基づいた「動ける身体づくり」と「痛みのない生活」を提供することを信条としています。</p>
+                <p>大手フィットネスクラブでの指導経験、スポーツ現場での帯同経験を経て、現在は「HALLEL」にて、一般の方からアスリートまで幅広いクライアントの目標達成をサポートしています。</p>
+              </div>
+
+              <dl data-stagger className="mt-14 grid grid-cols-2 md:grid-cols-4 border-t border-zinc-200">
+                {[
+                  { n: '指名No.1', s: 'エリア実績' },
+                  { n: '10年+', s: '指導歴' },
+                  { n: '3000+', s: 'セッション数' },
+                  { n: 'NASM', s: '国際資格' },
+                ].map((q) => (
+                  <div key={q.n} className="pt-6 pb-2 pr-4">
+                    <dd className="font-black text-xl md:text-2xl tracking-tight">{q.n}</dd>
+                    <dt className="mt-1 text-xs text-zinc-400 tracking-wider">{q.s}</dt>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </div>
+
+          <div className="mt-28 md:mt-40 grid grid-cols-12 gap-x-6 gap-y-20">
+            <div className="col-span-12 lg:col-span-6">
+              <h3 className="font-outfit text-[11px] font-semibold tracking-[0.3em] uppercase text-zinc-500 mb-12">経歴・実績 / Career</h3>
+              <ol className="relative pl-8">
+                <span className="absolute left-0 top-2 bottom-2 w-px bg-zinc-200" aria-hidden>
+                  <span data-draw="y" data-draw-scrub className="absolute inset-0 bg-navy-500" />
+                </span>
+                {timeline.map((tl) => (
+                  <li key={tl.y} data-reveal className="relative pb-12 last:pb-0">
+                    <span className="absolute -left-8 top-[0.55rem] -translate-x-1/2 w-[9px] h-[9px] rounded-full bg-zinc-50 border border-navy-500" aria-hidden />
+                    <p className="font-outfit text-xs font-semibold tracking-[0.25em] uppercase text-zinc-400">{tl.y}</p>
+                    <h4 className="mt-2 text-xl md:text-2xl font-black tracking-tight">{tl.t}</h4>
+                    <p className="mt-2 text-base leading-relaxed font-medium text-zinc-600">{tl.d}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <div className="col-span-12 lg:col-span-5 lg:col-start-8">
+              <h3 className="font-outfit text-[11px] font-semibold tracking-[0.3em] uppercase text-zinc-500 mb-12">専門分野 / Expertise</h3>
+              <div className="space-y-10">
+                {skills.map((sk) => (
+                  <div key={sk.s}>
+                    <div className="flex justify-between items-baseline mb-4">
+                      <span className="text-base font-bold">{sk.s}</span>
+                      <span data-count className="font-outfit text-sm font-semibold text-zinc-400 tabular-nums">
+                        {sk.v}%
+                      </span>
+                    </div>
+                    <div className="h-px bg-zinc-200 relative">
+                      <div data-draw className="absolute inset-y-[-0.5px] left-0 bg-navy-500 h-[2px]" style={{ width: `${sk.v}%` }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <dl className="mt-16 grid grid-cols-1 sm:grid-cols-2 gap-px bg-zinc-200 border border-zinc-200">
+                {[
+                  { t: 'Education', n: '日本大学文理学部\n体育学科 卒業' },
+                  { t: 'Certification', n: '全米スポーツ医学協会\nNASM-PES' },
+                ].map((q) => (
+                  <div key={q.t} className="bg-zinc-50 p-7">
+                    <dt className="font-outfit text-[10px] font-semibold tracking-[0.3em] uppercase text-zinc-400">{q.t}</dt>
+                    <dd className="mt-4 text-base font-bold leading-relaxed whitespace-pre-line">{q.n}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </div>
+        </section>
+
+        {/* ─── 10 Contact ─── */}
+        <section id="contact" className="relative bg-ink text-white px-5 md:px-10 pt-28 md:pt-44 pb-24 md:pb-32 overflow-hidden">
+          <div className="hero-glow hero-glow--low" aria-hidden />
+          <div className="relative">
+            <Label index="10" light>
+              Contact
+            </Label>
+            <h2 className="sr-only">CONTACT</h2>
+            <p data-split className="mt-10 font-black tracking-[-0.045em] leading-[1.02] text-[clamp(3rem,10vw,9rem)]">
+              さあ、
+              <br />
+              「したい！」を
+              <br />
+              はじめよう。
+            </p>
+
+            <ul className="mt-20 md:mt-28 border-t border-white/15">
+              {contacts.map((c) => (
+                <li key={c.t}>
+                  <a href={c.href} data-cursor="Open" className="contact-row group relative grid grid-cols-[1fr_auto] md:grid-cols-[12rem_1fr_auto] items-center gap-x-6 gap-y-2 py-8 md:py-10 border-b border-white/15 overflow-hidden">
+                    <span className="relative z-10 font-outfit text-[11px] font-semibold tracking-[0.3em] uppercase text-white/45 group-hover:text-navy-500/60 transition-colors duration-500 col-span-2 md:col-span-1">
+                      {c.e}
+                    </span>
+                    <span className="relative z-10">
+                      <span className="block text-2xl md:text-4xl font-black tracking-tight group-hover:text-navy-500 transition-colors duration-500">{c.t}</span>
+                      <span className="block mt-2 text-sm text-white/55 group-hover:text-navy-500/70 transition-colors duration-500">{c.d}</span>
+                    </span>
+                    <span className="relative z-10 text-3xl md:text-5xl font-outfit font-light transition-all duration-700 ease-[cubic-bezier(.16,1,.3,1)] group-hover:text-navy-500 group-hover:-rotate-45">→</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
       </main>
       <Footer />
+      {/* ページ全体の描画準備が整ってから動きを付けるため、最後に置く */}
+      <MotionProvider />
     </>
   )
 }

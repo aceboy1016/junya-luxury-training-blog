@@ -1,123 +1,149 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { usePathname } from 'next/navigation'
+import gsap from 'gsap'
+
+const navigation = [
+  { name: 'Methodology', jp: 'メソッド', href: '/#methodology' },
+  { name: 'Service', jp: 'サービスの流れ', href: '/#service-flow' },
+  { name: 'Studios', jp: 'スタジオ', href: '/#locations' },
+  { name: 'Price', jp: '料金', href: '/#pricing' },
+  { name: 'Profile', jp: 'プロフィール', href: '/#profile' },
+  { name: 'Journal', jp: 'ブログ', href: '/blog' },
+  { name: 'Contact', jp: 'お問い合わせ', href: '/#contact' },
+]
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [open, setOpen] = useState(false)
+  const [hidden, setHidden] = useState(false)
+  const overlay = useRef<HTMLDivElement>(null)
+  const pathname = usePathname()
 
+  // 下にスクロールしたら隠し、上に戻したら出す
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
+    let last = window.scrollY
+    const onScroll = () => {
+      const y = window.scrollY
+      setHidden(y > 160 && y > last)
+      last = y
     }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const navigation = [
-    { name: 'HOME', href: '/#home' },
-    { name: 'ABOUT', href: '/#profile' },
-    { name: 'SERVICE', href: '/#service-flow' },
-    { name: 'PRICE', href: '/#pricing' },
-    { name: 'BLOG', href: '/blog' },
-    { name: 'CONTACT', href: '/#contact' },
-  ]
+  useEffect(() => setOpen(false), [pathname])
+
+  useEffect(() => {
+    const el = overlay.current
+    if (!el) return
+    const lenis = (window as any).__lenis
+    if (open) {
+      lenis?.stop()
+      gsap.set(el, { visibility: 'visible' })
+      gsap.fromTo(el, { clipPath: 'inset(0% 0% 100% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1, ease: 'expo.inOut' })
+      gsap.fromTo(
+        el.querySelectorAll('[data-menu-item]'),
+        { yPercent: 110 },
+        { yPercent: 0, duration: 1.2, ease: 'expo.out', stagger: 0.05, delay: 0.35 }
+      )
+      gsap.fromTo(el.querySelectorAll('[data-menu-fade]'), { autoAlpha: 0 }, { autoAlpha: 1, duration: 1, delay: 0.7 })
+    } else {
+      lenis?.start()
+      gsap.to(el, {
+        clipPath: 'inset(0% 0% 100% 0%)',
+        duration: 0.8,
+        ease: 'expo.inOut',
+        onComplete: () => {
+          gsap.set(el, { visibility: 'hidden' })
+        },
+      })
+    }
+  }, [open])
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-1000 ${
-        isScrolled
-          ? 'bg-white/95 backdrop-blur-xl shadow-2xl py-4'
-          : 'bg-transparent py-8'
-      }`}
-    >
-      <nav className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="group flex items-center space-x-4">
-            <div className={`w-12 h-12 flex items-center justify-center text-xl font-black font-outfit tracking-tighter transition-all duration-700 ${
-              isScrolled ? 'bg-navy-500 text-white' : 'bg-white text-navy-500 shadow-2xl'
-            }`}>
-              JI
-            </div>
-            <div className="flex flex-col">
-              <span className={`text-xl font-black font-outfit tracking-tighter uppercase transition-colors duration-700 ${
-                isScrolled ? 'text-navy-500' : 'text-white'
-              }`}>
-                JUNYA ISHIHARA
-              </span>
-              <span className={`text-[8px] font-black tracking-[0.4em] uppercase transition-colors duration-700 ${
-                isScrolled ? 'text-zinc-400' : 'text-white/50'
-              }`}>
-                Personal Training
-              </span>
-            </div>
+    <>
+      <header
+        className={`fixed inset-x-0 top-0 z-[100] mix-blend-difference text-white transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)] ${
+          hidden && !open ? '-translate-y-full' : 'translate-y-0'
+        }`}
+      >
+        <nav className="flex items-center justify-between px-5 md:px-10 h-20 md:h-24">
+          <Link href="/" className="font-outfit font-black text-[15px] md:text-base tracking-[-0.02em] uppercase leading-none" aria-label="JUNYA ISHIHARA ホーム">
+            Junya Ishihara
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-12">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`text-[10px] font-black tracking-[0.4em] uppercase transition-all duration-700 hover:scale-110 relative group ${
-                  isScrolled ? 'text-navy-500' : 'text-white'
-                }`}
-              >
-                {item.name}
-                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-navy-500 transition-all duration-700 group-hover:w-full" />
-              </Link>
+          <ul className="hidden lg:flex items-center gap-9">
+            {navigation.slice(0, 6).map((item) => (
+              <li key={item.name}>
+                <Link href={item.href} className="nav-link inline-flex font-outfit text-[11px] font-semibold tracking-[0.22em] uppercase">
+                  <span data-text={item.name}>{item.name}</span>
+                </Link>
+              </li>
             ))}
+          </ul>
 
-            {/* CTA Button */}
-            <Link
-              href="/#contact"
-              className={`px-8 py-3 text-[10px] font-black tracking-[0.4em] uppercase transition-all duration-700 shadow-2xl ${
-                isScrolled 
-                  ? 'bg-navy-500 text-white hover:bg-zinc-950' 
-                  : 'bg-white text-navy-500 hover:bg-navy-500 hover:text-white'
-              }`}
-            >
-              Experience Session
+          <div className="flex items-center gap-6">
+            <Link href="/#contact" className="hidden md:inline-flex nav-link font-outfit text-[11px] font-semibold tracking-[0.22em] uppercase">
+              <span data-text="Book a Session">Book a Session</span>
+              <span className="ml-2" aria-hidden>↗</span>
             </Link>
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              className="lg:hidden flex items-center gap-3 font-outfit text-[11px] font-semibold tracking-[0.22em] uppercase h-10"
+              aria-expanded={open}
+              aria-controls="site-menu"
+            >
+              {open ? 'Close' : 'Menu'}
+              <span className="relative block w-6 h-[7px]" aria-hidden>
+                <span className={`absolute left-0 right-0 h-px bg-current transition-transform duration-500 ${open ? 'top-[3px] rotate-45' : 'top-0'}`} />
+                <span className={`absolute left-0 right-0 h-px bg-current transition-transform duration-500 ${open ? 'top-[3px] -rotate-45' : 'top-[6px]'}`} />
+              </span>
+            </button>
           </div>
+        </nav>
+      </header>
 
-          {/* Mobile Menu Button */}
-          <button
-            className={`lg:hidden w-12 h-12 flex items-center justify-center text-2xl transition-all duration-700 ${
-              isScrolled ? 'text-navy-500' : 'text-white'
-            }`}
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            <i className={isMenuOpen ? 'ri-close-line' : 'ri-menu-3-line'} />
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        <div className={`fixed inset-0 bg-zinc-950 z-[-1] flex flex-col items-center justify-center space-y-12 transition-all duration-1000 ${
-          isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-        }`}>
-          {navigation.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="text-white text-4xl font-black font-outfit tracking-tighter uppercase hover:text-navy-500 transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {item.name}
-            </Link>
+      <div
+        ref={overlay}
+        id="site-menu"
+        className="fixed inset-0 z-[90] bg-ink text-white invisible flex flex-col justify-between pt-28 pb-10 px-5 md:px-10"
+        style={{ clipPath: 'inset(0% 0% 100% 0%)' }}
+        aria-hidden={!open}
+      >
+        <ul className="space-y-1">
+          {navigation.map((item, i) => (
+            <li key={item.name} className="overflow-hidden">
+              <Link
+                href={item.href}
+                onClick={() => setOpen(false)}
+                data-menu-item
+                className="group flex items-baseline gap-4 py-1"
+                tabIndex={open ? 0 : -1}
+              >
+                <span className="font-outfit text-[10px] text-white/40 tabular-nums w-6">0{i + 1}</span>
+                <span className="font-outfit font-black uppercase tracking-[-0.04em] text-[clamp(2rem,9.5vw,6rem)] leading-[0.95] transition-colors duration-500 group-hover:text-white/40">
+                  {item.name}
+                </span>
+                <span className="text-xs text-white/40 hidden sm:inline">{item.jp}</span>
+              </Link>
+            </li>
           ))}
-          <Link
-            href="/#contact"
-            className="px-12 py-5 bg-navy-500 text-white text-[10px] font-black tracking-[0.4em] uppercase shadow-2xl"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Experience Session
-          </Link>
+        </ul>
+        <div data-menu-fade className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 text-xs text-white/50 border-t border-white/10 pt-6">
+          <p className="leading-relaxed">
+            HALLEL 半蔵門 / 恵比寿
+            <br />
+            「しなきゃ」を「したい！」に変える。
+          </p>
+          <a href="mailto:junya1995@gmail.com" className="font-outfit text-white text-base tracking-tight">
+            junya1995@gmail.com ↗
+          </a>
         </div>
-      </nav>
-    </header>
+      </div>
+    </>
   )
 }
 

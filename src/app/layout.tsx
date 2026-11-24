@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import CookieConsent from '@/components/CookieConsent'
+import Cursor from '@/components/motion/Cursor'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -99,7 +100,7 @@ export const viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
-  themeColor: '#E49B3F',
+  themeColor: '#12121A',
 }
 
 export default function RootLayout({
@@ -108,15 +109,20 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="ja" className={`${inter.variable} ${outfit.variable} ${cormorant.variable}`}>
+    <html lang="ja" suppressHydrationWarning className={`${inter.variable} ${outfit.variable} ${cormorant.variable}`}>
       <head>
+        {/* 描画前に実行：アニメーション対象のチラつき防止と、オープニングの再表示抑制 */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var d=document.documentElement;d.classList.add('js');try{if(sessionStorage.getItem('pl-seen'))d.classList.add('pl-seen')}catch(e){}if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('motion-off')})()`,
+          }}
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="//cdn.sanity.io" />
         <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
         <meta name="format-detection" content="telephone=no" />
-        <meta name="theme-color" content="#E49B3F" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
+                <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="JUNYA ISHIHARA PT" />
 
@@ -166,6 +172,7 @@ export default function RootLayout({
           <GoogleAnalytics ga_id={process.env.NEXT_PUBLIC_GA_ID} />
         )}
 
+        <Cursor />
         <div id="__next">
           {children}
         </div>
