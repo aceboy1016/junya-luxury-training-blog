@@ -130,7 +130,7 @@ export function generateStructuredData(
       "name": "JUNYA ISHIHARA PERSONAL TRAINING",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://junya-personal-training.com/logo.png"
+        "url": "https://junya-luxury-training-blog.vercel.app/logo.png"
       }
     },
     "datePublished": publishedAt,
@@ -142,7 +142,7 @@ export function generateStructuredData(
     "timeRequired": `PT${readingTime}M`,
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://junya-personal-training.com/blog/${title}`
+      "@id": `https://junya-luxury-training-blog.vercel.app/blog/${title}`
     }
   }
 }

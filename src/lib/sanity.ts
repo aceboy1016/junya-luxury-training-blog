@@ -1,8 +1,13 @@
 import { createClient } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
 
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || ''
+
+// Sanityの接続情報が未設定でもビルド・表示が壊れないようにする
+export const isSanityConfigured = projectId !== ''
+
 export const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '',
+  projectId: projectId || 'unconfigured',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   apiVersion: '2024-01-01',
   useCdn: true,
@@ -376,62 +381,72 @@ export const queries = {
 }
 
 // APIヘルパー関数
+async function safeFetch<T>(query: string, params: Record<string, unknown>, fallback: T): Promise<T> {
+  if (!isSanityConfigured) return fallback
+  try {
+    return (await client.fetch<T>(query, params)) ?? fallback
+  } catch (error) {
+    console.error('Sanity fetch failed:', error)
+    return fallback
+  }
+}
+
 export async function getAllPosts(): Promise<Post[]> {
-  return await client.fetch(queries.allPosts)
+  return safeFetch(queries.allPosts, {}, [])
 }
 
 export async function getFeaturedPosts(): Promise<Post[]> {
-  return await client.fetch(queries.featuredPosts)
+  return safeFetch(queries.featuredPosts, {}, [])
 }
 
 export async function getLatestPosts(): Promise<Post[]> {
-  return await client.fetch(queries.latestPosts)
+  return safeFetch(queries.latestPosts, {}, [])
 }
 
 export async function getPostBySlug(slug: string): Promise<Post | null> {
-  return await client.fetch(queries.postBySlug, { slug })
+  return safeFetch(queries.postBySlug, { slug }, null)
 }
 
 export async function getPostsByCategory(categoryId: string): Promise<Post[]> {
-  return await client.fetch(queries.postsByCategory, { categoryId })
+  return safeFetch(queries.postsByCategory, { categoryId }, [])
 }
 
 export async function getRelatedPosts(currentPostId: string): Promise<Post[]> {
-  return await client.fetch(queries.relatedPosts, { currentPostId })
+  return safeFetch(queries.relatedPosts, { currentPostId }, [])
 }
 
 export async function getAllCategories(): Promise<Category[]> {
-  return await client.fetch(queries.allCategories)
+  return safeFetch(queries.allCategories, {}, [])
 }
 
 export async function getCategoryBySlug(slug: string): Promise<Category | null> {
-  return await client.fetch(queries.categoryBySlug, { slug })
+  return safeFetch(queries.categoryBySlug, { slug }, null)
 }
 
 export async function searchPosts(searchTerm: string): Promise<Post[]> {
-  return await client.fetch(queries.searchPosts, { searchTerm })
+  return safeFetch(queries.searchPosts, { searchTerm }, [])
 }
 
 export async function getAllAuthors(): Promise<Author[]> {
-  return await client.fetch(queries.allAuthors)
+  return safeFetch(queries.allAuthors, {}, [])
 }
 
 export async function getAllPostSlugs(): Promise<string[]> {
-  return await client.fetch(queries.allPostSlugs)
+  return safeFetch(queries.allPostSlugs, {}, [])
 }
 
 export async function getAllCategorySlugs(): Promise<string[]> {
-  return await client.fetch(queries.allCategorySlugs)
+  return safeFetch(queries.allCategorySlugs, {}, [])
 }
 
 // 人気記事取得
 export async function getPopularPosts(): Promise<Post[]> {
-  return await client.fetch(queries.popularPosts)
+  return safeFetch(queries.popularPosts, {}, [])
 }
 
 // アクセス数ランキング取得
 export async function getViewsRanking(): Promise<Post[]> {
-  return await client.fetch(queries.viewsRanking)
+  return safeFetch(queries.viewsRanking, {}, [])
 }
 
 // アクセス数を増加させる関数

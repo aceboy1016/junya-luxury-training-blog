@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'JUNYA ISHIHARA' }],
   creator: 'JUNYA ISHIHARA',
   publisher: 'JUNYA ISHIHARA PERSONAL TRAINING',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://junya-personal-training.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://junya-luxury-training-blog.vercel.app'),
   alternates: {
     canonical: '/',
   },

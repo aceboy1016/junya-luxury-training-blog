@@ -39,7 +39,7 @@ const StructuredData = ({
       "name": "JUNYA ISHIHARA PERSONAL TRAINING",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://junya-personal-training.com/logo.png"
+        "url": "https://junya-luxury-training-blog.vercel.app/logo.png"
       }
     },
     "datePublished": publishedAt,
@@ -48,10 +48,10 @@ const StructuredData = ({
     "keywords": tags?.join(', '),
     "articleSection": "フィットネス・トレーニング",
     "wordCount": content.length,
-    "url": `https://junya-personal-training.com/blog/${slug}`,
+    "url": `https://junya-luxury-training-blog.vercel.app/blog/${slug}`,
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://junya-personal-training.com/blog/${slug}`
+      "@id": `https://junya-luxury-training-blog.vercel.app/blog/${slug}`
     }
   }
 
@@ -64,19 +64,19 @@ const StructuredData = ({
         "@type": "ListItem",
         "position": 1,
         "name": "ホーム",
-        "item": "https://junya-personal-training.com"
+        "item": "https://junya-luxury-training-blog.vercel.app"
       },
       {
         "@type": "ListItem", 
         "position": 2,
         "name": "ブログ",
-        "item": "https://junya-personal-training.com/blog"
+        "item": "https://junya-luxury-training-blog.vercel.app/blog"
       },
       {
         "@type": "ListItem",
         "position": 3,
         "name": title,
-        "item": `https://junya-personal-training.com/blog/${slug}`
+        "item": `https://junya-luxury-training-blog.vercel.app/blog/${slug}`
       }
     ]
   }
@@ -87,8 +87,8 @@ const StructuredData = ({
     "@type": "Organization",
     "name": "JUNYA ISHIHARA PERSONAL TRAINING",
     "description": "プロフェッショナルパーソナルトレーナーによる専門的なトレーニング指導",
-    "url": "https://junya-personal-training.com",
-    "logo": "https://junya-personal-training.com/logo.png",
+    "url": "https://junya-luxury-training-blog.vercel.app",
+    "logo": "https://junya-luxury-training-blog.vercel.app/logo.png",
     "contactPoint": {
       "@type": "ContactPoint",
       "telephone": "+81-3-1234-5678",
