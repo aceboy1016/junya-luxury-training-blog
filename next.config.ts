@@ -1,13 +1,8 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  // 静的サイト出力設定
-  output: 'export',
-  trailingSlash: true,
-  
   // Sanity CDN用の画像最適化設定
   images: {
-    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
