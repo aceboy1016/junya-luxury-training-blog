@@ -68,7 +68,7 @@ export default function Preloader() {
   if (done) return null
 
   return (
-    <div ref={root} className="preloader fixed inset-0 z-[200] bg-breeze-50 text-navy-500" aria-hidden="true">
+    <div ref={root} className="preloader fixed inset-0 z-[200] bg-breeze-50 text-deep" aria-hidden="true">
       <div data-pl="inner" className="absolute inset-0 flex flex-col justify-between p-6 md:p-10">
         <div className="flex justify-between text-[10px] font-semibold tracking-[0.4em] uppercase text-zinc-400 font-outfit">
           <span>Junya Ishihara</span>
@@ -89,7 +89,7 @@ export default function Preloader() {
         </div>
 
         <div className="flex items-end justify-between gap-8">
-          <div className="flex-1 h-px bg-navy-500/10 relative overflow-hidden self-center">
+          <div className="flex-1 h-px bg-deep/10 relative overflow-hidden self-center">
             <div data-pl="bar" className="absolute inset-0 bg-breeze-500 origin-left scale-x-0" />
           </div>
           <span data-pl="count" className="font-outfit font-light text-5xl md:text-7xl tabular-nums leading-none">

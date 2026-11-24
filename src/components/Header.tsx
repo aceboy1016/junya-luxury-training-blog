@@ -65,7 +65,7 @@ const Header = () => {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-[100] mix-blend-difference text-white transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)] ${
+        className={`fixed inset-x-0 top-0 z-[100] text-deep transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)] ${
           hidden && !open ? '-translate-y-full' : 'translate-y-0'
         }`}
       >
@@ -109,7 +109,7 @@ const Header = () => {
       <div
         ref={overlay}
         id="site-menu"
-        className="fixed inset-0 z-[90] bg-navy-500 text-white invisible flex flex-col justify-between pt-28 pb-10 px-5 md:px-10"
+        className="fixed inset-0 z-[90] bg-breeze-50 text-deep invisible flex flex-col justify-between pt-28 pb-10 px-5 md:px-10"
         style={{ clipPath: 'inset(0% 0% 100% 0%)' }}
         aria-hidden={!open}
       >
@@ -123,22 +123,22 @@ const Header = () => {
                 className="group flex items-baseline gap-4 py-1"
                 tabIndex={open ? 0 : -1}
               >
-                <span className="font-outfit text-[10px] text-white/40 tabular-nums w-6">0{i + 1}</span>
-                <span className="font-outfit font-black uppercase tracking-[-0.04em] text-[clamp(2rem,9.5vw,6rem)] leading-[0.95] transition-colors duration-500 group-hover:text-white/40">
+                <span className="font-outfit text-[10px] text-breeze-500 tabular-nums w-6">0{i + 1}</span>
+                <span className="font-outfit font-black uppercase tracking-[-0.04em] text-[clamp(2rem,9.5vw,6rem)] leading-[0.95] transition-colors duration-500 group-hover:text-breeze-500">
                   {item.name}
                 </span>
-                <span className="text-xs text-white/40 hidden sm:inline">{item.jp}</span>
+                <span className="text-xs text-zinc-400 hidden sm:inline">{item.jp}</span>
               </Link>
             </li>
           ))}
         </ul>
-        <div data-menu-fade className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 text-xs text-white/50 border-t border-white/10 pt-6">
+        <div data-menu-fade className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 text-xs text-zinc-500 border-t border-deep/10 pt-6">
           <p className="leading-relaxed">
             HALLEL 半蔵門 / 恵比寿
             <br />
             「しなきゃ」を「したい！」に変える。
           </p>
-          <a href="mailto:junya1995@gmail.com" className="font-outfit text-white text-base tracking-tight">
+          <a href="mailto:junya1995@gmail.com" className="font-outfit text-breeze-600 text-base tracking-tight">
             junya1995@gmail.com ↗
           </a>
         </div>
