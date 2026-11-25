@@ -11,7 +11,7 @@ const sitemap = [
 ]
 
 const journal = [
-  { n: 'Journal', h: '/blog' },
+  { n: 'Blog', h: '/blog' },
   { n: 'Training Method', h: '/blog/category/training' },
   { n: 'Performance Meal', h: '/blog/category/nutrition' },
   { n: 'Mind & Lifestyle', h: '/blog/category/lifestyle' },
@@ -34,7 +34,7 @@ const Footer = () => {
           </div>
 
           <FooterList title="Index" items={sitemap} className="md:col-span-2 md:col-start-7" />
-          <FooterList title="Journal" items={journal} className="md:col-span-2" />
+          <FooterList title="Blog" items={journal} className="md:col-span-2" />
 
           <div className="col-span-2 md:col-span-3 md:col-start-10 lg:col-span-2 lg:col-start-11 space-y-6 text-sm">
             <p className="font-outfit text-[10px] font-semibold tracking-[0.4em] uppercase text-deep/50">Studios</p>
