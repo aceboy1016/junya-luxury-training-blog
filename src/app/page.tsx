@@ -1,3 +1,4 @@
+import { siteConfig } from '@/config/site'
 import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -8,7 +9,8 @@ import MotionProvider from '@/components/motion/MotionProvider'
 import TokyoClock from '@/components/motion/TokyoClock'
 
 export const metadata: Metadata = {
-  title: 'J. ISHIHARA | Premium Personal Training & Conditioning',
+  title: 'コンディショニング・パーソナルトレーニング',
+  alternates: { canonical: siteConfig.url },
   description:
     '「しなきゃ」を「したい！」に変える。半蔵門・恵比寿のパーソナルトレーニング。コンディショニングを軸に、見た目も体調も根本から変える石原淳哉のセッション。',
 }
@@ -104,10 +106,10 @@ const skills = [
 ]
 
 const contacts = [
-  { t: 'Googleフォーム', e: 'Form', d: '体験のご予約やご質問など、お気軽にお問い合わせください。', href: '#' },
-  { t: 'LINE公式', e: 'LINE', d: 'チャットで迅速に対応します。まずはお友だち追加から。', href: '#' },
-  { t: 'メール', e: 'Mail', d: 'junya1995@gmail.com', href: 'mailto:junya1995@gmail.com' },
-]
+  { t: 'Googleフォーム', e: 'Form', d: '体験のご予約やご質問など、お気軽にお問い合わせください。', href: siteConfig.contact.googleForm },
+  { t: 'LINE公式', e: 'LINE', d: 'チャットで迅速に対応します。まずはお友だち追加から。', href: siteConfig.contact.line },
+  { t: 'メール', e: 'Mail', d: 'junya1995@gmail.com', href: `mailto:${siteConfig.contact.email}` },
+].filter((contact) => Boolean(contact.href))
 
 /* ──────────────────────────────────────────
    Parts

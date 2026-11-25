@@ -1,3 +1,4 @@
+import { siteConfig } from '@/config/site'
 import { Metadata } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -173,7 +174,7 @@ export default function PrivacyPage() {
               <div className="bg-gray-50 p-6 rounded-lg">
                 <p className="text-gray-700">
                   <strong>JUNYA ISHIHARA PERSONAL TRAINING</strong><br />
-                  メール: info@junya-personal-training.com<br />
+                  メール: {siteConfig.contact.email}<br />
                   電話: 03-1234-5678<br />
                   受付時間: 平日 9:00-18:00
                 </p>

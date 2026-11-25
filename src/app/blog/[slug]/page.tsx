@@ -1,3 +1,4 @@
+import { siteConfig } from '@/config/site'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
@@ -15,9 +16,7 @@ import ViewsCounter from '@/components/ViewsCounter'
 import BlogAnalytics from '@/components/BlogAnalytics'
 import TagsList from '@/components/TagsList'
 import RelatedPosts from '@/components/RelatedPosts'
-import ArticleTags from '@/components/ArticleTags'
 import StructuredData from '@/components/StructuredData'
-import SEOAnalysis from '@/components/SEOAnalysis'
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -30,7 +29,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   
   if (!post) {
     return {
-      title: '記事が見つかりません | JUNYA ISHIHARA PERSONAL TRAINING',
+      title: '記事が見つかりません',
+      robots: {index: false, follow: false, googleBot: {index: false, follow: false}},
+      alternates: {canonical: null},
     }
   }
 
@@ -41,20 +42,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? urlFor(seo.ogImage).width(1200).height(630).url()
     : mainImage 
     ? urlFor(mainImage).width(1200).height(630).url()
-    : '/og-default.jpg'
+    : '/junya-portrait.jpg'
 
   return {
-    title: `${metaTitle} | JUNYA ISHIHARA PERSONAL TRAINING`,
+    title: metaTitle,
     description: metaDescription,
     keywords: seo?.keywords || [],
     robots: seo?.noIndex ? 'noindex, nofollow' : 'index, follow',
-    canonical: seo?.canonicalUrl,
     openGraph: {
       title: metaTitle,
       description: metaDescription,
       type: 'article',
       locale: 'ja_JP',
-      url: `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${slug}`,
+      url: `${siteConfig.url}/blog/${slug}`,
       images: [
         {
           url: ogImageUrl,
@@ -75,7 +75,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [ogImageUrl],
     },
     alternates: {
-      canonical: seo?.canonicalUrl || `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${slug}`,
+      canonical: seo?.canonicalUrl || `${siteConfig.url}/blog/${slug}`,
     },
   }
 }
@@ -258,7 +258,7 @@ export default async function BlogPostPage({ params }: Props) {
       { label: post.title }
     ]
 
-    const currentUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${slug}`
+    const currentUrl = `${siteConfig.url}/blog/${slug}`
 
     return (
       <>
@@ -268,9 +268,10 @@ export default async function BlogPostPage({ params }: Props) {
         <StructuredData
           title={post.title}
           description={post.excerpt || ''}
-          content={JSON.stringify(post.body)}
           author={post.author.name}
           publishedAt={post.publishedAt}
+          modifiedAt={post._updatedAt}
+          canonicalUrl={post.seo?.canonicalUrl}
           imageUrl={post.mainImage ? urlFor(post.mainImage).width(1200).height(630).url() : undefined}
           tags={post.tags || []}
           slug={slug}
@@ -306,21 +307,6 @@ export default async function BlogPostPage({ params }: Props) {
                   {/* 著者情報 */}
                   <AuthorInfo author={post.author} />
 
-                  {/* 自動生成タグ */}
-                  <ArticleTags 
-                    content={post.body}
-                    title={post.title}
-                    existingTags={post.tags || []}
-                    className="mt-8"
-                  />
-
-                  {/* SEO分析 */}
-                  <SEOAnalysis
-                    content={post.body}
-                    title={post.title}
-                    existingTags={post.tags || []}
-                    className="mt-8"
-                  />
                 </div>
 
                 {/* サイドバー */}

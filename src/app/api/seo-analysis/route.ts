@@ -1,8 +1,11 @@
+import { checkAdminAuth } from '@/lib/admin-auth'
 import { NextRequest, NextResponse } from 'next/server'
 import { performSEOAnalysis } from '@/lib/seoUtils'
 import { generateAdvancedTags } from '@/lib/tagUtils'
 
 export async function POST(request: NextRequest) {
+  const denied = checkAdminAuth(request)
+  if (denied) return denied
   try {
     const { 
       title, 
@@ -113,11 +116,11 @@ function generateCompetitorInsights(tags: string[]): any {
   const insights = {
     fitnessMarket: {
       competition: 'HIGH',
-      opportunity: [],
-      trends: []
+      opportunity: [] as string[],
+      trends: [] as string[]
     },
-    recommendedKeywords: [],
-    contentGaps: []
+    recommendedKeywords: [] as string[],
+    contentGaps: [] as string[]
   }
 
   // タグに基づく市場分析

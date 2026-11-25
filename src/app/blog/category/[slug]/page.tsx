@@ -9,7 +9,7 @@ import Breadcrumb from '@/components/Breadcrumb'
 import SearchForm from '@/components/SearchForm'
 
 interface Props {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 // メタデータ生成
@@ -19,17 +19,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   
   if (!category) {
     return {
-      title: 'カテゴリーが見つかりません | JUNYA ISHIHARA PERSONAL TRAINING',
+      title: 'カテゴリーが見つかりません',
+      robots: {index: false, follow: false, googleBot: {index: false, follow: false}},
+      alternates: {canonical: null},
     }
   }
 
   const { title, description } = category
 
   return {
-    title: `${title}の記事一覧 | JUNYA ISHIHARA PERSONAL TRAINING`,
+    title: `${title}の記事一覧`,
+    alternates: { canonical: `/blog/category/${slug}` },
     description: description || `${title}に関する記事一覧です。プロトレーナーJUNYA ISHIHARAによる専門的な情報をお届けします。`,
     openGraph: {
-      title: `${title}の記事一覧 | JUNYA ISHIHARA PERSONAL TRAINING`,
+      title: `${title}の記事一覧`,
       description: description || `${title}に関する記事一覧です。`,
       type: 'website',
       locale: 'ja_JP',

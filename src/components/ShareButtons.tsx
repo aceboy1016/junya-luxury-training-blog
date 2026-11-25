@@ -110,7 +110,7 @@ const ShareButtons = ({ url, title, className = '' }: ShareButtonsProps) => {
         </button>
 
         {/* ネイティブ共有（モバイル対応） */}
-        {isClient && navigator.share && (
+        {isClient && typeof navigator.share === 'function' && (
           <button
             onClick={handleNativeShare}
             className="flex items-center px-6 py-3 bg-navy-500 text-white hover:bg-navy-600 transition-all duration-500 text-[10px] font-black tracking-widest uppercase"

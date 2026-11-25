@@ -11,18 +11,19 @@ import PopularPostsRanking from '@/components/PopularPostsRanking'
 import TagCloud from '@/components/TagCloud'
 
 export const metadata: Metadata = {
-  title: 'JUNYA\'S BLOG | JUNYA ISHIHARA PERSONAL TRAINING',
+  alternates: { canonical: "/blog" },
+  title: 'JUNYA\'S BLOG',
   description: 'プロトレーナーJUNYA ISHIHARAによるトレーニング、栄養、ライフスタイルに関する専門的なブログ記事をお届けします。',
   keywords: ['パーソナルトレーニング', 'トレーニング方法', '栄養', 'ダイエット', 'フィットネス', 'JUNYA ISHIHARA'],
   openGraph: {
-    title: 'JUNYA\'S BLOG | JUNYA ISHIHARA PERSONAL TRAINING',
+    title: 'JUNYA\'S BLOG',
     description: 'プロトレーナーJUNYA ISHIHARAによるトレーニング、栄養、ライフスタイルに関する専門的なブログ記事をお届けします。',
     type: 'website',
     locale: 'ja_JP',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'JUNYA\'S BLOG | JUNYA ISHIHARA PERSONAL TRAINING',
+    title: 'JUNYA\'S BLOG',
     description: 'プロトレーナーJUNYA ISHIHARAによるトレーニング、栄養、ライフスタイルに関する専門的なブログ記事をお届けします。',
   },
 }
@@ -88,7 +89,7 @@ const RankingSection = async () => {
 }
 
 interface BlogPageProps {
-  searchParams: { sort?: string }
+  searchParams: Promise<{ sort?: string }>
 }
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {

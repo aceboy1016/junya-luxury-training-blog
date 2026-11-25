@@ -171,9 +171,9 @@ const components = {
   },
   block: {
     h1: ({ children }: any) => (
-      <h1 className="text-4xl md:text-5xl font-black text-navy-500 mt-24 mb-10 leading-none tracking-tighter uppercase font-outfit">
+      <h2 className="text-4xl md:text-5xl font-black text-navy-500 mt-24 mb-10 leading-none tracking-tighter uppercase font-outfit">
         {children}
-      </h1>
+      </h2>
     ),
     h2: ({ children }: any) => (
       <h2 className="text-3xl md:text-4xl font-black text-navy-500 mt-24 mb-8 pb-6 border-b border-zinc-100 leading-none tracking-tighter uppercase font-outfit">
