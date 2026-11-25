@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 interface TOCItem {
   id: string
@@ -8,101 +8,76 @@ interface TOCItem {
   level: number
 }
 
-interface TableOfContentsProps {
-  className?: string
-}
-
-const TableOfContents = ({ className = '' }: TableOfContentsProps) => {
-  const [tocItems, setTocItems] = useState<TOCItem[]>([])
-  const [activeId, setActiveId] = useState<string>('')
+/** 記事本文（data-article-body）の見出しだけを拾う目次。PCでは追従、スマホでは折りたたみ。 */
+const TableOfContents = ({ className = '' }: { className?: string }) => {
+  const [items, setItems] = useState<TOCItem[]>([])
+  const [activeId, setActiveId] = useState('')
 
   useEffect(() => {
-    // ページ内の見出しを取得
-    const headings = document.querySelectorAll('h2, h3, h4')
-    const items: TOCItem[] = []
-
-    headings.forEach((heading, index) => {
-      const id = heading.id || `heading-${index}`
-      if (!heading.id) {
-        heading.id = id
-      }
-      
-      items.push({
-        id,
-        text: heading.textContent || '',
-        level: parseInt(heading.tagName.charAt(1))
-      })
+    const body = document.querySelector('[data-article-body]')
+    if (!body) return
+    const found: TOCItem[] = []
+    body.querySelectorAll('h2, h3').forEach((h, i) => {
+      if (!h.id) h.id = `section-${i + 1}`
+      found.push({ id: h.id, text: h.textContent || '', level: Number(h.tagName[1]) })
     })
+    setItems(found)
 
-    setTocItems(items)
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => e.isIntersecting && setActiveId(e.target.id))
+      },
+      { rootMargin: '-20% 0px -70% 0px' }
+    )
+    body.querySelectorAll('h2, h3').forEach((h) => io.observe(h))
+    return () => io.disconnect()
   }, [])
 
-  useEffect(() => {
-    // スクロール位置に応じてアクティブな見出しを更新
-    const handleScroll = () => {
-      const headings = tocItems.map(item => document.getElementById(item.id)).filter(Boolean)
-      
-      let current = ''
-      for (const heading of headings) {
-        if (heading && heading.offsetTop <= window.scrollY + 120) {
-          current = heading.id
-        }
-      }
-      
-      setActiveId(current)
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    handleScroll() // 初期実行
-
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [tocItems])
-
-  const scrollToHeading = (id: string) => {
-    const element = document.getElementById(id)
-    if (element) {
-      const offset = 100
-      const bodyRect = document.body.getBoundingClientRect().top
-      const elementRect = element.getBoundingClientRect().top
-      const elementPosition = elementRect - bodyRect
-      const offsetPosition = elementPosition - offset
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      })
-    }
+  const go = (id: string) => {
+    const el = document.getElementById(id)
+    if (!el) return
+    const lenis = (window as Window & { __lenis?: { scrollTo: (el: HTMLElement, o: { offset: number; duration: number }) => void } }).__lenis
+    if (lenis) lenis.scrollTo(el, { offset: -110, duration: 1.4 })
+    else window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 110, behavior: 'smooth' })
   }
 
-  if (tocItems.length === 0) return null
+  if (items.length === 0) return null
 
-  return (
-    <nav className={`bg-white border border-zinc-100 p-8 sticky top-24 ${className}`}>
-      <div className="flex items-center space-x-3 mb-8">
-        <span className="w-8 h-8 bg-navy-500 flex items-center justify-center text-white text-[10px] font-black font-outfit uppercase tracking-tighter">TOC</span>
-        <h3 className="text-sm font-black text-navy-500 tracking-[0.2em] uppercase font-outfit">Contents</h3>
-      </div>
-      <ul className="space-y-4">
-        {tocItems.map((item) => (
+  const list = (
+    <ol className="space-y-1 border-l border-deep/10">
+      {items.map((item) => {
+        const active = activeId === item.id
+        return (
           <li key={item.id}>
             <button
-              onClick={() => scrollToHeading(item.id)}
-              className={`
-                block w-full text-left text-[11px] leading-relaxed transition-all duration-300 uppercase tracking-widest
-                ${item.level === 2 ? 'font-black' : 'font-medium'}
-                ${item.level === 3 ? 'pl-4' : ''}
-                ${item.level === 4 ? 'pl-8' : ''}
-                ${activeId === item.id 
-                  ? 'text-navy-500 border-l-2 border-navy-500 pl-3' 
-                  : 'text-zinc-400 hover:text-navy-300 hover:translate-x-1'
-                }
-              `}
+              type="button"
+              onClick={() => go(item.id)}
+              className={`relative block w-full text-left py-2 text-[13px] leading-relaxed transition-colors duration-500 ${item.level === 3 ? 'pl-8 text-[12px]' : 'pl-5'} ${
+                active ? 'text-breeze-600 font-bold' : 'text-zinc-500 hover:text-deep'
+              }`}
             >
+              <span className={`absolute left-[-1px] top-2 bottom-2 w-[2px] bg-breeze-500 transition-transform duration-500 origin-top ${active ? 'scale-y-100' : 'scale-y-0'}`} aria-hidden />
               {item.text}
             </button>
           </li>
-        ))}
-      </ul>
+        )
+      })}
+    </ol>
+  )
+
+  return (
+    <nav aria-label="目次" className={className}>
+      <details className="lg:hidden rounded-md bg-breeze-50 px-5 py-4 group">
+        <summary className="flex items-center justify-between cursor-pointer list-none font-outfit text-[11px] font-semibold tracking-[0.3em] uppercase text-deep">
+          Contents
+          <span aria-hidden className="text-lg transition-transform duration-500 group-open:rotate-45">+</span>
+        </summary>
+        <div className="mt-4">{list}</div>
+      </details>
+      <div className="hidden lg:block">
+        <p className="font-outfit text-[11px] font-semibold tracking-[0.3em] uppercase text-zinc-500 mb-5">Contents</p>
+        {list}
+      </div>
     </nav>
   )
 }

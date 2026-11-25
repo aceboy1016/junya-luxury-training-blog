@@ -292,3 +292,26 @@ figure:hover .portrait-tone, [data-clip]:hover .portrait-tone { filter: saturate
   body { background: white !important; color: black !important; }
   .no-print { display: none !important; }
 }
+/* ══════════════════════════════════════════
+   Journal（ブログ本文）
+   ══════════════════════════════════════════ */
+.article-h2 {
+  position: relative; margin: 5rem 0 1.75rem; padding-top: 1.75rem;
+  font-size: clamp(1.45rem, 2.4vw, 1.9rem); font-weight: 700; line-height: 1.5; letter-spacing: -0.01em;
+  color: #2B3A55; scroll-margin-top: 7rem; font-feature-settings: 'palt' 1;
+}
+.article-h2::before { content: ''; position: absolute; left: 0; top: 0; width: 2.5rem; height: 2px; background: #4A98D0; }
+.article-h3 {
+  margin: 3rem 0 1.25rem; font-size: clamp(1.15rem, 1.8vw, 1.35rem); font-weight: 700; line-height: 1.6;
+  color: #2B3A55; scroll-margin-top: 7rem; font-feature-settings: 'palt' 1;
+}
+[data-article-body] > div > :first-child { margin-top: 0; }
+.article-ol { counter-reset: art; }
+.article-ol > li { counter-increment: art; }
+.article-ol > li::before {
+  content: counter(art, decimal-leading-zero); position: absolute; left: 0; top: 0.1em;
+  font-family: var(--font-outfit), sans-serif; font-weight: 700; font-size: 0.85em; color: #4A98D0;
+}
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+input[type='search']::-webkit-search-cancel-button { display: none; }
