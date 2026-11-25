@@ -11,7 +11,7 @@ const navigation = [
   { name: 'Studios', jp: 'スタジオ', href: '/#locations' },
   { name: 'Price', jp: '料金', href: '/#pricing' },
   { name: 'Profile', jp: 'プロフィール', href: '/#profile' },
-  { name: 'Journal', jp: 'ブログ', href: '/blog' },
+  { name: 'Blog', jp: 'ブログ', href: '/blog' },
   { name: 'Contact', jp: 'お問い合わせ', href: '/#contact' },
 ]
 
