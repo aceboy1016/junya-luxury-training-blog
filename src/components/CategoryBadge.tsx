@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Category } from '@/lib/sanity'
+import type { Category } from '@/lib/sanity'
 
 interface CategoryBadgeProps {
   category: Category
@@ -8,60 +8,23 @@ interface CategoryBadgeProps {
   clickable?: boolean
 }
 
-const CategoryBadge = ({ 
-  category, 
-  size = 'md', 
-  variant = 'solid',
-  clickable = true 
-}: CategoryBadgeProps) => {
-  const { title, slug, color } = category
-
-  const sizeClasses = {
-    sm: 'px-2 py-1 text-xs',
-    md: 'px-3 py-1 text-sm',
-    lg: 'px-4 py-2 text-base'
-  }
-
-  const getStyleClasses = () => {
-    if (variant === 'outline') {
-      return {
-        backgroundColor: 'transparent',
-        color: color,
-        border: `2px solid ${color}`,
-      }
-    }
-    
-    return {
-      backgroundColor: color,
-      color: 'white',
-    }
-  }
-
-  const baseClasses = `
-    inline-flex items-center font-semibold rounded-full 
-    transition-all duration-300 no-underline
-    ${sizeClasses[size]}
-    ${clickable ? 'hover:scale-105 hover:shadow-md cursor-pointer' : ''}
-  `.trim()
+/** カテゴリー名の小さなラベル。色はブランドの空色に統一し、Sanityの色は先頭の点にだけ使う。 */
+const CategoryBadge = ({ category, size = 'md', variant = 'outline', clickable = true }: CategoryBadgeProps) => {
+  const sizes = { sm: 'h-7 px-3 text-[10px]', md: 'h-8 px-4 text-[11px]', lg: 'h-9 px-5 text-[12px]' }
+  const tone =
+    variant === 'solid'
+      ? 'bg-breeze-500 text-white'
+      : 'bg-white/70 text-deep ring-1 ring-breeze-200 hover:ring-breeze-400'
 
   const badge = (
-    <span 
-      className={baseClasses}
-      style={getStyleClasses()}
-    >
-      {title}
+    <span className={`inline-flex items-center gap-2 rounded-full font-outfit font-semibold tracking-[0.12em] uppercase transition-all duration-500 ${sizes[size]} ${tone}`}>
+      <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: variant === 'solid' ? '#fff' : category.color || '#4A98D0' }} aria-hidden />
+      {category.title}
     </span>
   )
 
-  if (clickable) {
-    return (
-      <Link href={`/blog/category/${slug.current}`} className="no-underline">
-        {badge}
-      </Link>
-    )
-  }
-
-  return badge
+  if (!clickable) return badge
+  return <Link href={`/blog/category/${category.slug.current}`}>{badge}</Link>
 }
 
 export default CategoryBadge

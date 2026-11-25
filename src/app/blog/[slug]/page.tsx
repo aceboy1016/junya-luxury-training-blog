@@ -6,17 +6,17 @@ import Link from 'next/link'
 import { getPostBySlug, getRelatedPosts, getAllPostSlugs, urlFor } from '@/lib/sanity'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import ArticleCard from '@/components/ArticleCard'
 import CategoryBadge from '@/components/CategoryBadge'
 import Breadcrumb from '@/components/Breadcrumb'
 import TableOfContents from '@/components/TableOfContents'
 import PortableText from '@/components/PortableText'
 import ShareButtons from '@/components/ShareButtons'
 import ViewsCounter from '@/components/ViewsCounter'
-import BlogAnalytics from '@/components/BlogAnalytics'
 import TagsList from '@/components/TagsList'
 import RelatedPosts from '@/components/RelatedPosts'
 import StructuredData from '@/components/StructuredData'
+import MotionProvider from '@/components/motion/MotionProvider'
+import { BookingCTA, formatDate, readingMinutes } from '@/components/blog/ui'
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -86,150 +86,75 @@ export async function generateStaticParams() {
   return slugs.map((slug) => ({ slug }))
 }
 
-// 記事ヘッダー
-const ArticleHeader = ({ post }: { post: any }) => {
-  const formattedDate = new Date(post.publishedAt).toLocaleDateString('ja-JP', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
-
-  return (
-    <header className="mb-8">
-      {/* カテゴリーバッジ */}
-      {post.categories && post.categories.length > 0 && (
-        <div className="mb-4">
-          <CategoryBadge category={post.categories[0]} size="lg" />
-        </div>
-      )}
-
-      {/* タイトル */}
-      <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-junya-text mb-6 leading-tight">
+// 記事ヘッダー：淡い空色の面に、タイトルと記事情報
+const ArticleHeader = ({ post, breadcrumb }: { post: any; breadcrumb: { label: string; href?: string }[] }) => (
+  <header className="relative bg-breeze-50 overflow-hidden px-5 md:px-10 pt-28 md:pt-36 pb-14 md:pb-20">
+    <div className="hero-glow" aria-hidden />
+    <div className="relative max-w-5xl">
+      <Breadcrumb items={breadcrumb} />
+      <div className="mt-10 md:mt-14 flex flex-wrap items-center gap-x-5 gap-y-3">
+        {post.categories?.[0] && <CategoryBadge category={post.categories[0]} size="md" />}
+        <span className="font-outfit text-[11px] font-semibold tracking-[0.18em] uppercase text-zinc-500 tabular-nums">
+          <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
+          <span className="mx-3 text-zinc-300" aria-hidden>/</span>
+          {readingMinutes(post.body)} min read
+        </span>
+      </div>
+      <h1 data-split className="mt-8 font-bold tracking-[-0.02em] leading-[1.4] text-[clamp(1.9rem,4.4vw,3.6rem)] text-deep">
         {post.title}
       </h1>
-
-      {/* 記事情報 */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <div className="flex items-center space-x-4">
-          {/* 著者情報 */}
-          <div className="flex items-center space-x-3">
-            {post.author.image && (
-              <div className="w-12 h-12 relative rounded-full overflow-hidden">
-                <Image
-                  src={urlFor(post.author.image).width(48).height(48).url()}
-                  alt={post.author.image.alt || post.author.name}
-                  fill
-                  className="object-cover"
-                  sizes="48px"
-                />
-              </div>
-            )}
-            <div>
-              <p className="font-semibold text-junya-text">{post.author.name}</p>
-              <time className="text-sm text-junya-gray">{formattedDate}</time>
-            </div>
-          </div>
-        </div>
-
-        {/* タグ */}
-        {post.tags && post.tags.length > 0 && (
-          <TagsList tags={post.tags} variant="outlined" />
-        )}
-      </div>
-
-      {/* 抜粋 */}
       {post.excerpt && (
-        <p className="text-xl text-junya-gray leading-relaxed mb-8 font-light">
+        <p data-reveal className="mt-8 max-w-3xl text-base md:text-lg leading-[1.9] text-zinc-600">
           {post.excerpt}
         </p>
       )}
-
-      {/* アイキャッチ画像 */}
-      {post.mainImage && (
-        <div className="aspect-video relative rounded-junya-lg overflow-hidden shadow-junya-card mb-8">
+      <div data-reveal className="mt-10 flex items-center gap-4">
+        <div className="relative w-12 h-12 rounded-full overflow-hidden bg-gradient-to-b from-white to-breeze-200 ring-1 ring-breeze-200">
           <Image
-            src={urlFor(post.mainImage).width(1200).height(675).quality(90).url()}
-            alt={post.mainImage.alt || post.title}
+            src={post.author?.image ? urlFor(post.author.image).width(96).height(96).url() : '/junya-portrait-cut.webp'}
+            alt={post.author?.image?.alt || post.author?.name || '石原淳哉'}
             fill
-            className="object-cover"
-            priority
-            sizes="(max-width: 768px) 100vw, 1200px"
+            sizes="48px"
+            className="object-cover object-top"
           />
         </div>
-      )}
-    </header>
-  )
-}
-
-// 著者情報
-const AuthorInfo = ({ author }: { author: any }) => (
-  <div className="card p-6 mb-8">
-    <h3 className="text-lg font-semibold text-junya-text mb-4">著者について</h3>
-    <div className="flex flex-col sm:flex-row gap-4">
-      {author.image && (
-        <div className="w-16 h-16 relative rounded-full overflow-hidden flex-shrink-0">
-          <Image
-            src={urlFor(author.image).width(64).height(64).url()}
-            alt={author.image.alt || author.name}
-            fill
-            className="object-cover"
-            sizes="64px"
-          />
+        <div>
+          <p className="text-sm font-bold text-deep">{post.author?.name}</p>
+          <p className="font-outfit text-[10px] font-semibold tracking-[0.2em] uppercase text-zinc-400">Personal Trainer</p>
         </div>
-      )}
-      <div className="flex-1">
-        <h4 className="font-semibold text-junya-text mb-2">{author.name}</h4>
-        {author.bio && (
-          <p className="text-junya-gray text-sm leading-relaxed mb-3">
-            {author.bio}
-          </p>
-        )}
-        {author.qualification && author.qualification.length > 0 && (
-          <div className="mb-3">
-            <h5 className="text-sm font-semibold text-junya-text mb-2">保有資格・経歴</h5>
-            <ul className="text-sm text-junya-gray space-y-1">
-              {author.qualification.map((qual: string, index: number) => (
-                <li key={index} className="flex items-start">
-                  <span className="text-junya-orange mr-2">•</span>
-                  {qual}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-        {author.socialLinks && (
-          <div className="flex space-x-3">
-            {author.socialLinks.instagram && (
-              <a
-                href={author.socialLinks.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-junya-gray hover:text-junya-orange transition-colors duration-300"
-                aria-label="Instagram"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.987 11.987s11.987-5.367 11.987-11.987C24.014 5.367 18.647.001 12.017.001zM8.449 16.988c-1.297 0-2.348-1.051-2.348-2.348s1.051-2.348 2.348-2.348 2.348 1.051 2.348 2.348-1.051 2.348-2.348 2.348zm7.718 0c-1.297 0-2.348-1.051-2.348-2.348s1.051-2.348 2.348-2.348 2.348 1.051 2.348 2.348-1.051 2.348-2.348 2.348z"/>
-                </svg>
-              </a>
-            )}
-            {author.socialLinks.website && (
-              <a
-                href={author.socialLinks.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-junya-gray hover:text-junya-orange transition-colors duration-300"
-                aria-label="Website"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9" />
-                </svg>
-              </a>
-            )}
-          </div>
-        )}
       </div>
     </div>
-  </div>
+  </header>
+)
+
+// 著者紹介：ホームのプロフィールと同じアーチ型の写真
+const AuthorInfo = ({ author }: { author: any }) => (
+  <aside className="mt-20 rounded-md bg-breeze-50 p-7 md:p-10 grid grid-cols-[5.5rem_1fr] md:grid-cols-[7rem_1fr] gap-6 md:gap-8 items-start">
+    <div className="relative aspect-[3/4] overflow-hidden rounded-t-full bg-gradient-to-b from-white to-breeze-200">
+      <Image
+        src={author?.image ? urlFor(author.image).width(240).height(320).url() : '/junya-portrait-cut.webp'}
+        alt={author?.image?.alt || author?.name || '石原淳哉'}
+        fill
+        sizes="112px"
+        className="object-cover object-top"
+      />
+    </div>
+    <div>
+      <p className="font-outfit text-[10px] font-semibold tracking-[0.3em] uppercase text-zinc-500">Written by</p>
+      <p className="mt-2 text-xl font-bold text-deep">{author?.name}</p>
+      {author?.bio && <p className="mt-3 text-sm leading-[1.9] text-zinc-600">{author.bio}</p>}
+      {author?.qualification?.length > 0 && (
+        <ul className="mt-4 flex flex-wrap gap-2">
+          {author.qualification.map((q: string) => (
+            <li key={q} className="inline-flex items-center px-3 py-1 rounded bg-white text-[12px] leading-relaxed text-deep/80">{q}</li>
+          ))}
+        </ul>
+      )}
+      <Link href="/#profile" className="mt-5 inline-flex items-center gap-2 font-outfit text-[11px] font-semibold tracking-[0.2em] uppercase text-breeze-600 link-underline">
+        Profile →
+      </Link>
+    </div>
+  </aside>
 )
 
 export default async function BlogPostPage({ params }: Props) {
@@ -250,12 +175,11 @@ export default async function BlogPostPage({ params }: Props) {
     }
 
     const breadcrumbItems = [
-      { label: 'ブログ', href: '/blog' },
-      ...(post.categories && post.categories.length > 0 
+      { label: 'Journal', href: '/blog' },
+      ...(post.categories && post.categories.length > 0
         ? [{ label: post.categories[0].title, href: `/blog/category/${post.categories[0].slug.current}` }]
-        : []
-      ),
-      { label: post.title }
+        : []),
+      { label: post.title },
     ]
 
     const currentUrl = `${siteConfig.url}/blog/${slug}`
@@ -263,7 +187,7 @@ export default async function BlogPostPage({ params }: Props) {
     return (
       <>
         <Header />
-        
+
         {/* 構造化データ（SEO用） */}
         <StructuredData
           title={post.title}
@@ -276,81 +200,68 @@ export default async function BlogPostPage({ params }: Props) {
           tags={post.tags || []}
           slug={slug}
         />
-        
-        <main className="min-h-screen">
+
+        <main className="bg-white text-deep">
           {/* アクセス数カウンター（非表示） */}
           <ViewsCounter postId={post._id} />
-          
-          {/* Google Analytics トラッキング（非表示） */}
-          {/* <BlogAnalytics 
-            postTitle={post.title} 
-            category={post.categories?.[0]?.title} 
-          /> */}
-          
-          <article className="bg-white">
-            <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
-              <Breadcrumb items={breadcrumbItems} />
-              <ArticleHeader post={post} />
-              
-              <div className="flex flex-col lg:flex-row gap-12">
-                {/* メインコンテンツ */}
-                <div className="flex-1">
-                  <div className="prose prose-lg max-w-none">
-                    <PortableText value={post.body} />
-                  </div>
 
-                  {/* シェアボタン */}
-                  <div className="mt-12 pt-8 border-t border-junya-border">
-                    <ShareButtons url={currentUrl} title={post.title} />
-                  </div>
+          <article>
+            <ArticleHeader post={post} breadcrumb={breadcrumbItems} />
 
-                  {/* 著者情報 */}
-                  <AuthorInfo author={post.author} />
+            {post.mainImage?.asset && (
+              <div className="px-5 md:px-10 -mt-px bg-[linear-gradient(to_bottom,#F5F9FC_50%,#fff_50%)]">
+                <div data-clip className="relative aspect-[16/9] md:aspect-[21/9] overflow-hidden rounded-md bg-breeze-100">
+                  <Image
+                    src={urlFor(post.mainImage).width(2000).height(860).quality(85).url()}
+                    alt={post.mainImage.alt || post.title}
+                    fill
+                    priority
+                    sizes="100vw"
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            )}
 
+            <div className="px-5 md:px-10 pt-14 md:pt-24 pb-24 grid grid-cols-12 gap-x-6">
+              <div className="col-span-12 lg:col-span-3">
+                <div className="lg:sticky lg:top-28 mb-12 lg:mb-0">
+                  <TableOfContents />
+                </div>
+              </div>
+
+              <div className="col-span-12 lg:col-span-7 lg:col-start-5 max-w-[46rem]">
+                <div data-article-body>
+                  <PortableText value={post.body} />
                 </div>
 
-                {/* サイドバー */}
-                <aside className="lg:w-80">
-                  <TableOfContents />
-                </aside>
+                {post.tags && post.tags.length > 0 && (
+                  <div className="mt-14">
+                    <TagsList tags={post.tags} />
+                  </div>
+                )}
+
+                <div className="mt-10 pt-10 border-t border-deep/10">
+                  <ShareButtons url={currentUrl} title={post.title} />
+                </div>
+
+                <AuthorInfo author={post.author} />
               </div>
             </div>
           </article>
 
-          {/* 関連記事 */}
-          <section className="bg-gray-50 py-16">
-            <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-              <RelatedPosts 
-                posts={relatedPosts} 
-                currentPostId={post._id}
-              />
-            </div>
-          </section>
+          <div className="border-t border-deep/10">
+            <RelatedPosts posts={relatedPosts} currentPostId={post._id} />
+          </div>
 
-          {/* ナビゲーション */}
-          <section className="bg-white py-8 border-t border-junya-border">
-            <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex justify-between items-center">
-                <Link 
-                  href="/blog"
-                  className="btn-secondary"
-                >
-                  ← ブログ一覧に戻る
-                </Link>
-                <Link 
-                  href="/"
-                  className="btn-primary"
-                >
-                  ホームページへ
-                </Link>
-              </div>
-            </div>
-          </section>
+          <BookingCTA />
         </main>
         <Footer />
+        <MotionProvider />
       </>
     )
   } catch (error) {
+    if ((error as any)?.digest?.startsWith?.('NEXT_')) throw error
     console.error('Error loading blog post:', error)
     notFound()
   }

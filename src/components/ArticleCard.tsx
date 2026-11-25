@@ -1,23 +1,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity'
-import { Post } from '@/lib/sanity'
-import CategoryBadge from './CategoryBadge'
-import TagsList from './TagsList'
-
-// 技術アイコンのマッピング
-const getTechIcon = (title: string) => {
-  const lowerTitle = title.toLowerCase()
-  if (lowerTitle.includes('react') || lowerTitle.includes('next')) return '⚛️'
-  if (lowerTitle.includes('typescript') || lowerTitle.includes('javascript')) return '📘'
-  if (lowerTitle.includes('css') || lowerTitle.includes('tailwind')) return '🎨'
-  if (lowerTitle.includes('training') || lowerTitle.includes('トレーニング')) return '💪'
-  if (lowerTitle.includes('nutrition') || lowerTitle.includes('栄養')) return '🥗'
-  if (lowerTitle.includes('diet') || lowerTitle.includes('ダイエット')) return '⚖️'
-  if (lowerTitle.includes('web') || lowerTitle.includes('サイト')) return '🌐'
-  if (lowerTitle.includes('デプロイ') || lowerTitle.includes('deploy')) return '🚀'
-  return '📝'
-}
+import type { Post } from '@/lib/sanity'
+import { formatDate } from '@/components/blog/ui'
 
 interface ArticleCardProps {
   post: Post
@@ -25,58 +10,56 @@ interface ArticleCardProps {
   priority?: boolean
 }
 
+/** 画像がない記事でも崩れないよう、空色のグラデーションに大きな頭文字を置く。 */
+function Cover({ post, sizes, priority, w, h }: { post: Post; sizes: string; priority?: boolean; w: number; h: number }) {
+  if (post.mainImage?.asset) {
+    return (
+      <Image
+        src={urlFor(post.mainImage).width(w).height(h).quality(85).url()}
+        alt={post.mainImage.alt || post.title}
+        fill
+        priority={priority}
+        sizes={sizes}
+        className="object-cover transition-transform duration-[1.4s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.05]"
+      />
+    )
+  }
+  return (
+    <div className="absolute inset-0 bg-gradient-to-br from-white via-breeze-100 to-breeze-300 flex items-end p-6" aria-hidden>
+      <span className="font-outfit font-bold text-[5rem] leading-none tracking-[-0.05em] text-white/80">
+        {(post.categories?.[0]?.title || 'Journal').slice(0, 1)}
+      </span>
+    </div>
+  )
+}
+
+function Meta({ post }: { post: Post }) {
+  return (
+    <div className="flex items-center gap-3 font-outfit text-[11px] font-semibold tracking-[0.18em] uppercase">
+      {post.categories?.[0] && <span className="text-breeze-600">{post.categories[0].title}</span>}
+      {post.categories?.[0] && <span className="h-px w-4 bg-zinc-300" aria-hidden />}
+      <time dateTime={post.publishedAt} className="text-zinc-400 tabular-nums">
+        {formatDate(post.publishedAt)}
+      </time>
+    </div>
+  )
+}
+
 const ArticleCard = ({ post, variant = 'default', priority = false }: ArticleCardProps) => {
-  const {
-    title,
-    slug,
-    excerpt,
-    mainImage,
-    categories,
-    author,
-    publishedAt,
-  } = post
-
-  const formattedDate = new Date(publishedAt).toLocaleDateString('ja-JP', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
-
-  const imageUrl = mainImage
-    ? urlFor(mainImage)
-        .width(variant === 'featured' ? 600 : variant === 'compact' ? 300 : 400)
-        .height(variant === 'featured' ? 400 : variant === 'compact' ? 200 : 250)
-        .quality(90)
-        .url()
-    : '/placeholder-image.jpg'
+  const href = `/blog/${post.slug.current}`
 
   if (variant === 'compact') {
     return (
-      <article className="card hover:shadow-junya-card-hover transition-all duration-300">
-        <Link href={`/blog/${slug.current}`} className="block">
-          <div className="flex gap-4 p-4">
-            <div className="flex-shrink-0">
-              <div className="w-20 h-20 relative rounded-junya overflow-hidden">
-                <Image
-                  src={imageUrl}
-                  alt={mainImage?.alt || title}
-                  fill
-                  className="object-cover"
-                  sizes="80px"
-                />
-              </div>
-            </div>
-            <div className="flex-1 min-w-0">
-              <h3 className="text-sm font-semibold text-junya-text line-clamp-2 mb-1">
-                {title}
-              </h3>
-              <p className="text-xs text-junya-gray mb-2 line-clamp-2">
-                {excerpt}
-              </p>
-              <time className="text-xs text-junya-gray">
-                {formattedDate}
-              </time>
-            </div>
+      <article className="group">
+        <Link href={href} className="flex gap-4 items-center py-4">
+          <div className="relative w-20 h-20 shrink-0 overflow-hidden rounded-md bg-breeze-100">
+            <Cover post={post} sizes="80px" w={160} h={160} />
+          </div>
+          <div className="min-w-0">
+            <h3 className="text-sm font-bold leading-snug text-deep line-clamp-2 group-hover:text-breeze-600 transition-colors duration-500">{post.title}</h3>
+            <time dateTime={post.publishedAt} className="mt-1 block font-outfit text-[11px] text-zinc-400 tabular-nums">
+              {formatDate(post.publishedAt)}
+            </time>
           </div>
         </Link>
       </article>
@@ -85,50 +68,24 @@ const ArticleCard = ({ post, variant = 'default', priority = false }: ArticleCar
 
   if (variant === 'featured') {
     return (
-      <article className="card hover:shadow-junya-card-hover transition-all duration-300 lg:col-span-2">
-        <Link href={`/blog/${slug.current}`} className="block">
-          <div className="aspect-video relative overflow-hidden rounded-t-junya-lg">
-            <Image
-              src={imageUrl}
-              alt={mainImage?.alt || title}
-              fill
-              className="object-cover transition-transform duration-300 hover:scale-105"
-              priority={priority}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-            />
-            {categories && categories.length > 0 && (
-              <div className="absolute top-4 left-4">
-                <CategoryBadge category={categories[0]} clickable={false} />
-              </div>
-            )}
+      <article className="group">
+        <Link href={href} data-cursor="Read" className="grid grid-cols-12 gap-x-6 gap-y-8 items-center">
+          <div className="col-span-12 lg:col-span-7 relative aspect-[16/10] overflow-hidden rounded-md bg-breeze-100">
+            <Cover post={post} priority={priority} sizes="(min-width:1024px) 58vw, 100vw" w={1400} h={875} />
           </div>
-          <div className="p-6">
-            <h2 className="text-2xl font-bold text-junya-text mb-3 line-clamp-2">
-              {title}
-            </h2>
-            {excerpt && (
-              <p className="text-junya-gray mb-4 line-clamp-3 leading-relaxed">
-                {excerpt}
-              </p>
-            )}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                {author?.image && (
-                  <div className="w-8 h-8 relative rounded-full overflow-hidden">
-                    <Image
-                      src={urlFor(author.image).width(32).height(32).url()}
-                      alt={author.image.alt || author.name}
-                      fill
-                      className="object-cover"
-                      sizes="32px"
-                    />
-                  </div>
-                )}
-                <span className="text-sm text-junya-gray">{author?.name}</span>
-              </div>
-              <time className="text-sm text-junya-gray">
-                {formattedDate}
-              </time>
+          <div className="col-span-12 lg:col-span-5 lg:pl-6">
+            <span className="inline-flex items-center gap-2 font-outfit text-[11px] font-semibold tracking-[0.3em] uppercase text-breeze-600">
+              <span className="w-1.5 h-1.5 rounded-full bg-breeze-500" aria-hidden />
+              Featured
+            </span>
+            <h3 className="mt-6 font-bold tracking-[-0.02em] leading-[1.4] text-[clamp(1.5rem,2.6vw,2.25rem)] text-deep palt">
+              <span className="bg-[linear-gradient(currentColor,currentColor)] bg-[length:0_1px] bg-no-repeat bg-[position:0_100%] group-hover:bg-[length:100%_1px] transition-[background-size] duration-700">
+                {post.title}
+              </span>
+            </h3>
+            {post.excerpt && <p className="mt-6 text-base leading-relaxed text-zinc-600 line-clamp-3">{post.excerpt}</p>}
+            <div className="mt-8">
+              <Meta post={post} />
             </div>
           </div>
         </Link>
@@ -136,67 +93,22 @@ const ArticleCard = ({ post, variant = 'default', priority = false }: ArticleCar
     )
   }
 
-  const techIcon = getTechIcon(title)
-  
   return (
-    <article className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-white">
-      <Link href={`/blog/${slug.current}`} className="block">
-        {/* サムネイル画像 */}
-        {mainImage && (
-          <div className="aspect-video relative overflow-hidden">
-            <Image
-              src={imageUrl}
-              alt={mainImage.alt || title}
-              fill
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-              priority={priority}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-          </div>
-        )}
-        
-        {/* コンテンツ部分 */}
-        <div className="p-6">
-          {/* カテゴリーバッジ */}
-          {categories && categories.length > 0 && (
-            <div className="mb-3">
-              <CategoryBadge category={categories[0]} size="sm" clickable={false} />
-            </div>
-          )}
-          
-          {/* タイトル */}
-          <h3 className="text-xl font-bold text-junya-text mb-3 line-clamp-2 leading-tight">
-            {title}
+    <article className="group h-full">
+      <Link href={href} data-cursor="Read" className="flex flex-col h-full">
+        <div className="relative aspect-[4/3] overflow-hidden rounded-md bg-breeze-100">
+          <Cover post={post} priority={priority} sizes="(min-width:1024px) 31vw, (min-width:768px) 48vw, 100vw" w={900} h={675} />
+        </div>
+        <div className="pt-6 flex flex-col flex-1">
+          <Meta post={post} />
+          <h3 className="mt-4 text-lg md:text-xl font-bold leading-[1.55] tracking-[-0.01em] text-deep palt line-clamp-3 group-hover:text-breeze-600 transition-colors duration-500">
+            {post.title}
           </h3>
-          
-          {/* 抜粋 */}
-          {excerpt && (
-            <p className="text-junya-gray mb-4 line-clamp-3 text-sm leading-relaxed">
-              {excerpt}
-            </p>
-          )}
-          
-          {/* メタ情報 */}
-          <div className="flex items-center justify-between text-sm text-junya-gray">
-            <div className="flex items-center space-x-2">
-              {author?.image && (
-                <div className="w-6 h-6 relative rounded-full overflow-hidden">
-                  <Image
-                    src={urlFor(author.image).width(24).height(24).url()}
-                    alt={author.image.alt || author.name}
-                    fill
-                    className="object-cover"
-                    sizes="24px"
-                  />
-                </div>
-              )}
-              <span>{author?.name}</span>
-            </div>
-            <time>
-              {formattedDate}
-            </time>
-          </div>
+          {post.excerpt && <p className="mt-3 text-sm leading-relaxed text-zinc-500 line-clamp-2">{post.excerpt}</p>}
+          <span className="mt-auto pt-6 inline-flex items-center gap-2 font-outfit text-[11px] font-semibold tracking-[0.2em] uppercase text-deep/60 group-hover:text-breeze-600 transition-colors duration-500">
+            Read
+            <span aria-hidden className="transition-transform duration-500 group-hover:translate-x-1">→</span>
+          </span>
         </div>
       </Link>
     </article>
