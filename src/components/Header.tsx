@@ -1,5 +1,7 @@
 'use client'
 
+import { siteConfig } from '@/config/site'
+
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
@@ -138,8 +140,8 @@ const Header = () => {
             <br />
             「しなきゃ」を「したい！」に変える。
           </p>
-          <a href="mailto:junya1995@gmail.com" className="font-outfit text-breeze-600 text-base tracking-tight">
-            junya1995@gmail.com ↗
+          <a href={`mailto:${siteConfig.contact.email}`} className="font-outfit text-breeze-600 text-base tracking-tight">
+            {siteConfig.contact.email} ↗
           </a>
         </div>
       </div>
