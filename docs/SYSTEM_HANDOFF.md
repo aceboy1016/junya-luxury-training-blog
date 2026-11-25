@@ -49,6 +49,6 @@ Cookie同意の有無が未決定の間はGA測定IDを空欄にする。ドメ�
 
 最初のデスクトップ上の検証ではファイル読み込み遅延とGoogle Fonts通信失敗が発生したため、同一ソースを `/private/tmp` にコピーして検証。最終的には通常のフォント取得でビルド成功。一時的なフォントキャッシュやローカル認証用のダミー値はリポジトリに含めない。
 
-このMacのNode.js 25から `--localstorage-file` 警告が出る。READMEの推奨はNode 22.12以降。依存インストール時のnpm audit集計は38件（low 1 / moderate 18 / high 18 / critical 1）で、依存全体の更新・監査は別途必要。破壊的な `npm audit fix --force` は行っていない。
+初回検証ではNode.js 25の `--localstorage-file` 警告とnpm audit 38件が残っていたが、後続の依存更新で対応。現在はNode 22.23.5で検証し、監査は全重要度0件。詳細は `docs/DEPENDENCY_SECURITY.md` を参照。
 
 Sanityの実ログイン・実記事公開・本番への更新反映は、オーナーが接続情報/CORS/Webhookを設定した後の確認事項。GA同意方針・独自ドメインは保留。

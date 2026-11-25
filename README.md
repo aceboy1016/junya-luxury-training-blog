@@ -4,7 +4,7 @@ Next.js 16 / React 19 / Sanity Studio。デザインの担当範囲は `CLAUDE.m
 
 ## ローカル起動
 
-Node.js 22.12 以上を使用します。
+Node.js 22.23.5（`.nvmrc`）で検証しています。Sanityの内部依存がNode.js 22.22.2以上を必要とするため、Node 22系の最新パッチを使用してください。Vercelは `package.json` の `engines.node: "22.x"` に合わせます。
 
 ```sh
 npm install --legacy-peer-deps
@@ -15,7 +15,9 @@ npm run dev
 Sanity 未設定でもビルドでき、ブログは空状態、`/studio` は設定案内になります。実際の値やトークンをコミットしないでください。
 
 ```sh
+npm run audit
 npm run lint
+npm test
 npx tsc --noEmit
 npm run build
 npm start
@@ -101,3 +103,9 @@ GAは有効な `G-...` を設定した場合に読み込みます。現状は同
 - `.env.local` やトークンがgitに含まれない。
 
 独自ドメイン取得後は `NEXT_PUBLIC_SITE_URL`、Sanity CORS / Webhook URL、Vercelドメイン設定をまとめて更新します。旧ホストのリダイレクトは新ドメイン確定後に設定してください。
+
+## 依存関係とCI
+
+2026-11-25の依存更新で、開発用を含む `npm audit` の指摘は38件から0件になりました。修正バージョンと限定的な `overrides` の根拠は [依存関係の更新記録](docs/DEPENDENCY_SECURITY.md) を参照してください。
+
+GitHub Actions `Verify` はPRごとにNode 22で `npm ci --legacy-peer-deps`、全重要度の監査、lint、テスト、Sanityスキーマ抽出、ビルド、型チェックを実行します。Sanityの実接続情報やAPIトークンはCIに不要です。依存を更新したら必ず同じチェックを通してください。既存UIに対するlint警告は残し、新規システムファイルのルールは緩めていません。
