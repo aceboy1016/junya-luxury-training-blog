@@ -1,6 +1,7 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  turbopack: { root: process.cwd() },
   // Sanity CDN用の画像最適化設定
   images: {
     remotePatterns: [
@@ -58,14 +59,13 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['@sanity/client', '@sanity/image-url'],
   },
 
-  // TypeScript設定
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-
-  // ESLint設定
-  eslint: {
-    ignoreDuringBuilds: true,
+  async redirects() {
+    return [
+      { source: '/about', destination: '/#profile', statusCode: 301 },
+      { source: '/service', destination: '/#service-flow', statusCode: 301 },
+      { source: '/price', destination: '/#pricing', statusCode: 301 },
+      { source: '/contact', destination: '/#contact', statusCode: 301 },
+    ]
   },
 
   // コンパイラ最適化

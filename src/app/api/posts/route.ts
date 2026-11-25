@@ -1,11 +1,13 @@
 import { NextResponse } from 'next/server'
-import { getAllPosts } from '@/lib/sanity'
+import { siteConfig } from '@/config/site'
+import { getAllPosts, urlFor } from '@/lib/sanity'
 
 // WordPress統合用のAPI
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url)
-    const limit = parseInt(searchParams.get('limit') || '6')
+    const requestedLimit = Number(searchParams.get('limit') || 6)
+    const limit = Number.isFinite(requestedLimit) ? Math.max(1, Math.min(100, Math.trunc(requestedLimit))) : 6
     const category = searchParams.get('category') || ''
     
     // すべての投稿を取得
@@ -33,14 +35,14 @@ export async function GET(request: Request) {
       content: post.body,
       author: post.author?.name || 'JUNYA ISHIHARA',
       publishedAt: post.publishedAt,
-      mainImage: post.mainImage ? `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/image/${post.mainImage.asset._ref}` : null,
+      mainImage: post.mainImage ? urlFor(post.mainImage).width(1200).url() : null,
       categories: post.categories?.map(cat => ({
         id: cat._id,
         name: cat.title,
         slug: cat.slug.current
       })) || [],
       tags: post.tags || [],
-      url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/blog/${post.slug.current}`
+      url: `${siteConfig.url}/blog/${post.slug.current}`
     }))
     
     return NextResponse.json(formattedPosts, {
@@ -48,7 +50,7 @@ export async function GET(request: Request) {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type',
-        'Cache-Control': 'public, max-age=300, stale-while-revalidate=600'
+        'Cache-Control': 'no-cache'
       }
     })
     

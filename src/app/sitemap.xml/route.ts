@@ -1,61 +1,15 @@
 import { NextResponse } from 'next/server'
-import { getAllPosts } from '@/lib/sanity'
-
+import { getAllPosts, getAllCategories } from '@/lib/sanity'
+import { siteConfig } from '@/config/site'
+const escapeXml = (value: string) => value.replace(/[<>&"']/g, (char) => ({'<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&apos;'}[char]!))
 export async function GET() {
-  try {
-    const posts = await getAllPosts()
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://junya-luxury-training-blog.vercel.app'
-
-    // 静的ページのURL
-    const staticPages = [
-      '',
-      '/about',
-      '/service', 
-      '/price',
-      '/contact',
-      '/blog'
-    ]
-
-    // XMLサイトマップ生成
-    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-${staticPages.map(page => `  <url>
-    <loc>${baseUrl}${page}</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>${page === '' ? 'daily' : page === '/blog' ? 'daily' : 'weekly'}</changefreq>
-    <priority>${page === '' ? '1.0' : page === '/blog' ? '0.9' : '0.8'}</priority>
-  </url>`).join('\n')}
-${posts.map(post => `  <url>
-    <loc>${baseUrl}/blog/${post.slug.current}</loc>
-    <lastmod>${new Date(post._updatedAt || post.publishedAt).toISOString()}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <news:news>
-      <news:publication>
-        <news:name>JUNYA ISHIHARA PERSONAL TRAINING Blog</news:name>
-        <news:language>ja</news:language>
-      </news:publication>
-      <news:publication_date>${new Date(post.publishedAt).toISOString()}</news:publication_date>
-      <news:title>${post.title}</news:title>
-      <news:keywords>${(post.tags || []).join(', ')}</news:keywords>
-    </news:news>
-  </url>`).join('\n')}
-</urlset>`
-
-    return new NextResponse(sitemap, {
-      headers: {
-        'Content-Type': 'application/xml',
-        'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400'
-      }
-    })
-  } catch (error) {
-    console.error('Error generating sitemap:', error)
-    return new NextResponse('Error generating sitemap', { status: 500 })
-  }
+  const [posts, categories] = await Promise.all([getAllPosts(), getAllCategories()])
+  const urls = [
+    ...['', '/blog', '/privacy'].map((path) => ({url: `${siteConfig.url}${path}`, updated: ''})),
+    ...posts.filter((post) => !post.seo?.noIndex && (!post.seo?.canonicalUrl || post.seo.canonicalUrl === `${siteConfig.url}/blog/${post.slug.current}`)).map((post) => ({url: `${siteConfig.url}/blog/${post.slug.current}`, updated: post._updatedAt || post.publishedAt})),
+    ...categories.map((category) => ({url: `${siteConfig.url}/blog/category/${category.slug.current}`, updated: ''})),
+  ]
+  const xml = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.map(({url, updated}) => `<url><loc>${escapeXml(url)}</loc>${updated && !Number.isNaN(Date.parse(updated)) ? `<lastmod>${new Date(updated).toISOString()}</lastmod>` : ''}</url>`).join('')}</urlset>`
+  return new NextResponse(xml, {headers: {'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'no-cache'}})
 }
-// Sanityの更新を60秒ごとに反映
 export const revalidate = 60

@@ -4,14 +4,14 @@ import imageUrlBuilder from '@sanity/image-url'
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || ''
 
 // Sanityの接続情報が未設定でもビルド・表示が壊れないようにする
-export const isSanityConfigured = projectId !== ''
+export const isSanityConfigured = projectId !== '' && Boolean(process.env.NEXT_PUBLIC_SANITY_DATASET)
 
 export const client = createClient({
   projectId: projectId || 'unconfigured',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   apiVersion: '2024-01-01',
   useCdn: true,
-  token: process.env.SANITY_API_TOKEN,
+  perspective: 'published',
 })
 
 const builder = imageUrlBuilder(client)
@@ -107,6 +107,7 @@ export const queries = {
     _id,
     _createdAt,
     _updatedAt,
+    seo,
     title,
     slug,
     excerpt,
@@ -384,7 +385,7 @@ export const queries = {
 async function safeFetch<T>(query: string, params: Record<string, unknown>, fallback: T): Promise<T> {
   if (!isSanityConfigured) return fallback
   try {
-    return (await client.fetch<T>(query, params)) ?? fallback
+    return (await client.fetch<T>(query, params, { useCdn: false, cache: 'no-store' })) ?? fallback
   } catch (error) {
     console.error('Sanity fetch failed:', error)
     return fallback
@@ -447,16 +448,4 @@ export async function getPopularPosts(): Promise<Post[]> {
 // アクセス数ランキング取得
 export async function getViewsRanking(): Promise<Post[]> {
   return safeFetch(queries.viewsRanking, {}, [])
-}
-
-// アクセス数を増加させる関数
-export async function incrementPostViews(postId: string): Promise<void> {
-  try {
-    await client
-      .patch(postId)
-      .inc({ views: 1 })
-      .commit()
-  } catch (error) {
-    console.error('Failed to increment post views:', error)
-  }
 }

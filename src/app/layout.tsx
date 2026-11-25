@@ -1,9 +1,9 @@
+import { siteConfig } from '@/config/site'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
-import CookieConsent from '@/components/CookieConsent'
-import Cursor from '@/components/motion/Cursor'
+import Cursor from '@/components/SiteCursor'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -29,27 +29,24 @@ const cormorant = Cormorant_Garamond({
 export const metadata: Metadata = {
   title: {
     default: 'JUNYA ISHIHARA PERSONAL TRAINING',
-    template: '%s | JUNYA ISHIHARA PERSONAL TRAINING'
+    template: '%s | J. ISHIHARA Premium Personal Training'
   },
-  description: 'プロフェッショナルパーソナルトレーナーJUNYA ISHIHARAによる科学的根拠に基づいたトレーニング指導。あなたの理想の身体づくりをサポートします。',
+  description: '「しなきゃ」を「したい！」に変える。恵比寿・半蔵門で石原淳哉が提供する、コンディショニングを軸にしたパーソナルトレーニング。',
   keywords: ['パーソナルトレーニング', 'フィットネス', 'ダイエット', 'ボディメイク', 'トレーニング', '筋トレ', '栄養指導', 'JUNYA ISHIHARA'],
   authors: [{ name: 'JUNYA ISHIHARA' }],
   creator: 'JUNYA ISHIHARA',
   publisher: 'JUNYA ISHIHARA PERSONAL TRAINING',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://junya-luxury-training-blog.vercel.app'),
-  alternates: {
-    canonical: '/',
-  },
+  metadataBase: new URL(siteConfig.url),
   openGraph: {
     type: 'website',
     locale: 'ja_JP',
     url: '/',
     siteName: 'JUNYA ISHIHARA PERSONAL TRAINING',
     title: 'JUNYA ISHIHARA PERSONAL TRAINING',
-    description: 'プロフェッショナルパーソナルトレーナーJUNYA ISHIHARAによる科学的根拠に基づいたトレーニング指導。あなたの理想の身体づくりをサポートします。',
+    description: '「しなきゃ」を「したい！」に変える。恵比寿・半蔵門で石原淳哉が提供する、コンディショニングを軸にしたパーソナルトレーニング。',
     images: [
       {
-        url: '/og-image.jpg',
+        url: '/junya-portrait.jpg',
         width: 1200,
         height: 630,
         alt: 'JUNYA ISHIHARA PERSONAL TRAINING',
@@ -60,7 +57,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'JUNYA ISHIHARA PERSONAL TRAINING',
     description: 'プロフェッショナルパーソナルトレーナーJUNYA ISHIHARAによる科学的根拠に基づいたトレーニング指導。',
-    images: ['/twitter-image.jpg'],
+    images: ['/junya-portrait.jpg'],
     creator: '@junya_pt',
   },
   robots: {
@@ -74,23 +71,7 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  icons: {
-    icon: [
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-    ],
-    apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
-    ],
-    other: [
-      {
-        rel: 'mask-icon',
-        url: '/safari-pinned-tab.svg',
-        color: '#E49B3F',
-      },
-    ],
-  },
-  manifest: '/site.webmanifest',
+  icons: { icon: '/favicon.ico' },
   verification: {
     google: process.env.GOOGLE_SITE_VERIFICATION,
   },
@@ -134,10 +115,10 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               "name": "JUNYA ISHIHARA PERSONAL TRAINING",
-              "url": process.env.NEXT_PUBLIC_SITE_URL,
+              "url": siteConfig.url,
               "logo": {
                 "@type": "ImageObject",
-                "url": `${process.env.NEXT_PUBLIC_SITE_URL}/logo.png`
+                "url": `${siteConfig.url}/junya-portrait.jpg`
               },
               "description": "プロフェッショナルパーソナルトレーナーJUNYA ISHIHARAによる科学的根拠に基づいたトレーニング指導。",
               "address": {
@@ -150,19 +131,15 @@ export default function RootLayout({
                 "name": "JUNYA ISHIHARA",
                 "jobTitle": "パーソナルトレーナー"
               },
-              "sameAs": [
-                "https://instagram.com/junya_pt",
-                "https://youtube.com/@junya_pt"
-              ],
               "potentialAction": {
                 "@type": "SearchAction",
                 "target": {
                   "@type": "EntryPoint",
-                  "urlTemplate": `${process.env.NEXT_PUBLIC_SITE_URL}/blog/search?q={search_term_string}`
+                  "urlTemplate": `${siteConfig.url}/blog/search?q={search_term_string}`
                 },
                 "query-input": "required name=search_term_string"
               }
-            }),
+            }).replace(/</g, '\\u003c'),
           }}
         />
       </head>

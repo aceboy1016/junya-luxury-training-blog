@@ -1,7 +1,10 @@
+import { checkAdminAuth } from '@/lib/admin-auth'
 import { NextRequest, NextResponse } from 'next/server'
 import { generateAdvancedTags, categorizeTag } from '@/lib/tagUtils'
 
 export async function POST(request: NextRequest) {
+  const denied = checkAdminAuth(request)
+  if (denied) return denied
   try {
     const { content, title, minConfidence = 0.2, maxTags = 8 } = await request.json()
 

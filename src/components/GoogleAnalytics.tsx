@@ -8,7 +8,7 @@ interface GoogleAnalyticsProps {
 
 const GoogleAnalytics = ({ ga_id }: GoogleAnalyticsProps) => {
   // プレースホルダーIDの場合は何も表示しない
-  if (!ga_id || ga_id === 'G-XXXXXXXXXX') {
+  if (!/^G-[A-Z0-9]+$/.test(ga_id) || ga_id === 'G-XXXXXXXXXX') {
     if (process.env.NODE_ENV === 'development') {
       console.log('🔍 Google Analytics: プレースホルダーIDが設定されています。実際の測定IDを設定してください。')
     }
