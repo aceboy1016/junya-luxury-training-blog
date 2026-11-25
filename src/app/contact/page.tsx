@@ -1,3 +1,4 @@
+import { siteConfig } from '@/config/site'
 import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -71,7 +72,7 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <span className="text-[10px] font-black text-zinc-400 tracking-widest uppercase block mb-1">Email</span>
-                        <a href="mailto:contact@junya-training.com" className="text-lg font-black text-navy-500 font-outfit hover:text-navy-300 transition-colors">contact@junya-training.com</a>
+                        <a href={`mailto:${siteConfig.contact.email}`} className="text-lg font-black text-navy-500 font-outfit hover:text-navy-300 transition-colors">{siteConfig.contact.email}</a>
                       </div>
                     </div>
 

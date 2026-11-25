@@ -1,3 +1,4 @@
+import { siteConfig } from '@/config/site'
 import Link from 'next/link'
 import TokyoClock from '@/components/motion/TokyoClock'
 
@@ -46,8 +47,8 @@ const Footer = () => {
               <p>HALLEL 恵比寿</p>
               <p className="text-deep/50 text-xs mt-1 leading-relaxed">東京都渋谷区恵比寿南2-3-11</p>
             </div>
-            <a href="mailto:junya1995@gmail.com" className="link-underline inline-block font-outfit text-breeze-600">
-              junya1995@gmail.com
+            <a href={`mailto:${siteConfig.contact.email}`} className="link-underline inline-block font-outfit text-breeze-600">
+              {siteConfig.contact.email}
             </a>
           </div>
         </div>
