@@ -108,7 +108,7 @@ const skills = [
 const contacts = [
   { t: 'Googleフォーム', e: 'Form', d: '体験のご予約やご質問など、お気軽にお問い合わせください。', href: siteConfig.contact.googleForm },
   { t: 'LINE公式', e: 'LINE', d: 'チャットで迅速に対応します。まずはお友だち追加から。', href: siteConfig.contact.line },
-  { t: 'メール', e: 'Mail', d: 'junya1995@gmail.com', href: `mailto:${siteConfig.contact.email}` },
+  { t: 'メール', e: 'Mail', d: siteConfig.contact.email, href: `mailto:${siteConfig.contact.email}` },
 ].filter((contact) => Boolean(contact.href))
 
 /* ──────────────────────────────────────────
