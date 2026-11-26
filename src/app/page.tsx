@@ -99,6 +99,14 @@ const timeline = [
   { y: 'Current', t: '湘南学院高等学校 男子バレーボール部', d: 'ストレングストレーナーとしてチームに帯同。' },
 ]
 
+// 石原淳哉の活動（多角的に何をしている人かが一目でわかるように）
+const activities = [
+  { k: 'Personal Training', t: 'パーソナルトレーニング', d: 'HALLEL 半蔵門・恵比寿で、コンディショニングを軸に一般の方からアスリートまで指導。', href: '#pricing', cta: 'Price', external: false },
+  { k: 'Strength Coaching', t: 'チームのストレングス指導', d: '湘南学院高等学校 男子バレーボール部に、ストレングストレーナーとして帯同。', href: '', cta: '', external: false },
+  { k: 'AI Product', t: 'AIサービスの開発', d: '音声でカルテを自動作成するAI「VOICEカルテ」を開発中（試験運用中）。', href: siteConfig.officialSite, cta: 'Official Site', external: true },
+  { k: 'Journal', t: '情報発信', d: 'トレーニング・栄養・ライフスタイルについて、現場の知見を記事で発信。', href: '/blog', cta: 'Journal', external: false },
+]
+
 const skills = [
   { s: '姿勢改善・機能改善', v: 100 },
   { s: '疼痛改善（腰痛・肩こり等）', v: 95 },
@@ -517,7 +525,7 @@ export default function Home() {
                 石原 淳哉
               </h2>
               <p data-reveal className="mt-5 font-outfit text-sm font-semibold tracking-[0.4em] uppercase text-zinc-400">
-                Junya Ishihara — Personal Trainer
+                Personal Trainer / Strength Coach / AI Product Developer
               </p>
 
               <p data-reveal className="mt-12 md:mt-16 text-xl md:text-2xl font-bold leading-[1.7] tracking-tight max-w-2xl">
@@ -542,6 +550,55 @@ export default function Home() {
                 ))}
               </dl>
             </div>
+          </div>
+
+          <div className="mt-28 md:mt-40">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+              <div>
+                <h3 className="font-outfit text-[11px] font-semibold tracking-[0.3em] uppercase text-zinc-500">活動 / What I Do</h3>
+                <p data-split className="mt-6 font-bold tracking-[-0.03em] leading-[1.2] text-[clamp(2rem,4.5vw,3.75rem)]">
+                  鍛える、支える、つくる。
+                </p>
+              </div>
+              <p data-reveal className="max-w-md text-base leading-relaxed font-medium text-zinc-600">
+                トレーナーとしての指導を軸に、チームのサポート、AIを使ったサービスづくり、情報発信まで。現場の経験を、いろいろな形で届けています。
+              </p>
+            </div>
+            <ul data-stagger className="mt-12 md:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {activities.map((a, i) => {
+                const highlight = a.k === 'AI Product'
+                const body = (
+                  <>
+                    <div className="flex items-center justify-between">
+                      <span className={`font-outfit text-[11px] font-semibold tracking-[0.2em] uppercase ${highlight ? 'text-white/80' : 'text-breeze-600'}`}>{a.k}</span>
+                      <span className={`font-outfit text-[11px] tabular-nums ${highlight ? 'text-white/60' : 'text-zinc-400'}`}>0{i + 1}</span>
+                    </div>
+                    <p className="mt-10 text-xl xl:text-2xl font-black tracking-tight palt">{a.t}</p>
+                    <p className={`mt-3 text-sm leading-relaxed font-medium ${highlight ? 'text-white/85' : 'text-zinc-600'}`}>{a.d}</p>
+                    {a.href && (
+                      <span className={`mt-auto pt-8 inline-flex items-center gap-2 font-outfit text-[11px] font-semibold tracking-[0.2em] uppercase ${highlight ? 'text-white' : 'text-deep/70 group-hover:text-breeze-600'} transition-colors duration-500`}>
+                        {a.cta}
+                        <span aria-hidden className="transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-0.5">{a.external ? '↗' : '→'}</span>
+                      </span>
+                    )}
+                  </>
+                )
+                const box = `group h-full sm:min-h-[17rem] flex flex-col rounded-md p-7 transition-colors duration-700 ${
+                  highlight ? 'bg-breeze-500 text-white hover:bg-breeze-600' : 'bg-white ring-1 ring-breeze-200 hover:ring-breeze-400'
+                }`
+                return (
+                  <li key={a.k}>
+                    {a.href ? (
+                      <a href={a.href} {...(a.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})} data-cursor={a.external ? 'Visit' : undefined} className={box}>
+                        {body}
+                      </a>
+                    ) : (
+                      <div className={box}>{body}</div>
+                    )}
+                  </li>
+                )
+              })}
+            </ul>
           </div>
 
           <div className="mt-28 md:mt-40 grid grid-cols-12 gap-x-6 gap-y-20">
