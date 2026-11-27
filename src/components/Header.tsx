@@ -20,6 +20,7 @@ const navigation = [
 const Header = () => {
   const [open, setOpen] = useState(false)
   const [hidden, setHidden] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const overlay = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
 
@@ -29,8 +30,10 @@ const Header = () => {
     const onScroll = () => {
       const y = window.scrollY
       setHidden(y > 160 && y > last)
+      setScrolled(y > 40)
       last = y
     }
+    onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -67,9 +70,9 @@ const Header = () => {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-[100] text-deep transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)] ${
+        className={`fixed inset-x-0 top-0 z-[100] text-deep transition-[transform,background-color,box-shadow] duration-700 ease-[cubic-bezier(.16,1,.3,1)] ${
           hidden && !open ? '-translate-y-full' : 'translate-y-0'
-        }`}
+        } ${scrolled && !open ? 'bg-white/80 backdrop-blur-xl shadow-[0_1px_0_rgba(43,58,85,0.08)]' : 'bg-transparent'}`}
       >
         <nav className="flex items-center justify-between px-5 md:px-10 h-20 md:h-24">
           <Link href="/" className="font-outfit font-black text-[15px] md:text-base tracking-[-0.02em] uppercase leading-none" aria-label="JUNYA ISHIHARA ホーム">

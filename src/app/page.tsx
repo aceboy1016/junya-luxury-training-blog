@@ -39,11 +39,13 @@ const concept = [
   { t: 'Luxury', s: '最高級体験', d: '上質な環境とプレミアムサービスで、最高のフィットネス体験を。' },
 ]
 
-const flow = [
-  { n: '01', t: 'お申し込み', e: 'Apply', d: 'トレーニング目標の調整を行います。' },
-  { n: '02', t: 'ご来店', e: 'Visit', d: 'ご案内した施設（半蔵門・恵比寿）にお越しください。' },
-  { n: '03', t: 'カウンセリング', e: 'Counsel', d: '入念なカウンセリング・世界基準のフィジカルテストを行い、カラダの現状を的確に把握します。' },
-  { n: '04', t: 'コンディション', e: 'Condition', d: 'お悩みやカラダの問題を解決するための、具体的なアプローチを開始します。' },
+// img に画像のパス（例: '/flow/01.webp'。public/flow/ に置く）と alt を入れると、各ステップの上に画像を表示する
+// 仕様: docs/FLOW_IMAGES_SPEC.md
+const flow: { n: string; t: string; e: string; d: string; img?: string; alt?: string }[] = [
+  { n: '01', t: 'お申し込み', e: 'Apply', d: 'トレーニング目標の調整を行います。', img: '/flow/01.webp', alt: 'スマートフォンから体験セッションを予約するイメージ' },
+  { n: '02', t: 'ご来店', e: 'Visit', d: 'ご案内した施設（半蔵門・恵比寿）にお越しください。', img: '/flow/02.webp', alt: '明るくミニマルなプライベートスタジオの室内イメージ' },
+  { n: '03', t: 'カウンセリング', e: 'Counsel', d: '入念なカウンセリング・世界基準のフィジカルテストを行い、カラダの現状を的確に把握します。', img: '/flow/03.webp', alt: 'トレーナーとタブレットを見ながらカウンセリングするイメージ' },
+  { n: '04', t: 'コンディション', e: 'Condition', d: 'お悩みやカラダの問題を解決するための、具体的なアプローチを開始します。', img: '/flow/04.webp', alt: 'トレーナーのサポートで股関節のストレッチを行うイメージ' },
 ]
 
 const studios = [
@@ -351,6 +353,11 @@ export default function Home() {
               {flow.map((f) => (
                 <li key={f.n} data-reveal className="relative md:pt-14">
                   <span className="hidden md:block absolute top-[6px] left-0 w-[11px] h-[11px] rounded-full bg-breeze-50 border border-breeze-500" aria-hidden />
+                  {f.img && (
+                    <div data-clip className="relative aspect-[4/3] mb-8 overflow-hidden rounded-md bg-breeze-100">
+                      <Image src={f.img} alt={f.alt || f.t} fill sizes="(min-width:768px) 25vw, 100vw" className="object-cover" />
+                    </div>
+                  )}
                   <div className="flex items-baseline justify-between border-b md:border-0 border-zinc-200 pb-4 md:pb-0">
                     <span className="font-outfit font-black text-6xl md:text-7xl tracking-[-0.05em] leading-none tabular-nums">{f.n}</span>
                     <span className="font-outfit text-[11px] font-semibold tracking-[0.3em] uppercase text-zinc-400">{f.e}</span>
@@ -360,6 +367,7 @@ export default function Home() {
                 </li>
               ))}
             </ol>
+            <p className="mt-6 text-xs text-zinc-400">※写真はイメージです</p>
           </div>
         </section>
 
