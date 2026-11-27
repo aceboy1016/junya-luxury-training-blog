@@ -7,7 +7,6 @@ import Footer from '@/components/Footer'
 import Preloader from '@/components/motion/Preloader'
 import MotionProvider from '@/components/motion/MotionProvider'
 import TokyoClock from '@/components/motion/TokyoClock'
-import FlowIllustration from '@/components/FlowIllustration'
 
 export const metadata: Metadata = {
   title: 'コンディショニング・パーソナルトレーニング',
@@ -40,8 +39,9 @@ const concept = [
   { t: 'Luxury', s: '最高級体験', d: '上質な環境とプレミアムサービスで、最高のフィットネス体験を。' },
 ]
 
-// img に写真のパス（例: '/flow/01.jpg'。public/flow/ に置く）を入れると、イラストの代わりに写真を表示する
-const flow: { n: '01' | '02' | '03' | '04'; t: string; e: string; d: string; img?: string }[] = [
+// img に画像のパス（例: '/flow/01.webp'。public/flow/ に置く）と alt を入れると、各ステップの上に画像を表示する
+// 仕様: docs/FLOW_IMAGES_SPEC.md
+const flow: { n: string; t: string; e: string; d: string; img?: string; alt?: string }[] = [
   { n: '01', t: 'お申し込み', e: 'Apply', d: 'トレーニング目標の調整を行います。' },
   { n: '02', t: 'ご来店', e: 'Visit', d: 'ご案内した施設（半蔵門・恵比寿）にお越しください。' },
   { n: '03', t: 'カウンセリング', e: 'Counsel', d: '入念なカウンセリング・世界基準のフィジカルテストを行い、カラダの現状を的確に把握します。' },
@@ -353,13 +353,11 @@ export default function Home() {
               {flow.map((f) => (
                 <li key={f.n} data-reveal className="relative md:pt-14">
                   <span className="hidden md:block absolute top-[6px] left-0 w-[11px] h-[11px] rounded-full bg-breeze-50 border border-breeze-500" aria-hidden />
-                  <div className="relative aspect-[4/3] mb-8 overflow-hidden rounded-md bg-white ring-1 ring-breeze-200/70">
-                    {f.img ? (
-                      <Image src={f.img} alt={f.t} fill sizes="(min-width:768px) 25vw, 100vw" className="object-cover" />
-                    ) : (
-                      <FlowIllustration step={f.n} label={`${f.t}のイメージ`} />
-                    )}
-                  </div>
+                  {f.img && (
+                    <div data-clip className="relative aspect-[4/3] mb-8 overflow-hidden rounded-md bg-breeze-100">
+                      <Image src={f.img} alt={f.alt || f.t} fill sizes="(min-width:768px) 25vw, 100vw" className="object-cover" />
+                    </div>
+                  )}
                   <div className="flex items-baseline justify-between border-b md:border-0 border-zinc-200 pb-4 md:pb-0">
                     <span className="font-outfit font-black text-6xl md:text-7xl tracking-[-0.05em] leading-none tabular-nums">{f.n}</span>
                     <span className="font-outfit text-[11px] font-semibold tracking-[0.3em] uppercase text-zinc-400">{f.e}</span>
